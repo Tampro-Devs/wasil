@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { usePageTitle } from "../../navigation/context/page.title.provider";
 import StatCard from "../components/stat.card";
 import { Building2, CreditCard, UsersRound } from "lucide-react";
 import DashboardFilter from "../components/dashboard.filter";
@@ -8,14 +6,10 @@ import {
   DashboardAcquisitionTable,
   DashboardContributionTable,
 } from "../components/dashboard.tables";
+import { setPageTitle } from "../../../utils/general_hooks";
 
 export default function DashboardPage() {
-  const { setPageTitle } = usePageTitle();
-
-  useEffect(() => {
-    const title = { text: "Overview" };
-    setPageTitle(title);
-  }, []);
+  setPageTitle("Overview");
 
   return (
     <div className="mt-3 flex gap-5">

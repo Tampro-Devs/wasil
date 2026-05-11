@@ -1,12 +1,6 @@
-import { useEffect } from "react";
-import { usePageTitle } from "../../navigation/context/page.title.provider";
+import { setPageTitle } from "../../../utils/general_hooks";
 
 export default function RolesConfigPage() {
-  const { setPageTitle } = usePageTitle();
-
-  useEffect(() => {
-    const title = { text: "Roles" };
-    setPageTitle(title);
-  }, []);
+  setPageTitle("Roles");
   return <div>RolesConfigPage</div>;
 }

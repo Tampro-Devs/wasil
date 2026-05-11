@@ -1,12 +1,6 @@
-import { useEffect } from "react";
-import { usePageTitle } from "../../navigation/context/page.title.provider";
+import { setPageTitle } from "../../../utils/general_hooks";
 
 export default function EducationConfigPage() {
-  const { setPageTitle } = usePageTitle();
-
-  useEffect(() => {
-    const title = { text: "Education" };
-    setPageTitle(title);
-  }, []);
+  setPageTitle("Eduaction");
   return <div>EducationConfigPage</div>;
 }
