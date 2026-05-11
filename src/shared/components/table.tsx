@@ -17,7 +17,7 @@ export function TableWrapper({
     <div
       data-slot="table-container"
       className={cn(
-        "relative w-full overflow-x-auto bg-white/80 rounded-lg p-3",
+        "w-full overflow-x-auto bg-white/80 rounded-lg p-3",
         className,
       )}
       {...props}
@@ -51,7 +51,11 @@ export function TableHeader({
   ...props
 }: React.ComponentProps<"thead">) {
   return (
-    <thead data-slot="table-header" className={cn("", className)} {...props} />
+    <thead
+      data-slot="table-header"
+      className={cn("bg-slate-300/30 rounded-t-lg", className)}
+      {...props}
+    />
   );
 }
 export function TableFooter({
@@ -116,7 +120,7 @@ export function TableCell({
     <td
       data-slot="table-cell"
       className={cn(
-        "p-2 align-middle whitespace-nowrap text-black/80",
+        "py-3 px-2 align-middle whitespace-nowrap text-black/80",
         className,
       )}
       {...props}
