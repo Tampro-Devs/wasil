@@ -3,8 +3,8 @@ const rolesBase = `${configsBase}/roles`;
 const membershipBase = "/membership";
 
 const organisationBase = "/organisation";
-const branchBase = `${organisationBase}/branches`;
-const leadershipBase = `${organisationBase}/leadership`;
+const branchBase = `/branches`;
+const leadershipBase = `/leadership`;
 
 export const ROUTE_PATHS = {
   auth: {
