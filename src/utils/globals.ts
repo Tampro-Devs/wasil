@@ -13,3 +13,15 @@ export function shortenNumber(value: number): string {
 
   return value.toString();
 }
+
+export const formatMoney = (
+  amount: number,
+  currency = "TZS",
+  locale = "sw-TZ",
+) => {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
