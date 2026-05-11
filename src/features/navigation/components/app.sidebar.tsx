@@ -5,8 +5,8 @@ import { useSidebar } from "../context/sidebar.provider";
 export default function AppSidebar() {
   const { isOpen } = useSidebar();
   return (
-    <div
-      className={`border-r border-r-gray-400/30 h-screen p-3 transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? "w-72" : "w-20"}`}
+    <aside
+      className={`border-r border-r-gray-400/30 h-screen overflow-hidden p-3 transition-all duration-300 ease-in-out ${isOpen ? "w-72" : "w-20"}`}
     >
       <div className="flex items-center gap-1 mb-10">
         <div className="bg-white p-1 rounded-full">
@@ -36,6 +36,6 @@ export default function AppSidebar() {
           ))}
         </div>
       ))}
-    </div>
+    </aside>
   );
 }
