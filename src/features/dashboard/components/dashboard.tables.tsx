@@ -1,4 +1,4 @@
-import { CreditCard, Users, Users2 } from "lucide-react";
+import { CreditCard, Users } from "lucide-react";
 import {
   Table,
   TableBody,
