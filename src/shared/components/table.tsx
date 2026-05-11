@@ -1,0 +1,138 @@
+import type React from "react";
+import { cn } from "../../utils/cn";
+import type { AppError } from "../types/app.error";
+import NotFound from "./not-found";
+
+interface WrapperProps extends React.ComponentProps<"div"> {
+  error?: AppError;
+}
+
+export function TableWrapper({
+  error,
+  className,
+  children,
+  ...props
+}: WrapperProps) {
+  return (
+    <div
+      data-slot="table-container"
+      className={cn(
+        "relative w-full overflow-x-auto bg-white/80 rounded-lg p-3",
+        className,
+      )}
+      {...props}
+    >
+      {error == null ? (
+        children
+      ) : (
+        <NotFound
+          isContent={true}
+          title={error.title}
+          message={error.message}
+          Icon={error.Icon}
+          className="flex-1"
+        />
+      )}
+    </div>
+  );
+}
+export function Table({ className, ...props }: React.ComponentProps<"table">) {
+  return (
+    <table
+      data-slot="table"
+      className={cn("w-full text-sm bg-slate-400/10 rounded-lg", className)}
+      {...props}
+    />
+  );
+}
+
+export function TableHeader({
+  className,
+  ...props
+}: React.ComponentProps<"thead">) {
+  return (
+    <thead data-slot="table-header" className={cn("", className)} {...props} />
+  );
+}
+export function TableFooter({
+  className,
+  ...props
+}: React.ComponentProps<"tfoot">) {
+  return (
+    <tfoot
+      data-slot="table-footer"
+      className={cn("border-t font-medium", className)}
+      {...props}
+    />
+  );
+}
+
+export function TableBody({
+  className,
+  ...props
+}: React.ComponentProps<"tbody">) {
+  return (
+    <tbody
+      data-slot="table-body"
+      className={cn("[&_tr:last-child]:border-0", className)}
+      {...props}
+    />
+  );
+}
+
+export function TableHead({ className, ...props }: React.ComponentProps<"th">) {
+  return (
+    <th
+      data-slot="table-head"
+      className={cn(
+        "h-10 px-2 text-left align-middle font-medium text-slate-400 whitespace-nowrap [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
+  return (
+    <tr
+      data-slot="table-row"
+      className={cn(
+        "hover:bg-slate-300/20 p-2 transition-colors duration-300 border-b border-b-slate-300/50",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export function TableCell({
+  rowSpan,
+  colSpan,
+  className,
+  ...props
+}: React.ComponentProps<"td">) {
+  return (
+    <td
+      data-slot="table-cell"
+      className={cn(
+        "p-2 align-middle whitespace-nowrap text-black/80",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export function TableCaption({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="table-caption"
+      className={cn("text-slate-400 text-sm", className)}
+      {...props}
+    />
+  );
+}

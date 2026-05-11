@@ -7,7 +7,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "../../router/route.paths";
-import Button from "../../../components/ui/button";
+import Button from "../../../shared/components/button";
 
 export default function SignInForm() {
   const navigate = useNavigate();

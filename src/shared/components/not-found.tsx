@@ -1,19 +1,38 @@
-import { MoveLeft } from "lucide-react";
+import { Ban, MoveLeft, type LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../components/ui/button";
+import Button from "./button";
+import type React from "react";
+import { cn } from "../../utils/cn";
 
-interface NotFoundContentProps {
+interface NotFoundContentProps extends React.HTMLAttributes<HTMLDivElement> {
   isContent: boolean;
   title?: string;
   message?: string;
+  Icon?: LucideIcon;
 }
+
+interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  message?: string;
+  Icon: LucideIcon;
+}
+
 export default function NotFound({
   isContent,
   title = "Not Found",
   message = "Content could not be found kindly retry again later",
+  Icon,
+  className,
+  ...props
 }: NotFoundContentProps) {
   return isContent ? (
-    <ContentNotFound title={title} message={message} />
+    <ContentNotFound
+      title={title}
+      message={message}
+      Icon={Icon ?? Ban}
+      className={className}
+      {...props}
+    />
   ) : (
     <PageNotFound title={title} message={message} />
   );
@@ -60,14 +79,21 @@ function PageNotFound({ title, message }: { title: string; message: string }) {
 function ContentNotFound({
   title,
   message,
-}: {
-  title: string;
-  message: string;
-}) {
+  Icon,
+  className,
+  ...props
+}: ContentProps) {
   return (
-    <div>
-      {title}
-      {message}
+    <div
+      className={cn(
+        "bg-white/80 rounded-xl p-3 flex flex-col justify-center items-center",
+        className,
+      )}
+      {...props}
+    >
+      <Icon className="text-slate-400 my-5" size={40} />
+      <span className="text-slate-400 font-bold">{title}</span>
+      <span className="text-slate-400 text-sm">{message}</span>
     </div>
   );
 }

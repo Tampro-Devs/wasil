@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import { LoadingContent } from "./components/ui/progress";
+import { LoadingContent } from "./shared/components/progress";
 import AuthLoader from "./features/auth/components/auth.loader";
 import { Route, Routes } from "react-router-dom";
 import { router } from "./features/router";
-import NotFound from "./features/shared/components/not-found";
+import NotFound from "./shared/components/not-found";
 
 function renderRoutes(routeList: typeof router) {
   return routeList.map((route, index) => {
