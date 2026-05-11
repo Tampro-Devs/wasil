@@ -3,7 +3,7 @@ import { cn } from "../../utils/cn";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
 
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonSize = "xs" | "sm" | "md" | "lg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -55,7 +55,8 @@ const variantClasses: Record<ButtonVariant, string> = {
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: "px-3 py-1.5 text-sm rounded-lg",
+  xs: "px-1 py-1 text-xs rounded-md",
+  sm: "px-3 py-1.5 text-sm rounded-xl",
   md: "px-4 py-2 text-sm rounded-xl",
   lg: "px-6 py-3 text-base rounded-xl",
 };
