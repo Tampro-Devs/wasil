@@ -8,16 +8,16 @@ import PageTitle from "./page.title";
 export default function AppLayout() {
   return (
     <SidebarProvider>
-      <div className="flex">
+      <div className="h-screen flex overflow-hidden">
         <AppSidebar />
         <div className="flex flex-1 flex-col">
           <AppNavbar />
-          <div className="pt-5 mx-5">
+          <main className="pt-5 mx-5 overflow-y-auto">
             <PageTitleProvider>
               <PageTitle />
               <Outlet />
             </PageTitleProvider>
-          </div>
+          </main>
         </div>
       </div>
     </SidebarProvider>
