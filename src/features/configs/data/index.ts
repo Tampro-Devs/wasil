@@ -1,4 +1,4 @@
-import type { SelectOption } from "../../../shared/components/app.select.field";
+import type { SelectOption } from "../../../shared/components/app.form.fields";
 
 export const regions: SelectOption[] = [
   { label: "Morogoro", value: "122212" },

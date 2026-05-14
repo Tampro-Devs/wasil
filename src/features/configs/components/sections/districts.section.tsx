@@ -1,3 +1,5 @@
+import { AppForm } from "../../../../shared/components/app.form";
+import { AppSelectField } from "../../../../shared/components/app.form.fields";
 import {
   Table,
   TableBody,
@@ -8,19 +10,29 @@ import {
   TableRow,
   TableWrapper,
 } from "../../../../shared/components/table";
-import AppSelectField from "../../../../shared/components/app.select.field";
 import { regions } from "../../data";
+import {
+  defaultDistrictValues,
+  districtSchema,
+  type DistrictFormValues,
+} from "../../schemas/district.form.schema";
 
 export default function DistrictsSection() {
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex gap-5">
+      <AppForm<DistrictFormValues>
+        schema={districtSchema}
+        defaultValues={defaultDistrictValues}
+        onSubmit={() => {}}
+        className="flex gap-5"
+      >
         <AppSelectField
+          name=""
           placeholder="Select Region"
           widthClass="w-60"
           options={regions}
         />
-      </div>
+      </AppForm>
 
       <TableWrapper
         className="flex flex-col"

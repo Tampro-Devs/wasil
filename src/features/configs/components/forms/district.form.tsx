@@ -1,24 +1,50 @@
 import AppModal from "../../../../shared/components/app.modal";
-import AppSelectField from "../../../../shared/components/app.select.field";
-import Button from "../../../../shared/components/button";
-import { FormField } from "../../../../shared/components/form.field";
+import { AppSubmitButton } from "../../../../shared/components/app.button";
+import {
+  AppSelectField,
+  AppTextField,
+} from "../../../../shared/components/app.form.fields";
 import type { FormModalProps } from "../../../../shared/types/form";
 import { regions } from "../../data";
+import type { SubmitHandler } from "react-hook-form";
+import {
+  defaultDistrictValues,
+  districtSchema,
+  type DistrictFormValues,
+} from "../../schemas/district.form.schema";
+import { AppForm } from "../../../../shared/components/app.form";
 
 interface DistrictFormProps extends FormModalProps {}
 
 export function DistrictForm({ isOpen, setIsOpen }: DistrictFormProps) {
+  const onSubmit: SubmitHandler<DistrictFormValues> = async (data) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("FORM DATA::", data);
+    setIsOpen(false);
+  };
   return (
     <AppModal isOpen={isOpen} setIsOpen={setIsOpen} title="Add District">
-      <form className="mt-2 flex flex-col gap-5">
-        <AppSelectField name="" placeholder="Select Region" options={regions} />
-        <FormField name="" placeholder="District Name" />
+      <AppForm<DistrictFormValues>
+        schema={districtSchema}
+        defaultValues={defaultDistrictValues}
+        onSubmit={onSubmit}
+        className="mt-2 flex flex-col gap-5"
+      >
+        <AppSelectField<DistrictFormValues>
+          label="Region"
+          name="region"
+          placeholder="Select..."
+          options={regions}
+        />
+        <AppTextField<DistrictFormValues>
+          label="District Name"
+          name="name"
+          placeholder="District Name"
+        />
         <div className="flex justify-end">
-          <Button type="submit" size="sm" className="w-fit px-10">
-            Add
-          </Button>
+          <AppSubmitButton label="Add" />
         </div>
-      </form>
+      </AppForm>
     </AppModal>
   );
 }

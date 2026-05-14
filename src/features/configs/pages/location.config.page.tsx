@@ -5,13 +5,13 @@ import RegionsSection from "../components/sections/regions.section";
 import DistrictsSection from "../components/sections/districts.section";
 import WardsSection from "../components/sections/wards.section";
 import StreetsSection from "../components/sections/streets.section";
-import Button from "../../../shared/components/button";
 import { Plus } from "lucide-react";
-import AppModal from "../../../shared/components/app.modal";
 import { RegionForm } from "../components/forms/region.form";
 import { DistrictForm } from "../components/forms/district.form";
 import { WardForm } from "../components/forms/ward.form";
 import { StreetForm } from "../components/forms/street.form";
+import AppContentContainer from "../../../shared/components/app.content.container";
+import AppButton from "../../../shared/components/app.button";
 
 export default function LocationsConfigPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -86,7 +86,7 @@ export default function LocationsConfigPage() {
   }
   return (
     <div className="flex gap-5">
-      <aside className="w-44 h-40 border-r rounded-lg border border-slate-300">
+      <AppContentContainer className="w-44 h-40">
         {locationTags.map((tag, _) => (
           <ConfigLinkItem
             key={tag.index}
@@ -97,29 +97,29 @@ export default function LocationsConfigPage() {
             }}
           />
         ))}
-      </aside>
-      <main className="flex-1 border-r p-3 rounded-lg border border-slate-300">
-        <div className="py-2 flex justify-between">
-          <span>{locationTags[currentIndex].text}</span>
-          <Button size="xs" variant="secondary" onClick={handleAddButtonClick}>
+      </AppContentContainer>
+      <AppContentContainer
+        className="flex-1"
+        title={locationTags[currentIndex].text}
+        actions={
+          <AppButton
+            size="xs"
+            variant="secondary"
+            onClick={handleAddButtonClick}
+          >
             <Plus />
-          </Button>
-          <RegionForm
-            isOpen={isOpenRegionForm}
-            setIsOpen={setIsOpenRegionForm}
-          />
-          <DistrictForm
-            isOpen={isOpenDistrictForm}
-            setIsOpen={setIsOpenDistrictForm}
-          />
-          <WardForm isOpen={isOpenWardForm} setIsOpen={setIsOpenWardForm} />
-          <StreetForm
-            isOpen={isOpenStreetForm}
-            setIsOpen={setIsOpenStreetForm}
-          />
-        </div>
+          </AppButton>
+        }
+      >
+        <RegionForm isOpen={isOpenRegionForm} setIsOpen={setIsOpenRegionForm} />
+        <DistrictForm
+          isOpen={isOpenDistrictForm}
+          setIsOpen={setIsOpenDistrictForm}
+        />
+        <WardForm isOpen={isOpenWardForm} setIsOpen={setIsOpenWardForm} />
+        <StreetForm isOpen={isOpenStreetForm} setIsOpen={setIsOpenStreetForm} />
         {locationTags[currentIndex].section}
-      </main>
+      </AppContentContainer>
     </div>
   );
 }

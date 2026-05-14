@@ -1,5 +1,5 @@
 import { SlidersHorizontal } from "lucide-react";
-import Button from "../../../shared/components/button";
+import Button from "../../../shared/components/app.button";
 
 export default function DashboardFilter() {
   return (

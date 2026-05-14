@@ -1,4 +1,5 @@
-import AppSelectField from "../../../../shared/components/app.select.field";
+import { AppForm } from "../../../../shared/components/app.form";
+import { AppSelectField } from "../../../../shared/components/app.form.fields";
 import {
   TableWrapper,
   TableCaption,
@@ -10,22 +11,34 @@ import {
   TableCell,
 } from "../../../../shared/components/table";
 import { districts, regions } from "../../data";
+import {
+  defaultWardValues,
+  wardSchema,
+  type WardFormValues,
+} from "../../schemas/ward.form.schema";
 
 export default function WardsSection() {
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex gap-5">
+      <AppForm<WardFormValues>
+        schema={wardSchema}
+        defaultValues={defaultWardValues}
+        onSubmit={() => {}}
+        className="flex gap-5"
+      >
         <AppSelectField
+          name=""
           placeholder="Select Region"
           widthClass="w-60"
           options={regions}
         />
         <AppSelectField
+          name=""
           placeholder="Select Districts"
           widthClass="w-60"
           options={districts}
         />
-      </div>
+      </AppForm>
 
       <TableWrapper
         className="flex flex-col"
