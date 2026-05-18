@@ -1,17 +1,17 @@
-import AppModal from "../../../../shared/components/app.modal";
-import { AppSubmitButton } from "../../../../shared/components/app.button";
+import AppModal from "../../../shared/components/app.modal";
+import { AppSubmitButton } from "../../../shared/components/app.button";
 import {
   AppSelectField,
   AppTextField,
-} from "../../../../shared/components/app.form.fields";
-import type { FormModalProps } from "../../../../shared/types/form";
-import { regions, districts, wards } from "../../data";
-import { AppForm } from "../../../../shared/components/app.form";
+} from "../../../shared/components/app.form.fields";
+import type { FormModalProps } from "../../../shared/types/form";
+import { regions, districts, wards } from "../data";
+import { AppForm } from "../../../shared/components/app.form";
 import {
   defaultStreetValues,
   streetSchema,
   type StreetFormValues,
-} from "../../schemas/street.form.schema";
+} from "../schemas/street.form.schema";
 import type { SubmitHandler } from "react-hook-form";
 
 interface StreetFormProps extends FormModalProps {}
