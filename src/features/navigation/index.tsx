@@ -6,6 +6,7 @@ import {
   MapPinHouse,
   ShieldUser,
   University,
+  Users,
 } from "lucide-react";
 import type { NavigationGroup } from "./types";
 import { ROUTE_PATHS } from "../router/route.paths";
@@ -38,6 +39,16 @@ export const navGroups: NavigationGroup[] = [
         title: "Branches",
         icon: University,
         path: ROUTE_PATHS.organisation.branches.root,
+      },
+    ],
+  },
+  {
+    label: "Membership",
+    items: [
+      {
+        title: "Members",
+        icon: Users,
+        path: ROUTE_PATHS.membership.members.root,
       },
     ],
   },

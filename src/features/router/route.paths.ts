@@ -1,6 +1,6 @@
 const configsBase = "/configs";
 const rolesBase = `${configsBase}/roles`;
-const membershipBase = "/membership";
+const membershipBase = "/members";
 
 const organisationBase = "/organisation";
 const branchBase = `/branches`;
@@ -22,15 +22,15 @@ export const ROUTE_PATHS = {
     },
     branches: {
       root: `${branchBase}`,
+      preview: (branchId: string) => `${branchBase}/${branchId}`,
+      onboard: `${branchBase}/onboard`,
     },
   },
 
   membership: {
     members: {
-      root: `${membershipBase}/members`,
-    },
-    userMembership: {
-      root: (userId: string) => `${membershipBase}/${userId}`,
+      root: `${membershipBase}`,
+      preview: (memberId: string) => `${membershipBase}/${memberId}`,
     },
   },
 
