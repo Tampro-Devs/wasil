@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { usePageTitle } from "../features/navigation/context/page.title.provider";
+import { usePageHeader } from "../features/navigation/context/page.header.provider";
 
-export function setPageTitle(title: string) {
-  const { setPageTitle } = usePageTitle();
+export function setPageHeader(title: string, backText?: string) {
+  const { setPageTitle, setBackText } = usePageHeader();
 
   useEffect(() => {
     setPageTitle({ text: title });
+    setBackText({ text: backText });
   }, []);
 }

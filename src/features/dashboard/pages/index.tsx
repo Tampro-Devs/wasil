@@ -6,10 +6,10 @@ import {
   DashboardAcquisitionTable,
   DashboardContributionTable,
 } from "../components/dashboard.tables";
-import { setPageTitle } from "../../../utils/general_hooks";
+import { setPageHeader } from "../../../utils/general_hooks";
 
 export default function DashboardPage() {
-  setPageTitle("Overview");
+  setPageHeader("Overview");
 
   return (
     <div className="mt-3 flex gap-5">

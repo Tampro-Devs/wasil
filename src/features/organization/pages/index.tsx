@@ -1,6 +1,6 @@
-import { setPageTitle } from "../../../utils/general_hooks";
+import { setPageHeader } from "../../../utils/general_hooks";
 
 export default function OrganizationMainPage() {
-  setPageTitle("Organization");
+  setPageHeader("Organization");
   return <div>OrganizationMainPage</div>;
 }
