@@ -1,14 +1,14 @@
-interface LinkItemProps {
+interface SideLinkItemProps {
   text: string;
   isActive: boolean;
   onClick: () => void;
 }
 
-export default function ConfigLinkItem({
+export default function SideLinkItem({
   text,
   isActive,
   onClick,
-}: LinkItemProps) {
+}: SideLinkItemProps) {
   return (
     <div
       className={`px-2 rounded-full border border-slate-300 m-2 cursor-pointer hover:bg-slate-200 ${isActive && "bg-slate-300 hover:bg-slate-300"} transition-colors duration-300`}
