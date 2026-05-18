@@ -25,3 +25,8 @@ export const formatMoney = (
     maximumFractionDigits: 0,
   }).format(amount);
 };
+
+export function shuffle<T>(array: T[]): T[] {
+  return [...array] // ← never mutate the original
+    .sort(() => Math.random() - 0.5);
+}
