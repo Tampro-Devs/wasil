@@ -2,6 +2,8 @@ import React from "react";
 import { cn } from "../../utils/cn";
 import { useFormState, type FieldValues } from "react-hook-form";
 import { useAppFormContext } from "./app.form";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
 
@@ -28,7 +30,7 @@ export default function AppButton({
   return (
     <button
       className={cn(
-        "btn-base cursor-pointer flex justify-center-safe items-center-safe gap-5",
+        "btn-base cursor-pointer flex justify-center-safe items-center-safe gap-2",
         variantClasses[variant],
         sizeClasses[size],
         loading && "opacity-60 cursor-not-allowed",
@@ -52,7 +54,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   secondary: "bg-[var(--primary)] text-white hover:bg-[var(--primary-light)]",
   outline:
     "border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800",
-  ghost: "hover:bg-slate-100 dark:hover:bg-slate-800",
+  ghost: "hover:bg-slate-100 dark:hover:bg-slate-800/10",
   danger: "bg-[var(--error)] text-white hover:opacity-90",
 };
 
@@ -87,6 +89,21 @@ export function AppSubmitButton<T extends FieldValues>({
       className={className}
     >
       {isSubmitting ? "Loading..." : label}
+    </AppButton>
+  );
+}
+
+export function AppBackButton({ label }: { label: string }) {
+  const navigate = useNavigate();
+  return (
+    <AppButton
+      variant="ghost"
+      size="sm"
+      className="text-blue-950 font-bold px-0 rounded-sm mb-3"
+      leftIcon={<ArrowLeft size={15} />}
+      onClick={() => navigate(-1) || navigate("/")}
+    >
+      {label}
     </AppButton>
   );
 }
