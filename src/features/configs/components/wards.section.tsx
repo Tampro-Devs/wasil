@@ -1,5 +1,5 @@
-import { AppForm } from "../../../../shared/components/app.form";
-import { AppSelectField } from "../../../../shared/components/app.form.fields";
+import { AppForm } from "../../../shared/components/app.form";
+import { AppSelectField } from "../../../shared/components/app.form.fields";
 import {
   TableWrapper,
   TableCaption,
@@ -9,18 +9,20 @@ import {
   TableHead,
   TableBody,
   TableCell,
-} from "../../../../shared/components/table";
-import { regions, districts, wards } from "../../data";
+} from "../../../shared/components/table";
+import { districts, regions } from "../data";
 import {
-  streetSchema,
-  type StreetFormValues,
-} from "../../schemas/street.form.schema";
+  defaultWardValues,
+  wardSchema,
+  type WardFormValues,
+} from "../schemas/ward.form.schema";
 
-export default function StreetsSection() {
+export default function WardsSection() {
   return (
     <div className="flex flex-col gap-5">
-      <AppForm<StreetFormValues>
-        schema={streetSchema}
+      <AppForm<WardFormValues>
+        schema={wardSchema}
+        defaultValues={defaultWardValues}
         onSubmit={() => {}}
         className="flex gap-5"
       >
@@ -36,12 +38,6 @@ export default function StreetsSection() {
           widthClass="w-60"
           options={districts}
         />
-        <AppSelectField
-          name=""
-          placeholder="Select Wards"
-          widthClass="w-60"
-          options={wards}
-        />
       </AppForm>
 
       <TableWrapper
@@ -52,21 +48,23 @@ export default function StreetsSection() {
         // }}
       >
         <TableCaption>
-          <span className="font-bold me-1">Ward:</span>
-          <span className="text-xs">Ward 01</span>
+          <span className="font-bold me-1">District:</span>
+          <span className="text-xs">Morogoro Mjini</span>
         </TableCaption>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
+              <TableHead>Streets</TableHead>
               <TableHead>Members</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {Array.from({ length: 5 }).map((_, index) => (
               <TableRow key={index}>
-                <TableCell>Mtaani</TableCell>
-                <TableCell>10</TableCell>
+                <TableCell>Msamvu</TableCell>
+                <TableCell>100</TableCell>
+                <TableCell>200</TableCell>
               </TableRow>
             ))}
           </TableBody>

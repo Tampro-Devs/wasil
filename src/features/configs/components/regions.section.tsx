@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -6,9 +7,12 @@ import {
   TableHeader,
   TableRow,
   TableWrapper,
-} from "../../../../shared/components/table";
+} from "../../../shared/components/table";
+import { shuffle } from "../../../utils/globals";
+import { regionDummies } from "../types/region.type";
 
 export default function RegionsSection() {
+  const regions = useMemo(() => shuffle(regionDummies), []);
   return (
     <TableWrapper
       className="flex flex-col"
@@ -20,15 +24,17 @@ export default function RegionsSection() {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>S/N</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Districts</TableHead>
             <TableHead>Members</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Array.from({ length: 30 }).map((_, index) => (
+          {regions.map((region, index) => (
             <TableRow key={index}>
-              <TableCell>Morogoro</TableCell>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{region.name}</TableCell>
               <TableCell>5</TableCell>
               <TableCell>100</TableCell>
             </TableRow>

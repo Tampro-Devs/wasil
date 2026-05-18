@@ -1,28 +1,28 @@
-import { AppForm } from "../../../../shared/components/app.form";
-import { AppSelectField } from "../../../../shared/components/app.form.fields";
+import { AppForm } from "../../../shared/components/app.form";
+import { AppSelectField } from "../../../shared/components/app.form.fields";
 import {
-  TableWrapper,
-  TableCaption,
   Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
   TableHeader,
   TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "../../../../shared/components/table";
-import { districts, regions } from "../../data";
+  TableWrapper,
+} from "../../../shared/components/table";
+import { regions } from "../data";
 import {
-  defaultWardValues,
-  wardSchema,
-  type WardFormValues,
-} from "../../schemas/ward.form.schema";
+  defaultDistrictValues,
+  districtSchema,
+  type DistrictFormValues,
+} from "../schemas/district.form.schema";
 
-export default function WardsSection() {
+export default function DistrictsSection() {
   return (
     <div className="flex flex-col gap-5">
-      <AppForm<WardFormValues>
-        schema={wardSchema}
-        defaultValues={defaultWardValues}
+      <AppForm<DistrictFormValues>
+        schema={districtSchema}
+        defaultValues={defaultDistrictValues}
         onSubmit={() => {}}
         className="flex gap-5"
       >
@@ -31,12 +31,6 @@ export default function WardsSection() {
           placeholder="Select Region"
           widthClass="w-60"
           options={regions}
-        />
-        <AppSelectField
-          name=""
-          placeholder="Select Districts"
-          widthClass="w-60"
-          options={districts}
         />
       </AppForm>
 
@@ -48,23 +42,23 @@ export default function WardsSection() {
         // }}
       >
         <TableCaption>
-          <span className="font-bold me-1">District:</span>
-          <span className="text-xs">Morogoro Mjini</span>
+          <span className="font-bold me-1">Region:</span>
+          <span className="text-xs">Morogoro</span>
         </TableCaption>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead>Streets</TableHead>
+              <TableHead>Wards</TableHead>
               <TableHead>Members</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {Array.from({ length: 5 }).map((_, index) => (
               <TableRow key={index}>
-                <TableCell>Msamvu</TableCell>
-                <TableCell>100</TableCell>
-                <TableCell>200</TableCell>
+                <TableCell>Morogoro Mjini</TableCell>
+                <TableCell>12</TableCell>
+                <TableCell>30</TableCell>
               </TableRow>
             ))}
           </TableBody>
