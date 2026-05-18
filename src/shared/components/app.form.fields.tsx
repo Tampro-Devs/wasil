@@ -45,7 +45,7 @@ export function AppTextField<T extends FieldValues>({
         type={type}
         placeholder={placeholder}
         disabled={disabled}
-        className={`w-full bg-slate-400/30 p-2 rounded-xl text-sm border border-slate-300`}
+        className={`w-full bg-slate-300/30 p-2 rounded-xl text-sm border border-slate-300`}
         aria-invalid={!!error}
         aria-describedby={error ? `${String(name)}-error` : undefined}
         {...form.register(name, rules)}
@@ -91,7 +91,7 @@ export function AppSelectField<T extends FieldValues>({
   const error = get(errors, name);
 
   return (
-    <div className="field-wrapper">
+    <div className="field-wrapper mb-3">
       {label && (
         <label className="ps-3 text-sm text-slate-600 font-bold" htmlFor={name}>
           {label}
