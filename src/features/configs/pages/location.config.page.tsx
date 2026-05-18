@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { setPageTitle } from "../../../utils/general_hooks";
-import ConfigLinkItem from "../components/config.link.item";
-import RegionsSection from "../components/sections/regions.section";
-import DistrictsSection from "../components/sections/districts.section";
-import WardsSection from "../components/sections/wards.section";
-import StreetsSection from "../components/sections/streets.section";
+import { setPageHeader } from "../../../utils/general_hooks";
+import RegionsSection from "../components/regions.section";
+import DistrictsSection from "../components/districts.section";
+import WardsSection from "../components/wards.section";
+import StreetsSection from "../components/streets.section";
 import { Plus } from "lucide-react";
-import { RegionForm } from "../components/forms/region.form";
-import { DistrictForm } from "../components/forms/district.form";
-import { WardForm } from "../components/forms/ward.form";
-import { StreetForm } from "../components/forms/street.form";
-import AppContentContainer from "../../../shared/components/app.content.container";
+import { RegionForm } from "../forms/region.form";
+import { DistrictForm } from "../forms/district.form";
+import { WardForm } from "../forms/ward.form";
+import { StreetForm } from "../forms/street.form";
+import {
+  AppContentBody,
+  AppContentContainer,
+  AppContentHeader,
+} from "../../../shared/components/app.content.container";
 import AppButton from "../../../shared/components/app.button";
+import SideLinkItem from "../../../shared/components/side.link.item";
 
 export default function LocationsConfigPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,7 +24,7 @@ export default function LocationsConfigPage() {
   const [isOpenWardForm, setIsOpenWardForm] = useState(false);
   const [isOpenStreetForm, setIsOpenStreetForm] = useState(false);
 
-  setPageTitle("Locations");
+  setPageHeader("Locations");
 
   const locationTags = [
     {
@@ -86,39 +90,49 @@ export default function LocationsConfigPage() {
   }
   return (
     <div className="flex gap-5">
-      <AppContentContainer className="w-44 h-40">
-        {locationTags.map((tag, _) => (
-          <ConfigLinkItem
-            key={tag.index}
-            text={tag.text}
-            isActive={tag.index == currentIndex}
-            onClick={() => {
-              setCurrentIndex(tag.index);
-            }}
-          />
-        ))}
+      <AppContentContainer className="w-44 h-fit">
+        <AppContentBody>
+          {locationTags.map((tag, _) => (
+            <SideLinkItem
+              key={tag.index}
+              text={tag.text}
+              isActive={tag.index == currentIndex}
+              onClick={() => {
+                setCurrentIndex(tag.index);
+              }}
+            />
+          ))}
+        </AppContentBody>
       </AppContentContainer>
-      <AppContentContainer
-        className="flex-1"
-        title={locationTags[currentIndex].text}
-        actions={
-          <AppButton
-            size="xs"
-            variant="secondary"
-            onClick={handleAddButtonClick}
-          >
-            <Plus />
-          </AppButton>
-        }
-      >
-        <RegionForm isOpen={isOpenRegionForm} setIsOpen={setIsOpenRegionForm} />
-        <DistrictForm
-          isOpen={isOpenDistrictForm}
-          setIsOpen={setIsOpenDistrictForm}
+      <AppContentContainer className="flex-1">
+        <AppContentHeader
+          title={locationTags[currentIndex].text}
+          actions={
+            <AppButton
+              size="xs"
+              variant="secondary"
+              onClick={handleAddButtonClick}
+            >
+              <Plus />
+            </AppButton>
+          }
         />
-        <WardForm isOpen={isOpenWardForm} setIsOpen={setIsOpenWardForm} />
-        <StreetForm isOpen={isOpenStreetForm} setIsOpen={setIsOpenStreetForm} />
-        {locationTags[currentIndex].section}
+        <AppContentBody>
+          <RegionForm
+            isOpen={isOpenRegionForm}
+            setIsOpen={setIsOpenRegionForm}
+          />
+          <DistrictForm
+            isOpen={isOpenDistrictForm}
+            setIsOpen={setIsOpenDistrictForm}
+          />
+          <WardForm isOpen={isOpenWardForm} setIsOpen={setIsOpenWardForm} />
+          <StreetForm
+            isOpen={isOpenStreetForm}
+            setIsOpen={setIsOpenStreetForm}
+          />
+          {locationTags[currentIndex].section}
+        </AppContentBody>
       </AppContentContainer>
     </div>
   );
