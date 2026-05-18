@@ -1,0 +1,76 @@
+import { useFindBy } from "../../../shared/hooks/global.hooks";
+import { leadersDummies, leadershipDummies } from "../types/leadership.type";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableWrapper,
+} from "../../../shared/components/table";
+import { streets } from "../../configs/data";
+import { Link } from "react-router-dom";
+import { ROUTE_PATHS } from "../../router/route.paths";
+import { Eye, Pen, Trash } from "lucide-react";
+
+export default function StreetLeadersSection() {
+  const leaders = useFindBy(leadersDummies, "title", leadershipDummies[6]);
+  const asistants = useFindBy(leadersDummies, "title", leadershipDummies[7]);
+
+  const streetLeaders = [...leaders, ...asistants];
+  return (
+    <TableWrapper
+      className="flex flex-col"
+      //   error={{
+      //     title: "No Ward Leaders Found",
+      //     message: "Click Plus button to add them",
+      //   }}
+    >
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>S/N</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Contacts</TableHead>
+            <TableHead>Action</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {streetLeaders.map((leader, index) => (
+            <TableRow key={index}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{leader.member.name}</TableCell>
+              <TableCell>
+                <div className="flex flex-col text-sm">
+                  <span>{leader.title.name}</span>
+                  <span>{streets[0].label}</span>
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex flex-col text-sm">
+                  <span>{leader.member.email}</span>
+                  <span>{leader.member.phone}</span>
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex gap-3">
+                  <Link
+                    to={ROUTE_PATHS.membership.members.preview(
+                      leader.member.memberId,
+                    )}
+                  >
+                    <Eye size={20} className="text-slate-400 cursor-pointer" />
+                  </Link>
+                  <Pen size={20} className="text-green-400 cursor-pointer" />
+                  <Trash size={20} className="text-red-400 cursor-pointer" />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableWrapper>
+  );
+}
