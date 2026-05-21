@@ -9,11 +9,13 @@ interface NotFoundContentProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   message?: string;
   Icon?: LucideIcon;
+  Action?: React.ReactNode;
 }
 
 interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   message?: string;
+  Action?: React.ReactNode;
   Icon: LucideIcon;
 }
 
@@ -23,6 +25,7 @@ export default function NotFound({
   message = "Content could not be found kindly retry again later",
   Icon,
   className,
+  Action,
   ...props
 }: NotFoundContentProps) {
   return isContent ? (
@@ -31,6 +34,7 @@ export default function NotFound({
       message={message}
       Icon={Icon ?? Ban}
       className={className}
+      Action={Action}
       {...props}
     />
   ) : (
@@ -81,6 +85,7 @@ function ContentNotFound({
   message,
   Icon,
   className,
+  Action,
   ...props
 }: ContentProps) {
   return (
@@ -94,6 +99,7 @@ function ContentNotFound({
       <Icon className="text-slate-400 my-5" size={40} />
       <span className="text-slate-400 font-bold">{title}</span>
       <span className="text-slate-400 text-sm">{message}</span>
+      {Action && Action}
     </div>
   );
 }
