@@ -115,8 +115,8 @@ function LeaderContainer({ leader }: { leader: Leader }) {
       <div className="flex text-slate-700 pb-3 border-b border-b-slate-300">
         <CircleUser />
         <div className="flex flex-col">
-          <span className="font-bold text-sm">{leader.title.name}</span>
-          <span className="text-sm">{leader.member.name}</span>
+          <span className="font-bold text-sm">{leader?.title.name}</span>
+          <span className="text-sm">{leader?.member.name}</span>
         </div>
       </div>
       <div className="grid grid-cols-2 my-2">
@@ -124,14 +124,14 @@ function LeaderContainer({ leader }: { leader: Leader }) {
           <Phone size={18} />
           <div className="flex flex-col">
             <span className="font-bold text-sm">Phone</span>
-            <span className="text-xs">{leader.member.phone}</span>
+            <span className="text-xs">{leader?.member.phone}</span>
           </div>
         </div>
         <div className="flex p-3 text-slate-700 gap-1  border-r border-r-slate-300">
           <Mail size={18} />
           <div className="flex flex-col">
             <span className="font-bold text-sm">Email</span>
-            <span className="text-xs">{leader.member.email}</span>
+            <span className="text-xs">{leader?.member.email}</span>
           </div>
         </div>
       </div>
