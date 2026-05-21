@@ -30,6 +30,7 @@ export function TableWrapper({
           title={error.title}
           message={error.message}
           Icon={error.Icon}
+          Action={error.Action}
           className="flex-1"
         />
       )}
