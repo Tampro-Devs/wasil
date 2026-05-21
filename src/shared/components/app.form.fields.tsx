@@ -8,6 +8,7 @@ import {
 } from "react-hook-form";
 import { useAppFormContext } from "./app.form";
 import Select, { type GroupBase, type SingleValue } from "react-select";
+import { cn } from "../../utils/cn";
 
 interface BaseFieldProps<T extends FieldValues> {
   name: Path<T>;
@@ -15,6 +16,7 @@ interface BaseFieldProps<T extends FieldValues> {
   placeholder?: string;
   disabled?: boolean;
   rules?: RegisterOptions<T>;
+  className?: string;
 }
 
 interface TextFieldProps<T extends FieldValues> extends BaseFieldProps<T> {
@@ -28,13 +30,14 @@ export function AppTextField<T extends FieldValues>({
   placeholder,
   disabled,
   rules,
+  className,
 }: TextFieldProps<T>) {
   const form = useAppFormContext<T>();
   const { errors } = useFormState({ control: form.control, name, exact: true });
   const error = get(errors, name);
 
   return (
-    <div className="field-wrapper mb-3">
+    <div className={cn("mb-3", className)}>
       {label && (
         <label className="ps-3 text-sm text-slate-600 font-bold" htmlFor={name}>
           {label}
