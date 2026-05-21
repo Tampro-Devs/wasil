@@ -63,7 +63,7 @@ export default function BranchMainPage() {
                 <TableRow key={index}>
                   <TableCell>{branch.name}</TableCell>
                   <TableCell>{branch.location.name}</TableCell>
-                  <TableCell>{branch.leader.member.name}</TableCell>
+                  <TableCell>{branch.leader?.member.name}</TableCell>
                   <TableCell>{branch.members}</TableCell>
                   <TableCell>
                     <div className="flex gap-3">
