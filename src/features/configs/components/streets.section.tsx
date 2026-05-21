@@ -15,6 +15,7 @@ import {
   streetSchema,
   type StreetFormValues,
 } from "../schemas/street.form.schema";
+import { streetDummies } from "../types/street.type";
 
 export default function StreetsSection() {
   return (
@@ -47,7 +48,7 @@ export default function StreetsSection() {
       <TableWrapper
         className="flex flex-col"
         // error={{
-        //   title: "No Morogoro Districts Found",
+        //   title: "No Streets Found",
         //   message: "Click plus icon to add one",
         // }}
       >
@@ -58,14 +59,16 @@ export default function StreetsSection() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>S/N</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Members</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {streetDummies.map((street, index) => (
               <TableRow key={index}>
-                <TableCell>Mtaani</TableCell>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{street.name}</TableCell>
                 <TableCell>10</TableCell>
               </TableRow>
             ))}
