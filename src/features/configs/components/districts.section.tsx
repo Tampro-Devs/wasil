@@ -16,6 +16,7 @@ import {
   districtSchema,
   type DistrictFormValues,
 } from "../schemas/district.form.schema";
+import { districtDummies } from "../types/district.type";
 
 export default function DistrictsSection() {
   return (
@@ -54,9 +55,9 @@ export default function DistrictsSection() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {districtDummies.map((district, index) => (
               <TableRow key={index}>
-                <TableCell>Morogoro Mjini</TableCell>
+                <TableCell>{district.name}</TableCell>
                 <TableCell>12</TableCell>
                 <TableCell>30</TableCell>
               </TableRow>

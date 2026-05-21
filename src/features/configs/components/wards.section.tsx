@@ -16,6 +16,7 @@ import {
   wardSchema,
   type WardFormValues,
 } from "../schemas/ward.form.schema";
+import { wardDummies } from "../types/ward.type";
 
 export default function WardsSection() {
   return (
@@ -60,9 +61,9 @@ export default function WardsSection() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {wardDummies.map((ward, index) => (
               <TableRow key={index}>
-                <TableCell>Msamvu</TableCell>
+                <TableCell>{ward.name}</TableCell>
                 <TableCell>100</TableCell>
                 <TableCell>200</TableCell>
               </TableRow>
