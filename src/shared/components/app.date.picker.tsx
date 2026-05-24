@@ -1,4 +1,13 @@
 import { useState, useRef, useEffect } from "react";
+import { cn } from "../../utils/cn";
+import {
+  get,
+  useFormState,
+  type FieldValues,
+  type Path,
+  type RegisterOptions,
+} from "react-hook-form";
+import { useAppFormContext } from "./app.form";
 
 const MONTHS = [
   "January",
@@ -39,21 +48,33 @@ function isToday(date: Date) {
 
 type View = "calendar" | "month" | "year";
 
-interface DatePickerProps {
+interface DatePickerProps<T extends FieldValues> {
+  name: Path<T>;
+  label?: string;
   value?: Date;
+  rules?: RegisterOptions<T>;
   onChange?: (date: Date | undefined) => void;
   placeholder?: string;
   minYear?: number;
   maxYear?: number;
+  className?: string;
 }
 
-export default function DatePicker({
+export default function DatePicker<T extends FieldValues>({
+  name,
+  label,
   value,
+  rules,
   onChange,
   placeholder = "Select a date",
   minYear = 1900,
   maxYear = 2100,
-}: DatePickerProps) {
+  className,
+}: DatePickerProps<T>) {
+  const form = useAppFormContext<T>();
+  const { errors } = useFormState({ control: form.control, name, exact: true });
+  const error = get(errors, name);
+
   const today = new Date();
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<View>("calendar");
@@ -89,6 +110,7 @@ export default function DatePicker({
     onChange?.(date);
     setOpen(false);
     setView("calendar");
+    // form.register(name, rules);
   }
 
   function prevMonth() {
@@ -149,30 +171,35 @@ export default function DatePicker({
   }
 
   return (
-    <div ref={containerRef} className="relative inline-block select-none">
-      {/* Trigger button */}
+    <div
+      ref={containerRef}
+      className={cn("block w-full select-none", className)}
+    >
+      {label && (
+        <label className="ps-3 text-sm text-slate-600 font-bold" htmlFor={name}>
+          {label}
+        </label>
+      )}
       <button
         onClick={() => {
           setOpen((o) => !o);
           setView("calendar");
         }}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all text-sm shadow-sm min-w-52.5"
+        className="flex items-center p-2 rounded-xl border border-slate-300 bg-slate-300/30 focus:outline-none focus:ring-2 focus:ring-blue-900/50 transition-all text-sm cursor-pointer w-full"
       >
-        <svg
-          className="w-4 h-4 text-indigo-500 shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <rect x="3" y="4" width="18" height="18" rx="2" />
-          <path d="M16 2v4M8 2v4M3 10h18" />
-        </svg>
         <span className={selected ? "text-gray-800" : "text-gray-400"}>
           {selected ? formatDate(selected) : placeholder}
         </span>
       </button>
-
+      {error && (
+        <p
+          id={`${String(name)}-error`}
+          className="ps-5 text-xs text-red-400"
+          role="alert"
+        >
+          {error.message as string}
+        </p>
+      )}
       {/* Dropdown panel */}
       {open && (
         <div className="absolute z-50 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 w-[288px]">
@@ -182,7 +209,7 @@ export default function DatePicker({
               <div className="flex items-center justify-between mb-3">
                 <button
                   onClick={prevMonth}
-                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition"
+                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition cursor-pointer"
                 >
                   <svg
                     className="w-4 h-4"
@@ -198,7 +225,7 @@ export default function DatePicker({
                 <div className="flex gap-1">
                   <button
                     onClick={() => setView("month")}
-                    className="px-2 py-1 text-sm font-semibold text-gray-800 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition"
+                    className="px-2 py-1 text-sm font-semibold text-gray-800 rounded-lg hover:bg-indigo-50 hover:text-blue-900 transition cursor-pointer"
                   >
                     {MONTHS[viewMonth]}
                   </button>
@@ -207,7 +234,7 @@ export default function DatePicker({
                       setYearPage(Math.floor(viewYear / 12));
                       setView("year");
                     }}
-                    className="px-2 py-1 text-sm font-semibold text-gray-800 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition"
+                    className="px-2 py-1 text-sm font-semibold text-gray-800 rounded-lg hover:bg-indigo-50 hover:text-blue-900 transition cursor-pointer"
                   >
                     {viewYear}
                   </button>
@@ -215,7 +242,7 @@ export default function DatePicker({
 
                 <button
                   onClick={nextMonth}
-                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition"
+                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition cursor-pointer"
                 >
                   <svg
                     className="w-4 h-4"
@@ -253,11 +280,11 @@ export default function DatePicker({
                       key={i}
                       onClick={() => selectDate(day)}
                       className={[
-                        "w-full aspect-square rounded-xl text-sm transition-all flex items-center justify-center",
+                        "w-full aspect-square rounded-xl text-sm transition-all flex items-center justify-center cursor-pointer",
                         isSel
-                          ? "bg-indigo-600 text-white font-semibold shadow"
+                          ? "bg-blue-900 text-white font-semibold shadow"
                           : itToday
-                            ? "border border-indigo-300 text-indigo-700 font-medium hover:bg-indigo-50"
+                            ? "border border-blue-300 text-blue-700 font-medium hover:bg-indigo-50"
                             : "text-gray-700 hover:bg-gray-100",
                       ].join(" ")}
                     >
@@ -271,14 +298,14 @@ export default function DatePicker({
               <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
                 <button
                   onClick={goToday}
-                  className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition"
+                  className="text-xs text-blue-600 hover:text-blue-800 font-medium transition cursor-pointer"
                 >
                   Today
                 </button>
                 {selected && (
                   <button
                     onClick={clearDate}
-                    className="text-xs text-gray-400 hover:text-gray-600 transition"
+                    className="text-xs text-gray-400 hover:text-gray-600 transition cursor-pointer"
                   >
                     Clear
                   </button>
@@ -310,7 +337,7 @@ export default function DatePicker({
                     setYearPage(Math.floor(viewYear / 12));
                     setView("year");
                   }}
-                  className="px-2 py-1 text-sm font-semibold text-gray-800 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition"
+                  className="px-2 py-1 text-sm font-semibold text-gray-800 rounded-lg hover:bg-indigo-50 hover:text-blue-700 transition"
                 >
                   {viewYear}
                 </button>
@@ -323,9 +350,9 @@ export default function DatePicker({
                     key={m}
                     onClick={() => selectMonth(i)}
                     className={[
-                      "py-2.5 rounded-xl text-sm font-medium transition",
+                      "py-2.5 rounded-xl text-sm font-medium transition cursor-pointer",
                       viewMonth === i
-                        ? "bg-indigo-600 text-white shadow"
+                        ? "bg-blue-900 text-white shadow"
                         : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700",
                     ].join(" ")}
                   >
@@ -381,9 +408,9 @@ export default function DatePicker({
                     key={y}
                     onClick={() => selectYear(y)}
                     className={[
-                      "py-2.5 rounded-xl text-sm font-medium transition",
+                      "py-2.5 rounded-xl text-sm font-medium transition cursor-pointer",
                       viewYear === y
-                        ? "bg-indigo-600 text-white shadow"
+                        ? "bg-blue-900 text-white shadow"
                         : today.getFullYear() === y
                           ? "border border-indigo-300 text-indigo-700 hover:bg-indigo-50"
                           : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700",
