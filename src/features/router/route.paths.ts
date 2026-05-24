@@ -5,6 +5,8 @@ const membershipBase = "/members";
 const organisationBase = "/organisation";
 const branchBase = `/branches`;
 const leadershipBase = `/leadership`;
+const financeBase = `/finance`;
+const contributionBase = `/contribution`;
 
 export const ROUTE_PATHS = {
   auth: {
@@ -30,7 +32,15 @@ export const ROUTE_PATHS = {
   membership: {
     members: {
       root: `${membershipBase}`,
+      register: `${membershipBase}/register`,
       preview: (memberId: string) => `${membershipBase}/${memberId}`,
+    },
+  },
+
+  finance: {
+    finance: {
+      root: `${financeBase}`,
+      contribution: `${contributionBase}`,
     },
   },
 

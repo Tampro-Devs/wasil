@@ -9,7 +9,11 @@ import {
   AppContentHeader,
 } from "../../../shared/components/app.content.container";
 import { Banknote, MapPinHouse } from "lucide-react";
-import { formatMoney } from "../../../utils/globals";
+import {
+  calculateAge,
+  convertStringToDate,
+  formatMoney,
+} from "../../../utils/globals";
 import { useState } from "react";
 import MemberBasicInfoSection from "../components/member.basic.info.section";
 import MemberContributionSection from "../components/member.contribution.section";
@@ -46,7 +50,20 @@ export default function MemberPreviewPage() {
   }
   return (
     <AppContentContainer>
-      <AppContentHeader title={member.name} />
+      <AppContentHeader>
+        <div className="flex flex-col">
+          <span className="font-bold">{member.name}</span>
+          <div className="flex gap-2 items-center">
+            <span className="w-fit px-3 text-xs rounded-full bg-blue-900 text-white">
+              {member.gender}
+            </span>
+            <span className="text-xs bg-blue-900 text-white px-3 rounded-sm">
+              {convertStringToDate(member.dob)} | {calculateAge(member.dob)}{" "}
+              years
+            </span>
+          </div>
+        </div>
+      </AppContentHeader>
       <AppContentBody>
         <div className="flex gap-5 mb-3">
           <MemberResidence member={member} />
@@ -85,23 +102,29 @@ function MemberResidence({ member }: { member: Member }) {
         <div className="w-40 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Region: </span>
           <span className="text-xs">
-            {member.residence.ward.district.region.name}
+            {member.residence.street.ward.district.region.name}
           </span>
         </div>
         <div className="w-40 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">District: </span>
-          <span className="text-xs">{member.residence.ward.district.name}</span>
+          <span className="text-xs">
+            {member.residence.street.ward.district.name}
+          </span>
         </div>
       </div>
       <div className="flex gap-3">
         <div className="w-40 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Ward: </span>
-          <span className="text-xs">{member.residence.ward.name}</span>
+          <span className="text-xs">{member.residence.street.ward.name}</span>
         </div>
         <div className="w-40 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">Street: </span>
-          <span className="text-xs">{member.residence.name}</span>
+          <span className="text-xs">{member.residence.street.name}</span>
         </div>
+      </div>
+      <div className="flex items-center gap-1">
+        <span className="text-sm font-bold">House No: </span>
+        <span className="text-xs">{member.residence.houseNo}</span>
       </div>
     </div>
   );
@@ -129,7 +152,6 @@ function MemberContribution() {
 }
 
 function MemberEducation() {
-  const category = "Sharia";
   return (
     <div className="w-80 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
@@ -138,18 +160,14 @@ function MemberEducation() {
       </div>
 
       <div className="flex px-2 py-3 border-b border-b-slate-300/50 gap-2 items-center">
-        <span className="text-sm font-bold">Category: </span>
-        <span
-          className={`w-20 text-sm text-center rounded-full ${category == "Sharia" ? "bg-green-500/20 text-green-400" : "bg-blue-500/20 text-blue-400"}`}
-        >
-          {category}
+        <span className="text-sm font-bold">Level: </span>
+        <span className={`text-sm text-center rounded-full`}>
+          Bachelor's Degree
         </span>
       </div>
 
       <div className="flex p-2 gap-2 items-center">
-        <span className="text-xs">
-          Bachelor of Science in Information Technology
-        </span>
+        <span className="text-xs">Bachelor of Science with Education</span>
       </div>
     </div>
   );

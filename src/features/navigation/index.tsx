@@ -1,4 +1,5 @@
 import {
+  BanknoteArrowUp,
   BookOpenText,
   BriefcaseConveyorBelt,
   Building,
@@ -7,6 +8,7 @@ import {
   ShieldUser,
   University,
   Users,
+  Wallet,
 } from "lucide-react";
 import type { NavigationGroup } from "./types";
 import { ROUTE_PATHS } from "../router/route.paths";
@@ -49,6 +51,21 @@ export const navGroups: NavigationGroup[] = [
         title: "Members",
         icon: Users,
         path: ROUTE_PATHS.membership.members.root,
+      },
+    ],
+  },
+  {
+    label: "Finance",
+    items: [
+      {
+        title: "Finance",
+        icon: Wallet,
+        path: ROUTE_PATHS.finance.finance.root,
+      },
+      {
+        title: "Contribution",
+        icon: BanknoteArrowUp,
+        path: ROUTE_PATHS.finance.finance.contribution,
       },
     ],
   },

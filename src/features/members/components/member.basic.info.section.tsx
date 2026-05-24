@@ -1,3 +1,64 @@
+import {
+  BriefcaseBusiness,
+  Building2,
+  Toolbox,
+  type LucideIcon,
+} from "lucide-react";
+
 export default function MemberBasicInfoSection() {
-  return <div>MemberBasicInfoSection</div>;
+  return (
+    <div className="mt-1 pt-1 border-t border-t-slate-300">
+      <div className="flex flex-col">
+        <InfoContainer
+          title="Proffession"
+          content="Teacher"
+          Icon={BriefcaseBusiness}
+        />
+        <InfoContainer
+          title="Work Title"
+          content="Head of School"
+          Icon={Toolbox}
+        />
+        <InfoContainer
+          title="Institution"
+          content="Morogoro Secondary School"
+          Icon={Building2}
+        />
+        <div className="flex flex-col py-1 border-t border-t-slate-300">
+          <span className="mb-1 font-bold">Member's Opinion</span>
+          <span className="text-xs">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit
+            repellendus tempore neque necessitatibus quasi magni, in hic placeat
+            ipsa dignissimos rerum excepturi quidem eaque nulla? Aut ad
+            obcaecati, unde eum eius sit perferendis nisi amet? Vitae nam
+            doloremque itaque ducimus quam praesentium, vel commodi aut dolorum
+            incidunt, ipsa fugit necessitatibus esse optio neque eligendi
+            quibusdam dolores. Optio eum est eveniet.
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InfoContainer({
+  title,
+  content,
+  Icon,
+}: {
+  title: string;
+  content: string;
+  Icon: LucideIcon;
+}) {
+  return (
+    <div className="flex items-center gap-1">
+      <div className="text-slate-500">
+        <Icon size={18} />
+      </div>
+      <div className="flex flex-col my-3">
+        <span className="font-bold text-sm">{title}</span>
+        <span className="font-bold text-xs ps-1">{content}</span>
+      </div>
+    </div>
+  );
 }

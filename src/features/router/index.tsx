@@ -3,8 +3,11 @@ import EducationConfigPage from "../configs/pages/education.config.page";
 import LocationsConfigPage from "../configs/pages/location.config.page";
 import RolesConfigPage from "../configs/pages/roles.config.page";
 import DashboardPage from "../dashboard/pages";
+import FinanceMainPage from "../finance/pages";
+import ContributionMainPage from "../finance/pages/contribution.page";
 import MembersMainPage from "../members/pages";
 import MemberPreviewPage from "../members/pages/member.preview";
+import MemberRegistrationPage from "../members/pages/member.registration.page";
 import AppLayout from "../navigation/components/app.layout";
 import type { RouteConfig } from "../navigation/types";
 import OrganizationMainPage from "../organization/pages";
@@ -84,6 +87,24 @@ export const router: RouteConfig[] = [
         title: "Preview Member",
         path: `${ROUTE_PATHS.membership.members.root}/:memberId`,
         element: <MemberPreviewPage />,
+      },
+
+      {
+        title: "Member Registration",
+        path: `${ROUTE_PATHS.membership.members.register}`,
+        element: <MemberRegistrationPage />,
+      },
+
+      // Finance
+      {
+        title: "Finance",
+        path: ROUTE_PATHS.finance.finance.root,
+        element: <FinanceMainPage />,
+      },
+      {
+        title: "Contribution",
+        path: ROUTE_PATHS.finance.finance.contribution,
+        element: <ContributionMainPage />,
       },
 
       // Configs
