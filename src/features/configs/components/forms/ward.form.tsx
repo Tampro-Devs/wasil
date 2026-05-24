@@ -1,18 +1,18 @@
-import AppModal from "../../../shared/components/app.modal";
-import { AppSubmitButton } from "../../../shared/components/app.button";
+import AppModal from "../../../../shared/components/app.modal";
+import { AppSubmitButton } from "../../../../shared/components/app.button";
 import {
   AppSelectField,
   AppTextField,
-} from "../../../shared/components/app.form.fields";
-import type { FormModalProps } from "../../../shared/types/form";
-import { districts, regions } from "../data";
+} from "../../../../shared/components/app.form.fields";
+import type { FormModalProps } from "../../../../shared/types/form";
+import { districts, regions } from "../../data";
 import type { SubmitHandler } from "react-hook-form";
 import {
   defaultWardValues,
   wardSchema,
   type WardFormValues,
-} from "../schemas/ward.form.schema";
-import { AppForm } from "../../../shared/components/app.form";
+} from "../../schemas/ward.form.schema";
+import { AppForm } from "../../../../shared/components/app.form";
 
 interface WardFormProps extends FormModalProps {}
 

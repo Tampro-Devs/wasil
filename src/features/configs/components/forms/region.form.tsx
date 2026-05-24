@@ -1,14 +1,14 @@
-import AppModal from "../../../shared/components/app.modal";
-import { AppTextField } from "../../../shared/components/app.form.fields";
-import type { FormModalProps } from "../../../shared/types/form";
-import { AppForm } from "../../../shared/components/app.form";
+import AppModal from "../../../../shared/components/app.modal";
+import { AppTextField } from "../../../../shared/components/app.form.fields";
+import type { FormModalProps } from "../../../../shared/types/form";
+import { AppForm } from "../../../../shared/components/app.form";
 import {
   defaultRegionValues,
   regionSchema,
   type RegionFormValues,
-} from "../schemas/region.form.schema";
+} from "../../schemas/region.form.schema";
 import type { SubmitHandler } from "react-hook-form";
-import { AppSubmitButton } from "../../../shared/components/app.button";
+import { AppSubmitButton } from "../../../../shared/components/app.button";
 
 interface RegionFormProps extends FormModalProps {}
 
