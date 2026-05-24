@@ -30,3 +30,22 @@ export function shuffle<T>(array: T[]): T[] {
   return [...array] // ← never mutate the original
     .sort(() => Math.random() - 0.5);
 }
+
+export function convertStringToDate(dateString: string, locale = "en-US") {
+  const formatted = new Date(dateString).toLocaleDateString(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return formatted;
+}
+
+export function calculateAge(dateString: string): number {
+  const birth = new Date(dateString.replace(/-/g, "/"));
+  const today = new Date();
+
+  let age = today.getFullYear() - birth.getFullYear();
+
+  return age;
+}
