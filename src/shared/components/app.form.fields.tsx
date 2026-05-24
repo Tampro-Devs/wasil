@@ -118,7 +118,7 @@ export function AppSelectField<T extends FieldValues>({
             }
             classNames={{
               control: () =>
-                `!border !border-slate-300 !bg-slate-300/30 !px-3 ${widthClass} !rounded-xl text-xs`,
+                `!border !border-slate-300 !bg-slate-300/30 !px-3 ${widthClass} !rounded-xl text-xs cursor-pointer`,
               menu: () => "!rounded-lg",
               option: ({ isFocused }) =>
                 isFocused
@@ -143,7 +143,7 @@ export function AppSelectField<T extends FieldValues>({
 
 // ─── CheckboxField ────────────────────────────────────────────────────────
 
-export function CheckboxField<T extends FieldValues>({
+export function AppCheckboxField<T extends FieldValues>({
   name,
   label,
   disabled,
@@ -153,19 +153,21 @@ export function CheckboxField<T extends FieldValues>({
   const error = get(errors, name);
 
   return (
-    <div className="field-wrapper field-wrapper--inline">
-      <input
-        id={String(name)}
-        type="checkbox"
-        disabled={disabled}
-        className="field-checkbox"
-        {...form.register(name)}
-      />
-      <label htmlFor={String(name)} className="field-label field-label--inline">
-        {label}
-      </label>
+    <div className="flex flex-col">
+      <div className="flex gap-1">
+        <input
+          id={String(name)}
+          type="checkbox"
+          disabled={disabled}
+          className="cursor-pointer"
+          {...form.register(name)}
+        />
+        <label htmlFor={String(name)} className="text-sm">
+          {label}
+        </label>
+      </div>
       {error && (
-        <p className="field-error" role="alert">
+        <p className="text-xs text-red-400" role="alert">
           {error.message as string}
         </p>
       )}

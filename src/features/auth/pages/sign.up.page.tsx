@@ -4,9 +4,9 @@ import {
   useAppFormContext,
 } from "../../../shared/components/app.form";
 import {
+  AppCheckboxField,
   AppSelectField,
   AppTextField,
-  CheckboxField,
 } from "../../../shared/components/app.form.fields";
 
 // ─── 1. Define your schema ────────────────────────────────────────────────
@@ -117,7 +117,7 @@ export function SignupForm() {
         ]}
       />
 
-      <CheckboxField<SignupFormValues>
+      <AppCheckboxField<SignupFormValues>
         name="acceptTerms"
         label="I accept the terms and conditions"
       />
