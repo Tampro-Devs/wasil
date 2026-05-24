@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
-import { AppSubmitButton } from "../../../shared/components/app.button";
+import { Link, useNavigate } from "react-router-dom";
+import AppButton, {
+  AppSubmitButton,
+} from "../../../shared/components/app.button";
 import {
   AppContentBody,
   AppContentContainer,
@@ -28,9 +30,11 @@ import {
 } from "../schema/member.filter.schema";
 import { membersDummies } from "../types/member.type";
 import { ROUTE_PATHS } from "../../router/route.paths";
-import { Eye, Trash } from "lucide-react";
+import { Eye, Plus, Trash } from "lucide-react";
 
 export default function MembersMainPage() {
+  const navigate = useNavigate();
+
   setPageHeader("Members");
   return (
     <AppContentContainer>
@@ -91,11 +95,20 @@ export default function MembersMainPage() {
           //   Action: <AppButton>Add New Member</AppButton>,
           // }}
         >
-          <TableCaption className="flex justify-between">
+          <TableCaption className="flex justify-between mb-3">
             <div className="flex items-center">
               <span className="font-bold me-1">Members:</span>
               <span className="text-xs">{membersDummies.length}</span>
             </div>
+            <AppButton
+              size="xs"
+              variant="secondary"
+              onClick={() => {
+                navigate(ROUTE_PATHS.membership.members.register);
+              }}
+            >
+              <Plus />
+            </AppButton>
           </TableCaption>
           <Table>
             <TableHeader>
@@ -114,7 +127,7 @@ export default function MembersMainPage() {
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{member.name}</TableCell>
                   <TableCell>
-                    <TableCell>{member.residence.name}</TableCell>
+                    <TableCell>{member.residence.street.name}</TableCell>
                   </TableCell>
                   <TableCell>{member.email}</TableCell>
                   <TableCell>{member.phone}</TableCell>
