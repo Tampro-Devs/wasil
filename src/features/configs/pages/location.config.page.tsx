@@ -5,10 +5,10 @@ import DistrictsSection from "../components/districts.section";
 import WardsSection from "../components/wards.section";
 import StreetsSection from "../components/streets.section";
 import { Plus } from "lucide-react";
-import { RegionForm } from "../forms/region.form";
-import { DistrictForm } from "../forms/district.form";
-import { WardForm } from "../forms/ward.form";
-import { StreetForm } from "../forms/street.form";
+import { RegionForm } from "../components/forms/region.form";
+import { DistrictForm } from "../components/forms/district.form";
+import { WardForm } from "../components/forms/ward.form";
+import { StreetForm } from "../components/forms/street.form";
 import {
   AppContentBody,
   AppContentContainer,
