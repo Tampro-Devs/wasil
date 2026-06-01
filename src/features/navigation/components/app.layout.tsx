@@ -8,11 +8,11 @@ import { PageHeaderProvider } from "../context/page.header.provider";
 export default function AppLayout() {
   return (
     <SidebarProvider>
-      <div className="h-screen flex overflow-hidden">
+      <div className="flex h-screen overflow-hidden">
         <AppSidebar />
         <div className="flex flex-1 flex-col">
           <AppNavbar />
-          <main className="pt-5 mx-5 overflow-y-auto">
+          <main className="pt-5 ms-5 overflow-y-auto">
             <PageHeaderProvider>
               <PageTitle />
               <Outlet />

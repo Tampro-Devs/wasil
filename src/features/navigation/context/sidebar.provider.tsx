@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useMediaQuery } from "../../../shared/hooks/use.mediaquery";
 
 type SidebarContextType = {
   // state: "expanded" | "collapsed";
@@ -9,7 +10,13 @@ type SidebarContextType = {
 const SidebarContext = createContext<SidebarContextType | null>(null);
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  const [isOpen, setIsOpen] = useState(isDesktop);
+
+  useEffect(() => {
+    setIsOpen(isDesktop);
+  }, [isDesktop]);
 
   const toggleSidebar = () => {
     setIsOpen((prev) => !prev);
