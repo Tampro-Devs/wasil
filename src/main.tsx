@@ -5,11 +5,11 @@ import WasilApp from "./App.tsx";
 import { HashRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    {/* <BrowserRouter> */}
-    <HashRouter>
+  // {/* <BrowserRouter> */}
+  <HashRouter>
+    <StrictMode>
       <WasilApp />
-    </HashRouter>
-    {/* </BrowserRouter> */}
-  </StrictMode>,
+    </StrictMode>
+  </HashRouter>,
+  // {/* </BrowserRouter> */}
 );
