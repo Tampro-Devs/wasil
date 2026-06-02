@@ -51,7 +51,7 @@ export default function MemberRegistrationForm() {
           <DatePicker<MemberRegisterFormValues>
             label="Date of birth"
             name="dob"
-            className="mb-3 w-96"
+            className="w-96"
           />
         </div>
         <div className="flex gap-5">

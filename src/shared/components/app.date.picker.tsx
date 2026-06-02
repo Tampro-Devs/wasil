@@ -185,7 +185,7 @@ export default function DatePicker<T extends FieldValues>({
           setOpen((o) => !o);
           setView("calendar");
         }}
-        className="flex items-center p-2 rounded-xl border border-slate-300 bg-slate-300/30 focus:outline-none focus:ring-2 focus:ring-blue-900/50 transition-all text-sm cursor-pointer w-full"
+        className="mb-3 flex items-center p-2 rounded-xl border border-slate-300 bg-slate-300/30 focus:outline-none focus:ring-2 focus:ring-blue-900/50 transition-all text-sm cursor-pointer w-full"
       >
         <span className={selected ? "text-gray-800" : "text-gray-400"}>
           {selected ? formatDate(selected) : placeholder}
