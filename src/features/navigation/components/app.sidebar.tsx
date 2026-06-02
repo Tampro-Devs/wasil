@@ -2,6 +2,7 @@ import { navGroups } from "..";
 import { NavLink } from "react-router-dom";
 import { useSidebar } from "../context/sidebar.provider";
 import { useMediaQuery } from "../../../shared/hooks/use.mediaquery";
+import { X } from "lucide-react";
 
 export default function AppSidebar() {
   const isSmallDevice = useMediaQuery("(max-width: 767px)");
@@ -17,15 +18,18 @@ export default function AppSidebar() {
       <aside
         className={`fixed top-0 left-0 z-30 md:relative md:translate-x-0 bg-gray-50
           border-r border-r-gray-400/30 h-full p-3 transition-all duration-300 ease-in-out overflow-y-auto flex-none
-         ${isOpen ? "w-52 md:w-72 translate-x-0" : "w-20 -translate-x-full"}`}
+         ${isOpen ? "w-64 md:w-72 translate-x-0" : "w-20 -translate-x-full"}`}
       >
         <div className="flex items-center gap-1 mb-10">
-          <div className="bg-white p-1 rounded-full">
-            <img src="/images/logo.png" className="size-9" alt="" />
+          <div className="flex-1 flex items-center-safe gap-1">
+            <div className="bg-white p-1 rounded-full">
+              <img src="/images/logo.png" className="size-9" alt="" />
+            </div>
+            <span className="font-bold text-3xl text-blue-950">
+              {isOpen && "Wasil"}
+            </span>
           </div>
-          <span className="font-bold text-3xl text-blue-950">
-            {isOpen && "Wasil"}
-          </span>
+          {isSmallDevice && <X onClick={toggleSidebar} />}
         </div>
         {navGroups.map((group, index) => (
           <div className={`mb-3 w-full`} key={index}>
