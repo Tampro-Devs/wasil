@@ -17,7 +17,7 @@ export function TableWrapper({
     <div
       data-slot="table-container"
       className={cn(
-        "w-full overflow-x-auto bg-white/80 rounded-lg p-3",
+        "w-full overflow-hidden bg-white/80 rounded-lg p-3",
         className,
       )}
       {...props}
@@ -39,11 +39,16 @@ export function TableWrapper({
 }
 export function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
-    <table
-      data-slot="table"
-      className={cn("w-full text-sm bg-slate-400/10 rounded-lg", className)}
-      {...props}
-    />
+    <div className="overflow-auto w-full h-full">
+      <table
+        data-slot="table"
+        className={cn(
+          "min-w-full overflow-auto text-sm bg-slate-400/10 rounded-lg",
+          className,
+        )}
+        {...props}
+      />
+    </div>
   );
 }
 
@@ -54,7 +59,7 @@ export function TableHeader({
   return (
     <thead
       data-slot="table-header"
-      className={cn("bg-slate-300/30 rounded-t-lg", className)}
+      className={cn("w-full bg-slate-300/30 rounded-t-lg", className)}
       {...props}
     />
   );
@@ -66,7 +71,7 @@ export function TableFooter({
   return (
     <tfoot
       data-slot="table-footer"
-      className={cn("border-t font-medium", className)}
+      className={cn("w-full border-t font-medium", className)}
       {...props}
     />
   );
@@ -79,7 +84,7 @@ export function TableBody({
   return (
     <tbody
       data-slot="table-body"
-      className={cn("[&_tr:last-child]:border-0", className)}
+      className={cn("w-full [&_tr:last-child]:border-0", className)}
       {...props}
     />
   );
@@ -103,7 +108,7 @@ export function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "hover:bg-slate-300/20 p-2 transition-colors duration-300 border-b border-b-slate-300/50",
+        "w-full hover:bg-slate-300/20 p-2 transition-colors duration-300 border-b border-b-slate-300/50",
         className,
       )}
       {...props}

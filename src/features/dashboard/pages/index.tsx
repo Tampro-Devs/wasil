@@ -12,9 +12,12 @@ export default function DashboardPage() {
   setPageHeader("Overview");
 
   return (
-    <div className="mt-3 flex gap-5">
-      <div className="flex-2 flex flex-col gap-5">
-        <div className="grid grid-cols-3 gap-5">
+    <div className="mt-3 flex flex-col xl:flex-row gap-5">
+      <div className="lg:hidden">
+        <DashboardFilter />
+      </div>
+      <div className="md:flex-2 flex flex-col gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
           <StatCard
             title="Member Acquisition"
             statValue={100}
@@ -32,7 +35,9 @@ export default function DashboardPage() {
       </div>
       <div className="flex-1">
         <div className="flex flex-col gap-5">
-          <DashboardFilter />
+          <div className="hidden lg:block">
+            <DashboardFilter />
+          </div>
           <DashboardEvents />
         </div>
       </div>
