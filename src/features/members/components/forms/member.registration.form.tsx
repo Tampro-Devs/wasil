@@ -7,8 +7,8 @@ import {
 } from "../../schema/member.register.for.schema";
 import type { SubmitHandler } from "react-hook-form";
 import {
-  AppCheckboxField,
   AppSelectField,
+  AppCheckboxField,
   AppTextField,
 } from "../../../../shared/components/app.form.fields";
 import DatePicker from "../../../../shared/components/app.date.picker";
