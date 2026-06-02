@@ -35,10 +35,14 @@ export default function MemberContributionSection() {
         <AppForm<MemberContributionFilterFormValues>
           schema={memberContributionFilterSchema}
           defaultValues={defaultMemberContributionFilterFormValues}
-          className="flex gap-5"
+          className="w-full flex gap-5"
           onSubmit={() => {}}
         >
-          <AppTextField name="receipt" placeholder="Receipt" className="w-96" />
+          <AppTextField
+            name="receipt"
+            placeholder="Receipt"
+            className="w-full sm:w-96"
+          />
           <AppSubmitButton label="Search" className="h-9" />
         </AppForm>
       </TableCaption>

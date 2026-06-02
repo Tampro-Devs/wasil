@@ -8,7 +8,7 @@ export default function BranchOnboardingPage({ branch }: { branch?: Branch }) {
   if (branch) {
   }
   return (
-    <AppContentContainer className="mt-3 w-96">
+    <AppContentContainer className="mt-3 w-full sm:w-96">
       <BranchOnboardForm />
     </AppContentContainer>
   );

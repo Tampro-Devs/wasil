@@ -65,7 +65,7 @@ export default function MemberPreviewPage() {
         </div>
       </AppContentHeader>
       <AppContentBody>
-        <div className="flex gap-5 mb-3">
+        <div className="flex flex-wrap gap-5 mb-3">
           <MemberResidence member={member} />
           <MemberContribution />
           <MemberEducation />
@@ -85,7 +85,7 @@ export default function MemberPreviewPage() {
             </div>
           ))}
         </div>
-        <div className="mt-3">{currentTab.component}</div>
+        <div className="mt-3 w-full">{currentTab.component}</div>
       </AppContentBody>
     </AppContentContainer>
   );
@@ -93,19 +93,19 @@ export default function MemberPreviewPage() {
 
 function MemberResidence({ member }: { member: Member }) {
   return (
-    <div className="flex flex-col border border-slate-300/30 p-2 rounded-sm">
+    <div className="w-full sm:flex-1 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
         <MapPinHouse size={18} />
         <span className="text-sm">Residence</span>
       </div>
       <div className="flex gap-3 my-1">
-        <div className="w-40 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
+        <div className="flex-1 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Region: </span>
           <span className="text-xs">
             {member.residence.street.ward.district.region.name}
           </span>
         </div>
-        <div className="w-40 flex border-b border-b-slate-300/50 gap-2 items-center">
+        <div className="flex-1 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">District: </span>
           <span className="text-xs">
             {member.residence.street.ward.district.name}
@@ -113,11 +113,11 @@ function MemberResidence({ member }: { member: Member }) {
         </div>
       </div>
       <div className="flex gap-3">
-        <div className="w-40 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
+        <div className="flex-1 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Ward: </span>
           <span className="text-xs">{member.residence.street.ward.name}</span>
         </div>
-        <div className="w-40 flex border-b border-b-slate-300/50 gap-2 items-center">
+        <div className="flex-1 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">Street: </span>
           <span className="text-xs">{member.residence.street.name}</span>
         </div>
@@ -132,7 +132,7 @@ function MemberResidence({ member }: { member: Member }) {
 
 function MemberContribution() {
   return (
-    <div className="w-80 flex flex-col border border-slate-300/30 p-2 rounded-sm">
+    <div className="w-full sm:flex-1 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
         <Banknote size={18} />
         <span className="text-sm">Contribution</span>
@@ -153,7 +153,7 @@ function MemberContribution() {
 
 function MemberEducation() {
   return (
-    <div className="w-80 flex flex-col border border-slate-300/30 p-2 rounded-sm">
+    <div className="w-full sm:flex-1 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
         <Banknote size={18} />
         <span className="text-sm">Education</span>

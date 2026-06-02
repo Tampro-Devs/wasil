@@ -40,7 +40,7 @@ export default function MembersMainPage() {
     <AppContentContainer>
       <AppContentBody>
         <AppForm<MemberFilterFormValues>
-          className="mb-5"
+          className="mb-5 w-full"
           schema={memberFilterSchema}
           defaultValues={defaultMemberFilterValues}
           onSubmit={() => {}}
@@ -52,7 +52,7 @@ export default function MembersMainPage() {
                 placeholder="Member Name"
               />
             </div>
-            <div className="flex gap-5">
+            <div className="grid grid-cols-2 md:flex gap-5">
               <div className="flex-1">
                 <AppSelectField<MemberFilterFormValues>
                   name="region"

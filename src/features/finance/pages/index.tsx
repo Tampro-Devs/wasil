@@ -39,39 +39,42 @@ export default function FinanceMainPage() {
           schema={financeFilterSchema}
           defaultValues={defaultFinanceFilterValues}
           onSubmit={() => {}}
-          className="my-3"
+          className="w-full my-3"
         >
-          <DatePicker<FinanceFilterFormValues> name="date" className="mb-3" />
-          <div className="flex gap-3">
+          <DatePicker<FinanceFilterFormValues>
+            name="date"
+            className="w-full mb-3"
+          />
+          <div className="w-full flex flex-col sm:flex-wrap sm:flex-row gap-3">
             <AppSelectField<FinanceFilterFormValues>
               name="source"
               placeholder="Select Source"
-              widthClass="w-60"
+              widthClass="w-full sm:flex-1 lg:w-60"
               options={financeSources}
             />
             <AppSelectField<FinanceFilterFormValues>
               name="region"
               placeholder="Select Region"
-              widthClass="w-60"
+              widthClass="w-full sm:flex-1 lg:w-60"
               options={regions}
             />
             <AppSelectField<FinanceFilterFormValues>
               name="district"
               placeholder="Select Districts"
-              widthClass="w-60"
+              widthClass="w-full sm:flex-1 lg:w-60"
               options={districts}
             />
             <AppSelectField<FinanceFilterFormValues>
               name="ward"
               placeholder="Select Wards"
-              widthClass="w-60"
+              widthClass="w-full sm:flex-1 lg:w-60"
               options={wards}
             />
             <AppSubmitButton label="Submit" className="h-10" />
           </div>
         </AppForm>
 
-        <div className="flex my-5 gap-5">
+        <div className="flex flex-wrap my-5 gap-5">
           <FinanceStatCard title="Total Revenue" statValue={3000000} />
           <FinanceStatCard
             title="Total Member Contribution"
@@ -115,7 +118,7 @@ function FinanceStatCard({
   statValue: number;
 }) {
   return (
-    <div className="bg-slate-300/30 p-3 rounded-xl w-48">
+    <div className="w-full sm:w-48 bg-slate-300/30 p-3 rounded-xl">
       <div className="flex flex-col gap-5 text-gray-600">
         <span className="text-xl">{shortenNumber(statValue)}</span>
         <span className="text-xs">{title}</span>

@@ -20,19 +20,21 @@ import { districtDummies } from "../types/district.type";
 
 export default function DistrictsSection() {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5">
       <AppForm<DistrictFormValues>
         schema={districtSchema}
         defaultValues={defaultDistrictValues}
         onSubmit={() => {}}
-        className="flex gap-5"
+        className="w-full flex gap-5"
       >
-        <AppSelectField
-          name=""
-          placeholder="Select Region"
-          widthClass="w-60"
-          options={regions}
-        />
+        <div className="flex-1">
+          <AppSelectField<DistrictFormValues>
+            name="region"
+            placeholder="Select Region"
+            widthClass="w-full sm:w-60"
+            options={regions}
+          />
+        </div>
       </AppForm>
 
       <TableWrapper

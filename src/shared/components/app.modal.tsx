@@ -46,7 +46,7 @@ export default function AppModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <div className={cn("bg-white rounded-xl min-w-md", className)}>
+                <div className={cn("bg-white rounded-xl w-md", className)}>
                   <Dialog.Panel className="w-full transform overflow-hidden rounded-xl p-6 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"

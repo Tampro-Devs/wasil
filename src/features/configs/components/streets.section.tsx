@@ -19,30 +19,38 @@ import { streetDummies } from "../types/street.type";
 
 export default function StreetsSection() {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5">
       <AppForm<StreetFormValues>
         schema={streetSchema}
         onSubmit={() => {}}
-        className="flex gap-5"
+        className="w-full flex-col sm:flex-row flex sm:gap-5"
       >
-        <AppSelectField
-          name=""
-          placeholder="Select Region"
-          widthClass="w-60"
-          options={regions}
-        />
-        <AppSelectField
-          name=""
-          placeholder="Select Districts"
-          widthClass="w-60"
-          options={districts}
-        />
-        <AppSelectField
-          name=""
-          placeholder="Select Wards"
-          widthClass="w-60"
-          options={wards}
-        />
+        <div className="sm:grid sm:grid-cols-2 sm:gap-2 md:flex md:flex-wrap">
+          <div className="flex-1">
+            <AppSelectField
+              name=""
+              placeholder="Select Region"
+              widthClass="w-full sm:w-60 md:w-46"
+              options={regions}
+            />
+          </div>
+          <div className="flex-1">
+            <AppSelectField
+              name=""
+              placeholder="Select Districts"
+              widthClass="w-full sm:w-60 md:w-46"
+              options={districts}
+            />
+          </div>
+          <div className="flex-1">
+            <AppSelectField
+              name=""
+              placeholder="Select Wards"
+              widthClass="w-full sm:w-60 md:w-46"
+              options={wards}
+            />
+          </div>
+        </div>
       </AppForm>
 
       <TableWrapper

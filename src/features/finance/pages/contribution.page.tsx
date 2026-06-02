@@ -41,17 +41,17 @@ export default function ContributionMainPage() {
           schema={contributionFilterSchema}
           defaultValues={defaultContributionFilterValues}
           onSubmit={() => {}}
-          className="my-3"
+          className="w-full my-3"
         >
-          <div className="flex gap-3 w-full">
+          <div className="flex flex-col sm:flex-row sm:gap-3 w-full">
             <AppTextField<ContributionFilterFormValues>
               name="receipt"
               placeholder="Receipt..."
-              className="w-60"
+              className="flex-1 w-full sm:w-60"
             />
             <DatePicker<ContributionFilterFormValues>
               name="date"
-              className="mb-3 w-60"
+              className="w-full sm:w-60"
             />
             <AppSubmitButton label="Submit" className="h-10" />
           </div>

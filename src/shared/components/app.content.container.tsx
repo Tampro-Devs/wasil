@@ -50,5 +50,10 @@ export function AppContentBody({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  return <div className={cn("flex flex-col", className)} {...props} />;
+  return (
+    <div
+      className={cn("flex flex-wrap lg:flex-col gap-2", className)}
+      {...props}
+    />
+  );
 }

@@ -89,11 +89,12 @@ export default function LocationsConfigPage() {
     }
   }
   return (
-    <div className="flex gap-5">
-      <AppContentContainer className="w-44 h-fit">
-        <AppContentBody>
+    <div className="flex flex-col lg:flex-row gap-5">
+      <AppContentContainer className="w-full lg:w-44 h-fit">
+        <AppContentBody className="items-center-safe justify-center-safe">
           {locationTags.map((tag, _) => (
             <SideLinkItem
+              className="w-28 text-center lg:w-full"
               key={tag.index}
               text={tag.text}
               isActive={tag.index == currentIndex}
@@ -117,7 +118,7 @@ export default function LocationsConfigPage() {
             </AppButton>
           }
         />
-        <AppContentBody>
+        <AppContentBody className="w-full">
           <RegionForm
             isOpen={isOpenRegionForm}
             setIsOpen={setIsOpenRegionForm}

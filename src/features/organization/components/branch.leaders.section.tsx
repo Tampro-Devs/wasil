@@ -22,10 +22,12 @@ export default function BranchLeadersSection() {
   return (
     <TableWrapper
       className="flex flex-col"
-      //   error={{
-      //     title: "No Branch Leaders Found",
-      //     message: "Click Plus button to add them",
-      //   }}
+      error={
+        branchLeaders && {
+          title: "No Branch Leaders Found",
+          message: "Click Plus button to add them",
+        }
+      }
     >
       <Table>
         <TableHeader>

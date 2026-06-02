@@ -22,10 +22,12 @@ export default function WardLeadersSection() {
   return (
     <TableWrapper
       className="flex flex-col"
-      //   error={{
-      //     title: "No Ward Leaders Found",
-      //     message: "Click Plus button to add them",
-      //   }}
+      error={
+        wardLeaders && {
+          title: "No Ward Leaders Found",
+          message: "Click Plus button to add them",
+        }
+      }
     >
       <Table>
         <TableHeader>

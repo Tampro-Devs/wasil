@@ -28,7 +28,7 @@ export function StreetForm({ isOpen, setIsOpen }: StreetFormProps) {
         schema={streetSchema}
         defaultValues={defaultStreetValues}
         onSubmit={onSubmit}
-        className="mt-2 flex flex-col gap-5"
+        className="w-full mt-2 flex flex-col gap-5"
       >
         <AppSelectField<StreetFormValues>
           name="region"

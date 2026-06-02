@@ -9,8 +9,8 @@ export default function MemberRegistrationPage() {
   setPageHeader("Register Member", "Back To Members");
 
   return (
-    <AppContentContainer>
-      <AppContentBody>
+    <AppContentContainer className="w-full lg:w-2/3">
+      <AppContentBody className="w-full">
         <MemberRegistrationForm />
       </AppContentBody>
     </AppContentContainer>

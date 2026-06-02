@@ -28,7 +28,7 @@ export function DistrictForm({ isOpen, setIsOpen }: DistrictFormProps) {
         schema={districtSchema}
         defaultValues={defaultDistrictValues}
         onSubmit={onSubmit}
-        className="mt-2 flex flex-col gap-5"
+        className="w-full mt-2 flex flex-col gap-5"
       >
         <AppSelectField<DistrictFormValues>
           label="Region"

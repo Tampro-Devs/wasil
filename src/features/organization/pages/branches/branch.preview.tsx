@@ -59,7 +59,7 @@ export default function BranchPreview() {
         </AppButton>
       </AppContentHeader>
       <AppContentBody className="mt-3">
-        <div className="grid grid-cols-2 gap-5 mb-5">
+        <div className="flex flex-wrap sm:flex-row gap-3 mb-5">
           <LeaderContainer leader={branch?.leader} />
           <LeaderContainer leader={branch?.assistant} />
         </div>
@@ -109,9 +109,9 @@ export default function BranchPreview() {
   );
 }
 
-function LeaderContainer({ leader }: { leader: Leader }) {
+function LeaderContainer({ leader }: { leader?: Leader }) {
   return (
-    <div className="flex flex-col border border-slate-300 px-3 pt-3 rounded-md">
+    <div className="w-full sm:flex-1 flex flex-col border border-slate-300 px-3 pt-3 rounded-md">
       <div className="flex text-slate-700 pb-3 border-b border-b-slate-300">
         <CircleUser />
         <div className="flex flex-col">
@@ -119,15 +119,15 @@ function LeaderContainer({ leader }: { leader: Leader }) {
           <span className="text-sm">{leader?.member.name}</span>
         </div>
       </div>
-      <div className="grid grid-cols-2 my-2">
-        <div className="flex p-3 text-slate-700 gap-1  border-r border-r-slate-300">
+      <div className="grid grid-cols-2 my-2 gap-1">
+        <div className="flex py-3 text-slate-700 gap-1  border-r border-r-slate-300">
           <Phone size={18} />
           <div className="flex flex-col">
             <span className="font-bold text-sm">Phone</span>
             <span className="text-xs">{leader?.member.phone}</span>
           </div>
         </div>
-        <div className="flex p-3 text-slate-700 gap-1  border-r border-r-slate-300">
+        <div className="flex py-3 text-slate-700 gap-1">
           <Mail size={18} />
           <div className="flex flex-col">
             <span className="font-bold text-sm">Email</span>

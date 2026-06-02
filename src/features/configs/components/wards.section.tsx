@@ -20,25 +20,31 @@ import { wardDummies } from "../types/ward.type";
 
 export default function WardsSection() {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5">
       <AppForm<WardFormValues>
         schema={wardSchema}
         defaultValues={defaultWardValues}
         onSubmit={() => {}}
-        className="flex gap-5"
+        className="w-full flex-col flex gap-5"
       >
-        <AppSelectField
-          name=""
-          placeholder="Select Region"
-          widthClass="w-60"
-          options={regions}
-        />
-        <AppSelectField
-          name=""
-          placeholder="Select Districts"
-          widthClass="w-60"
-          options={districts}
-        />
+        <div className="sm:grid sm:grid-cols-2 md:flex md:flex-wrap">
+          <div className="flex-1">
+            <AppSelectField
+              name=""
+              placeholder="Select Region"
+              widthClass="w-full sm:w-60 md:w-46"
+              options={regions}
+            />
+          </div>
+          <div className="flex-1">
+            <AppSelectField
+              name=""
+              placeholder="Select Districts"
+              widthClass="w-full sm:w-60 md:w-46"
+              options={districts}
+            />
+          </div>
+        </div>
       </AppForm>
 
       <TableWrapper

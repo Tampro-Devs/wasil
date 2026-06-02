@@ -29,8 +29,9 @@ export default function MemberRegistrationForm() {
       schema={memberRegisterFormSchema}
       defaultValues={defaultMemberRegisterFormValues}
       onSubmit={onSubmit}
+      className="w-full"
     >
-      <div className="flex flex-col mb-3">
+      <div className="w-full flex flex-col mb-3">
         <div className="flex items-center gap-1 mb-2">
           <span className="font-bold text-sm">Primary Details</span>
           <div className="flex-1 border-b-2 border-b-slate-300"></div>
@@ -38,36 +39,45 @@ export default function MemberRegistrationForm() {
         <AppTextField<MemberRegisterFormValues>
           name="name"
           label="Name"
-          className="w-9/12"
+          className="w-full md:w-9/12"
         />
-        <div className="flex items-center gap-5">
-          <AppSelectField<MemberRegisterFormValues>
-            label="Gender"
-            name="gender"
-            placeholder="Select..."
-            widthClass="w-96"
-            options={genders}
-          />
-          <DatePicker<MemberRegisterFormValues>
-            label="Date of birth"
-            name="dob"
-            className="w-96"
-          />
+        <div className="flex flex-col sm:flex-row sm:gap-2">
+          <div className="flex-1">
+            <AppSelectField<MemberRegisterFormValues>
+              label="Gender"
+              name="gender"
+              placeholder="Select..."
+              widthClass="w-full"
+              options={genders}
+            />
+          </div>
+
+          <div className="flex-1">
+            <DatePicker<MemberRegisterFormValues>
+              label="Date of birth"
+              name="dob"
+              className="w-full"
+            />
+          </div>
         </div>
-        <div className="flex gap-5">
-          <AppTextField<MemberRegisterFormValues>
-            name="phone"
-            label="Phone"
-            placeholder="+2550000000"
-            className="w-96"
-          />
-          <AppTextField<MemberRegisterFormValues>
-            type="email"
-            name="email"
-            label="Email"
-            placeholder="member@email.com"
-            className="w-96"
-          />
+        <div className="flex flex-col sm:flex-row sm:gap-2">
+          <div className="flex-1">
+            <AppTextField<MemberRegisterFormValues>
+              name="phone"
+              label="Phone"
+              placeholder="+2550000000"
+              className="w-full"
+            />
+          </div>
+          <div className="flex-1">
+            <AppTextField<MemberRegisterFormValues>
+              type="email"
+              name="email"
+              label="Email"
+              placeholder="member@email.com"
+              className="w-full"
+            />
+          </div>
         </div>
       </div>
       <div className="flex flex-col mb-3">
@@ -80,42 +90,50 @@ export default function MemberRegistrationForm() {
           name="residenceCategory"
           label="This is the permanent residence"
         />
-        <div className="flex gap-5">
-          <AppSelectField<MemberRegisterFormValues>
-            name="regionId"
-            label="Region"
-            placeholder="Select..."
-            widthClass="w-96"
-            options={regions}
-          />
-          <AppSelectField<MemberRegisterFormValues>
-            name="districtId"
-            label="District"
-            placeholder="Select..."
-            widthClass="w-96"
-            options={districts}
-          />
+        <div className="flex flex-col sm:flex-row sm:gap-2">
+          <div className="flex-1">
+            <AppSelectField<MemberRegisterFormValues>
+              name="regionId"
+              label="Region"
+              placeholder="Select..."
+              widthClass="w-full"
+              options={regions}
+            />
+          </div>
+          <div className="flex-1">
+            <AppSelectField<MemberRegisterFormValues>
+              name="districtId"
+              label="District"
+              placeholder="Select..."
+              widthClass="w-full"
+              options={districts}
+            />
+          </div>
         </div>
-        <div className="flex gap-5">
-          <AppSelectField<MemberRegisterFormValues>
-            name="wardId"
-            label="Ward"
-            placeholder="Select..."
-            widthClass="w-96"
-            options={wards}
-          />
-          <AppSelectField<MemberRegisterFormValues>
-            name="streetId"
-            label="Street"
-            placeholder="Select..."
-            widthClass="w-96"
-            options={streets}
-          />
+        <div className="flex flex-col sm:flex-row sm:gap-2">
+          <div className="flex-1">
+            <AppSelectField<MemberRegisterFormValues>
+              name="wardId"
+              label="Ward"
+              placeholder="Select..."
+              widthClass="w-full"
+              options={wards}
+            />
+          </div>
+          <div className="flex-1">
+            <AppSelectField<MemberRegisterFormValues>
+              name="streetId"
+              label="Street"
+              placeholder="Select..."
+              widthClass="w-full"
+              options={streets}
+            />
+          </div>
         </div>
         <AppTextField<MemberRegisterFormValues>
           name="houseNo"
           label="House no."
-          className="w-9/12"
+          className="w-full sm:w-1/2"
         />
       </div>
 
@@ -124,33 +142,41 @@ export default function MemberRegistrationForm() {
           <span className="font-bold text-sm">Professional Details</span>
           <div className="flex-1 border-b-2 border-b-slate-300"></div>
         </div>
-        <div className="flex gap-5">
-          <AppSelectField<MemberRegisterFormValues>
-            name="educationLevel"
-            label="Highest Level of Education"
-            placeholder="Select..."
-            widthClass="w-96"
-            options={educationLevels}
-          />
-          <AppTextField<MemberRegisterFormValues>
-            name="profession"
-            label="Proffesion"
-            placeholder="e.g. Bsc. with Education"
-            className="w-96"
-          />
+        <div className="flex flex-col sm:flex-row sm:gap-2">
+          <div className="flex-1">
+            <AppSelectField<MemberRegisterFormValues>
+              name="educationLevel"
+              label="Highest Level of Education"
+              placeholder="Select..."
+              widthClass="w-full"
+              options={educationLevels}
+            />
+          </div>
+          <div className="flex-1">
+            <AppTextField<MemberRegisterFormValues>
+              name="profession"
+              label="Proffesion"
+              placeholder="e.g. Bsc. with Education"
+              className="w-full"
+            />
+          </div>
         </div>
-        <div className="flex gap-5">
-          <AppTextField<MemberRegisterFormValues>
-            name="title"
-            label="Work Title"
-            placeholder="e.g. Manager, HoD"
-            className="w-96"
-          />
-          <AppTextField<MemberRegisterFormValues>
-            name="institution"
-            label="Institution"
-            className="w-96"
-          />
+        <div className="flex flex-col sm:flex-row sm:gap-2">
+          <div className="flex-1">
+            <AppTextField<MemberRegisterFormValues>
+              name="title"
+              label="Work Title"
+              placeholder="e.g. Manager, HoD"
+              className="w-full"
+            />
+          </div>
+          <div className="flex-1">
+            <AppTextField<MemberRegisterFormValues>
+              name="institution"
+              label="Institution"
+              className="w-full"
+            />
+          </div>
         </div>
       </div>
       <AppSubmitButton label="Submit" />
