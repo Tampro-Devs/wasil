@@ -1,8 +1,5 @@
 import { streetDummies, type Street } from "../../configs/types/street.type";
-import {
-  branchDummies,
-  type Branch,
-} from "../../organization/types/branch.type";
+import { type Branch } from "../../organization/types/branch.type";
 
 interface MemberResidence {
   houseNo: number;

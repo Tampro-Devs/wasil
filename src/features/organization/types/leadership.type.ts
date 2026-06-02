@@ -1,4 +1,4 @@
-import { membersDummies, type Member } from "../../members/types/member.type";
+import { type Member } from "../../members/types/member.type";
 
 export interface Leadership {
   name: string;

@@ -60,7 +60,7 @@ function UserDropDown({ isOpen }: { isOpen: boolean }) {
   );
 }
 
-function DropDownItem({ title, link, ItemIcon }: DropDownItemContent) {
+function DropDownItem({ title, ItemIcon }: DropDownItemContent) {
   return (
     <button className="cursor-pointer rounded-sm w-full my-1 py-2 px-1 border-b border-b-gray-400/30 transition-colors hover:bg-slate-300 hover:border-b-gray-400/10">
       <div className="flex items-center gap-1 text-gray-700">
