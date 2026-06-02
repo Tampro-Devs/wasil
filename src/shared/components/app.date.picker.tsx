@@ -64,7 +64,6 @@ export default function DatePicker<T extends FieldValues>({
   name,
   label,
   value,
-  rules,
   onChange,
   placeholder = "Select a date",
   minYear = 1900,
