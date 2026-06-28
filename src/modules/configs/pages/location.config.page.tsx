@@ -29,7 +29,6 @@ export default function LocationsConfigPage() {
   const locationTags = [
     {
       index: 0,
-
       text: "Regions",
       section: <RegionsSection />,
     },
