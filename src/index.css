@@ -82,20 +82,20 @@
 ========================= */
 
 @font-face {
-  font-family: "tajawal";
+  font-family: "quicksand";
   src: url("/fonts/Quicksand-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @theme {
-  --font-tajawal: "tajawal", sans-serif;
+  --font-quicksand: "quicksand", sans-serif;
 }
 
 @layer base {
   body {
     @apply bg-[var(--background)] text-[var(--text)];
-    font-family: var(--font-tajawal);
+    font-family: var(--font-quicksand);
   }
 }
 
