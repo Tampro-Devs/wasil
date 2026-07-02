@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { LoadingContent } from "./shared/components/progress";
-import AuthLoader from "./modules/auth/components/auth.loader";
 import { Route, Routes } from "react-router-dom";
 import { router } from "./modules/router";
 import NotFound from "./shared/components/not-found";
@@ -21,12 +20,10 @@ function renderRoutes(routeList: typeof router) {
 function WasilApp() {
   return (
     <Suspense fallback={<LoadingContent />}>
-      <AuthLoader>
-        <Routes>
-          {renderRoutes(router)}
-          <Route path="*" element={<NotFound isContent={false} />} />
-        </Routes>
-      </AuthLoader>
+      <Routes>
+        {renderRoutes(router)}
+        <Route path="*" element={<NotFound isContent={false} />} />
+      </Routes>
     </Suspense>
   );
 }
