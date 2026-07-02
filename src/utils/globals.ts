@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export function shortenNumber(value: number): string {
   if (value >= 1_000_000_000) {
     return `${(value / 1_000_000_000).toFixed(1).replace(".0", "")}B`;
@@ -48,4 +50,14 @@ export function calculateAge(dateString: string): number {
   let age = today.getFullYear() - birth.getFullYear();
 
   return age;
+}
+
+export function triggerToast(message: string, category: "success" | "error") {
+  const classNames = "text-xs p-0";
+
+  if (category === "success") {
+    toast.success(message, { className: classNames });
+  } else {
+    toast.error(message, { className: classNames });
+  }
 }

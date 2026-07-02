@@ -4,6 +4,7 @@ import { SidebarProvider } from "../context/sidebar.provider";
 import AppNavbar from "./app.navbar";
 import PageTitle from "./page.header";
 import { PageHeaderProvider } from "../context/page.header.provider";
+import { Bounce, ToastContainer } from "react-toastify";
 
 export default function AppLayout() {
   return (
@@ -20,6 +21,19 @@ export default function AppLayout() {
           </main>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </SidebarProvider>
   );
 }
