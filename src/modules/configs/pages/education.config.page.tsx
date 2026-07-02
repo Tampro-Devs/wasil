@@ -19,8 +19,14 @@ import {
 import { educationLevelsDummies } from "../types/education.type";
 import { useMemo } from "react";
 import { shuffle } from "../../../utils/globals";
+import { useQuery } from "@tanstack/react-query";
+import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";
 
 export default function EducationConfigPage() {
+  // const { data: educations, isLoading } = useQuery({
+  //   queryKey: apiQueryKeys.educationLevels,
+  //   queryFn: () => {},
+  // });
   const educations = useMemo(() => shuffle(educationLevelsDummies), []);
 
   setPageHeader("Education");
@@ -52,7 +58,7 @@ export default function EducationConfigPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {educations.map((level, index) => (
+              {educations?.map((level, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{level.title}</TableCell>

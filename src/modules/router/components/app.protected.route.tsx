@@ -1,6 +1,7 @@
 import type React from "react";
 import { ROUTE_PATHS } from "../route.paths";
 import { Navigate } from "react-router-dom";
+import { useAppSelector } from "../../../shared/store";
 
 type AppProtectedRouteProps = {
   children: React.ReactNode;
@@ -11,9 +12,11 @@ export function AppProtectedRoute({
   children,
   redirectTo = ROUTE_PATHS.auth.signIn,
 }: AppProtectedRouteProps) {
-  const isAuthenticated = true;
+  const isSessionExpired = useAppSelector(
+    (state) => state.authSession.isSessionExpired,
+  );
 
-  if (!isAuthenticated) {
+  if (isSessionExpired) {
     return <Navigate to={redirectTo} replace={true} />;
   }
   return <>{children}</>;
