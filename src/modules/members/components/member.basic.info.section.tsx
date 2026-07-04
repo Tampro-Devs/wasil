@@ -1,9 +1,6 @@
-import {
-  BriefcaseBusiness,
-  Building2,
-  Toolbox,
-  type LucideIcon,
-} from "lucide-react";
+import type { IconType } from "react-icons/lib";
+import { LuBriefcaseBusiness, LuBuilding2 } from "react-icons/lu";
+import { PiToolbox } from "react-icons/pi";
 
 export default function MemberBasicInfoSection() {
   return (
@@ -12,17 +9,17 @@ export default function MemberBasicInfoSection() {
         <InfoContainer
           title="Proffession"
           content="Teacher"
-          Icon={BriefcaseBusiness}
+          Icon={LuBriefcaseBusiness}
         />
         <InfoContainer
           title="Work Title"
           content="Head of School"
-          Icon={Toolbox}
+          Icon={PiToolbox}
         />
         <InfoContainer
           title="Institution"
           content="Morogoro Secondary School"
-          Icon={Building2}
+          Icon={LuBuilding2}
         />
         <div className="flex flex-col py-1 border-t border-t-slate-300">
           <span className="mb-1 font-bold">Member's Opinion</span>
@@ -48,7 +45,7 @@ function InfoContainer({
 }: {
   title: string;
   content: string;
-  Icon: LucideIcon;
+  Icon: IconType;
 }) {
   return (
     <div className="flex items-center gap-1">
