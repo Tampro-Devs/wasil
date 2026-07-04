@@ -3,8 +3,9 @@ import React, { Fragment } from "react";
 import { cn } from "../../utils/cn";
 
 interface ModalProps extends React.HTMLAttributes<HTMLDialogElement> {
-  title: string;
+  title?: string;
   isOpen: boolean;
+  padding?: string;
   children?: React.ReactNode;
   setIsOpen: (value: boolean) => void;
 }
@@ -14,6 +15,7 @@ export default function AppModal({
   isOpen,
   setIsOpen,
   className,
+  padding = "p-6",
 }: ModalProps) {
   function closeModal() {
     setIsOpen(false);
@@ -46,8 +48,13 @@ export default function AppModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <div className={cn("bg-white rounded-xl w-md", className)}>
-                  <Dialog.Panel className="w-full transform overflow-hidden rounded-xl p-6 text-left align-middle shadow-xl transition-all">
+                <div className={cn("bg-white rounded-xl w-fit", className)}>
+                  <Dialog.Panel
+                    className={cn(
+                      "w-full transform overflow-hidden rounded-xl text-left align-middle shadow-xl transition-all",
+                      padding,
+                    )}
+                  >
                     <Dialog.Title
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900"
