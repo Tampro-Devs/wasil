@@ -6,7 +6,14 @@ import PageTitle from "./page.header";
 import { PageHeaderProvider } from "../context/page.header.provider";
 import { Bounce, ToastContainer } from "react-toastify";
 
+import { useAppSelector } from "../../../shared/store";
+import SessionExpireDialog from "../../../shared/components/session.expired.dialog";
+
 export default function AppLayout() {
+  const isSessionExpired = useAppSelector(
+    (state) => state.authSession.isSessionExpired,
+  );
+
   return (
     <SidebarProvider>
       <div className="flex h-screen overflow-y-hidden">
@@ -34,6 +41,7 @@ export default function AppLayout() {
         theme="light"
         transition={Bounce}
       />
+      <SessionExpireDialog isOpened={isSessionExpired} />
     </SidebarProvider>
   );
 }

@@ -12,11 +12,9 @@ export function AppProtectedRoute({
   children,
   redirectTo = ROUTE_PATHS.auth.signIn,
 }: AppProtectedRouteProps) {
-  const isSessionExpired = useAppSelector(
-    (state) => state.authSession.isSessionExpired,
-  );
+  const user = useAppSelector((state) => state.authSession.user);
 
-  if (isSessionExpired) {
+  if (!user) {
     return <Navigate to={redirectTo} replace={true} />;
   }
   return <>{children}</>;

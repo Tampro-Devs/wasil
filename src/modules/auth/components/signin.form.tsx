@@ -1,4 +1,4 @@
-import { type SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import {
   defaultSignInValues,
   signinSchema,
@@ -6,8 +6,6 @@ import {
 } from "../schema/signing.form.schema";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "../../router/route.paths";
-import { AppForm } from "../../../shared/components/app.form";
-import { AppTextField } from "../../../shared/components/app.form.fields";
 import { AppSubmitButton } from "../../../shared/components/app.button";
 import { useMutation } from "@tanstack/react-query";
 import { authenticate } from "../services/api.services";
@@ -15,10 +13,18 @@ import { triggerToast } from "../../../utils/globals";
 import type { User } from "../types";
 import { useDispatch } from "react-redux";
 import { signIn } from "../services/reducers/auth.session.slice";
+import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
+import { AppFormProvider } from "../../../shared/components/form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function SignInForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const form = useForm<SignInFormValues>({
+    resolver: zodResolver(signinSchema),
+    defaultValues: defaultSignInValues,
+  });
 
   const signInMutation = useMutation({
     mutationFn: authenticate,
@@ -45,24 +51,24 @@ export default function SignInForm() {
   };
 
   return (
-    <AppForm<SignInFormValues>
-      schema={signinSchema}
-      defaultValues={defaultSignInValues}
-      onSubmit={onSubmit}
-    >
-      <AppTextField<SignInFormValues>
-        type="email"
-        name="email"
-        label="Email"
-        placeholder="Enter your login email"
-      />
-      <AppTextField<SignInFormValues>
-        type="password"
-        name="password"
-        label="Password"
-        placeholder="*************"
-      />
-      <AppSubmitButton<SignInFormValues> label="Sign In" />
-    </AppForm>
+    <AppFormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <AppTextField
+          control={form.control}
+          type="email"
+          name="email"
+          label="Email"
+          placeholder="Enter your login email"
+        />
+        <AppTextField
+          control={form.control}
+          type="password"
+          name="password"
+          label="Password"
+          placeholder="*************"
+        />
+        <AppSubmitButton label="Sign In" />
+      </form>
+    </AppFormProvider>
   );
 }

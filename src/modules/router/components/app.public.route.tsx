@@ -12,10 +12,9 @@ export function AppPublicRoute({
   children,
   redirectTo = ROUTE_PATHS.dashboard.root,
 }: AppProtectedRouteProps) {
-  const isSessionExpired = useAppSelector(
-    (state) => state.authSession.isSessionExpired,
-  );
-  if (!isSessionExpired) {
+  const user = useAppSelector((state) => state.authSession.user);
+
+  if (user) {
     return <Navigate to={redirectTo} replace={true} />;
   }
   return <>{children}</>;

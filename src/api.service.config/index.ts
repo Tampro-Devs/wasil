@@ -4,6 +4,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 import { store } from "../shared/store";
+import { setIsSessionExpired } from "../modules/auth/services/reducers/auth.session.slice";
 
 const baseURL = import.meta.env.VITE_WASIL_BASE_URL;
 const apiService = axios.create();
@@ -28,10 +29,20 @@ async function ON_REQUEST_FULFILLED(config: InternalAxiosRequestConfig) {
 }
 
 function ON_REQUEST_REJECTED(error: AxiosError) {
+  const responseCode = error.response?.status;
+
+  if (responseCode == 401) {
+    store.dispatch(setIsSessionExpired(true));
+  }
   return Promise.reject(error);
 }
 
 async function ON_RESPONSE_REJECTED(error: AxiosError) {
+  const responseCode = error.response?.status;
+
+  if (responseCode == 401) {
+    store.dispatch(setIsSessionExpired(true));
+  }
   return Promise.reject(error);
 }
 
