@@ -61,3 +61,11 @@ export function triggerToast(message: string, category: "success" | "error") {
     toast.error(message, { className: classNames });
   }
 }
+
+export function toDate(value: unknown): Date | undefined {
+  if (!value) return undefined;
+  if (value instanceof Date && !isNaN(value.getTime())) return value;
+
+  const d = new Date(value as any);
+  return isNaN(d.getTime()) ? undefined : d;
+}
