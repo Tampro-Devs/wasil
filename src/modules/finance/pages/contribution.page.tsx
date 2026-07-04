@@ -7,9 +7,6 @@ import {
   AppContentHeader,
 } from "../../../shared/components/app.content.container";
 import { setPageHeader } from "../../../utils/general_hooks";
-import DatePicker from "../../../shared/components/app.date.picker";
-import { AppForm } from "../../../shared/components/app.form";
-import { AppTextField } from "../../../shared/components/app.form.fields";
 import {
   contributionFilterSchema,
   defaultContributionFilterValues,
@@ -25,11 +22,25 @@ import {
   TableRow,
   TableWrapper,
 } from "../../../shared/components/table";
-import { Plus } from "lucide-react";
 import { convertStringToDate, formatMoney } from "../../../utils/globals";
+import { LuPlus } from "react-icons/lu";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
+import { AppDatePicker } from "../../../shared/components/form/fields/date.picker/app.date.picker";
+import { AppFormProvider } from "../../../shared/components/form";
 
 export default function ContributionMainPage() {
   setPageHeader("Contribution");
+  const form = useForm<ContributionFilterFormValues>({
+    resolver: zodResolver(contributionFilterSchema),
+    defaultValues: defaultContributionFilterValues,
+  });
+
+  async function onSubmit(data: ContributionFilterFormValues) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("FORM DATA::", data);
+  }
   return (
     <AppContentContainer>
       <AppContentHeader
@@ -37,32 +48,31 @@ export default function ContributionMainPage() {
       // actions={
       // }
       >
-        <AppForm<ContributionFilterFormValues>
-          schema={contributionFilterSchema}
-          defaultValues={defaultContributionFilterValues}
-          onSubmit={() => {}}
-          className="w-full my-3"
-        >
-          <div className="flex flex-col sm:flex-row sm:gap-3 w-full">
-            <AppTextField<ContributionFilterFormValues>
-              name="receipt"
-              placeholder="Receipt..."
-              className="flex-1 w-full sm:w-60"
-            />
-            <DatePicker<ContributionFilterFormValues>
-              name="date"
-              className="w-full sm:w-60"
-            />
-            <AppSubmitButton label="Submit" className="h-10" />
-          </div>
-        </AppForm>
+        <AppFormProvider {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full my-3">
+            <div className="flex flex-col sm:flex-row sm:gap-3 w-full">
+              <AppTextField
+                control={form.control}
+                name="receipt"
+                placeholder="Receipt..."
+                className="flex-1 w-full sm:w-60"
+              />
+              <AppDatePicker
+                control={form.control}
+                name="date"
+                className="w-full sm:w-60"
+              />
+              <AppSubmitButton label="Submit" className="h-10" />
+            </div>
+          </form>
+        </AppFormProvider>
       </AppContentHeader>
       <AppContentBody>
         <TableWrapper>
           <TableCaption className="flex justify-between mb-3">
             <span>My Contribution</span>
             <AppButton size="xs" variant="secondary" onClick={() => {}}>
-              <Plus />
+              <LuPlus />
             </AppButton>
           </TableCaption>
           <Table>

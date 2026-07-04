@@ -1,11 +1,10 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { AppSubmitButton } from "../../../shared/components/app.button";
 import {
   AppContentBody,
   AppContentContainer,
 } from "../../../shared/components/app.content.container";
-import DatePicker from "../../../shared/components/app.date.picker";
-import { AppForm } from "../../../shared/components/app.form";
-import { AppSelectField } from "../../../shared/components/app.form.fields";
 import {
   Table,
   TableBody,
@@ -22,6 +21,7 @@ import {
   shortenNumber,
 } from "../../../utils/globals";
 import { regions, districts, wards } from "../../configs/data";
+
 import { membersDummies } from "../../members/types/member.type";
 import {
   defaultFinanceFilterValues,
@@ -29,50 +29,64 @@ import {
   type FinanceFilterFormValues,
 } from "../schema/finance.filter.form.schema";
 import { financeSources } from "../types/finance.source";
+import { AppDatePicker } from "../../../shared/components/form/fields/date.picker/app.date.picker";
+import { AppSelectField } from "../../../shared/components/form/fields/app.select.field";
+import { AppFormProvider } from "../../../shared/components/form";
 
 export default function FinanceMainPage() {
+  const form = useForm<FinanceFilterFormValues>({
+    resolver: zodResolver(financeFilterSchema),
+    defaultValues: defaultFinanceFilterValues,
+  });
+
+  async function onSubmit(data: FinanceFilterFormValues) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("FORM DATA::", data);
+  }
   setPageHeader("Finance");
   return (
     <AppContentContainer>
       <AppContentBody>
-        <AppForm<FinanceFilterFormValues>
-          schema={financeFilterSchema}
-          defaultValues={defaultFinanceFilterValues}
-          onSubmit={() => {}}
-          className="w-full my-3"
-        >
-          <DatePicker<FinanceFilterFormValues>
-            name="date"
-            className="w-full mb-3"
-          />
-          <div className="w-full flex flex-col sm:flex-wrap sm:flex-row gap-3">
-            <AppSelectField<FinanceFilterFormValues>
-              name="source"
-              placeholder="Select Source"
-              widthClass="w-full sm:flex-1 lg:w-60"
-              options={financeSources}
+        <AppFormProvider {...form}>
+          <form className="w-full my-3" onSubmit={form.handleSubmit(onSubmit)}>
+            <AppDatePicker
+              control={form.control}
+              name="date"
+              className="w-full mb-3"
             />
-            <AppSelectField<FinanceFilterFormValues>
-              name="region"
-              placeholder="Select Region"
-              widthClass="w-full sm:flex-1 lg:w-60"
-              options={regions}
-            />
-            <AppSelectField<FinanceFilterFormValues>
-              name="district"
-              placeholder="Select Districts"
-              widthClass="w-full sm:flex-1 lg:w-60"
-              options={districts}
-            />
-            <AppSelectField<FinanceFilterFormValues>
-              name="ward"
-              placeholder="Select Wards"
-              widthClass="w-full sm:flex-1 lg:w-60"
-              options={wards}
-            />
-            <AppSubmitButton label="Submit" className="h-10" />
-          </div>
-        </AppForm>
+            <div className="w-full flex flex-col sm:flex-wrap sm:flex-row gap-3">
+              <AppSelectField
+                control={form.control}
+                name="source"
+                placeholder="Select Source"
+                widthClass="w-full sm:flex-1 lg:w-60"
+                options={financeSources}
+              />
+              <AppSelectField
+                control={form.control}
+                name="region"
+                placeholder="Select Region"
+                widthClass="w-full sm:flex-1 lg:w-60"
+                options={regions}
+              />
+              <AppSelectField
+                control={form.control}
+                name="district"
+                placeholder="Select Districts"
+                widthClass="w-full sm:flex-1 lg:w-60"
+                options={districts}
+              />
+              <AppSelectField
+                control={form.control}
+                name="ward"
+                placeholder="Select Wards"
+                widthClass="w-full sm:flex-1 lg:w-60"
+                options={wards}
+              />
+              <AppSubmitButton label="Submit" className="h-10" />
+            </div>
+          </form>
+        </AppFormProvider>
 
         <div className="flex flex-wrap my-5 gap-5">
           <FinanceStatCard title="Total Revenue" statValue={3000000} />

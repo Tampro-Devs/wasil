@@ -6,11 +6,7 @@ import {
   AppContentBody,
   AppContentContainer,
 } from "../../../shared/components/app.content.container";
-import { AppForm } from "../../../shared/components/app.form";
-import {
-  AppSelectField,
-  AppTextField,
-} from "../../../shared/components/app.form.fields";
+
 import {
   Table,
   TableBody,
@@ -30,63 +26,80 @@ import {
 } from "../schema/member.filter.schema";
 import { membersDummies } from "../types/member.type";
 import { ROUTE_PATHS } from "../../router/route.paths";
-import { Eye, Plus, Trash } from "lucide-react";
+import { LuEye, LuPlus, LuTrash } from "react-icons/lu";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
+import { AppFormProvider } from "../../../shared/components/form";
+import { AppSelectField } from "../../../shared/components/form/fields/app.select.field";
 
 export default function MembersMainPage() {
   const navigate = useNavigate();
+
+  const form = useForm<MemberFilterFormValues>({
+    resolver: zodResolver(memberFilterSchema),
+    defaultValues: defaultMemberFilterValues,
+  });
+
+  async function onSubmit(data: MemberFilterFormValues) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("FORM DATA::", data);
+  }
 
   setPageHeader("Members");
   return (
     <AppContentContainer>
       <AppContentBody>
-        <AppForm<MemberFilterFormValues>
-          className="mb-5 w-full"
-          schema={memberFilterSchema}
-          defaultValues={defaultMemberFilterValues}
-          onSubmit={() => {}}
-        >
-          <div className="flex flex-col">
-            <div className="flex-1">
-              <AppTextField<MemberFilterFormValues>
-                name="name"
-                placeholder="Member Name"
-              />
+        <AppFormProvider {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="mb-5 w-full">
+            <div className="flex flex-col">
+              <div className="flex-1">
+                <AppTextField
+                  control={form.control}
+                  name="name"
+                  placeholder="Member Name"
+                />
+              </div>
+              <div className="grid grid-cols-2 md:flex gap-5">
+                <div className="flex-1">
+                  <AppSelectField
+                    control={form.control}
+                    name="region"
+                    placeholder="Region"
+                    options={regions}
+                  />
+                </div>
+                <div className="flex-1">
+                  <AppSelectField
+                    control={form.control}
+                    name="district"
+                    placeholder="District"
+                    options={districts}
+                  />
+                </div>
+                <div className="flex-1">
+                  <AppSelectField
+                    control={form.control}
+                    name="ward"
+                    placeholder="Ward"
+                    options={wards}
+                  />
+                </div>
+                <div className="flex-1">
+                  <AppSelectField
+                    control={form.control}
+                    name="street"
+                    placeholder="Street"
+                    options={streets}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <AppSubmitButton label="Submit" className="w-96" />
+              </div>
             </div>
-            <div className="grid grid-cols-2 md:flex gap-5">
-              <div className="flex-1">
-                <AppSelectField<MemberFilterFormValues>
-                  name="region"
-                  placeholder="Region"
-                  options={regions}
-                />
-              </div>
-              <div className="flex-1">
-                <AppSelectField<MemberFilterFormValues>
-                  name="district"
-                  placeholder="District"
-                  options={districts}
-                />
-              </div>
-              <div className="flex-1">
-                <AppSelectField<MemberFilterFormValues>
-                  name="ward"
-                  placeholder="Ward"
-                  options={wards}
-                />
-              </div>
-              <div className="flex-1">
-                <AppSelectField<MemberFilterFormValues>
-                  name="street"
-                  placeholder="Street"
-                  options={streets}
-                />
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <AppSubmitButton label="Submit" className="w-96" />
-            </div>
-          </div>
-        </AppForm>
+          </form>
+        </AppFormProvider>
         <TableWrapper
           className="flex flex-col"
           // error={{
@@ -107,7 +120,7 @@ export default function MembersMainPage() {
                 navigate(ROUTE_PATHS.membership.members.register);
               }}
             >
-              <Plus />
+              <LuPlus />
             </AppButton>
           </TableCaption>
           <Table>
@@ -137,12 +150,12 @@ export default function MembersMainPage() {
                           member.memberId,
                         )}
                       >
-                        <Eye
+                        <LuEye
                           size={20}
                           className="text-slate-400 cursor-pointer"
                         />
                       </Link>
-                      <Trash
+                      <LuTrash
                         size={20}
                         className="text-red-400 cursor-pointer"
                       />

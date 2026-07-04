@@ -1,5 +1,5 @@
-import { AppForm } from "../../../shared/components/app.form";
-import { AppSelectField } from "../../../shared/components/app.form.fields";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import {
   Table,
   TableBody,
@@ -16,26 +16,40 @@ import {
   districtSchema,
   type DistrictFormValues,
 } from "../schemas/district.form.schema";
+
 import { districtDummies } from "../types/district.type";
+import { AppFormProvider } from "../../../shared/components/form";
+import { AppSelectField } from "../../../shared/components/form/fields/app.select.field";
 
 export default function DistrictsSection() {
+  const form = useForm<DistrictFormValues>({
+    resolver: zodResolver(districtSchema),
+    defaultValues: defaultDistrictValues,
+  });
+
+  async function onSubmit(data: DistrictFormValues) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("FORM DATA::", data);
+  }
+
   return (
     <div className="w-full flex flex-col gap-5">
-      <AppForm<DistrictFormValues>
-        schema={districtSchema}
-        defaultValues={defaultDistrictValues}
-        onSubmit={() => {}}
-        className="w-full flex gap-5"
-      >
-        <div className="flex-1">
-          <AppSelectField<DistrictFormValues>
-            name="region"
-            placeholder="Select Region"
-            widthClass="w-full sm:w-60"
-            options={regions}
-          />
-        </div>
-      </AppForm>
+      <AppFormProvider {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full flex gap-5"
+        >
+          <div className="flex-1">
+            <AppSelectField
+              control={form.control}
+              name="region"
+              placeholder="Select Region"
+              widthClass="w-full sm:w-60"
+              options={regions}
+            />
+          </div>
+        </form>
+      </AppFormProvider>
 
       <TableWrapper
         className="flex flex-col"

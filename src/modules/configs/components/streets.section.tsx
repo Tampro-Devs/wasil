@@ -1,5 +1,5 @@
-import { AppForm } from "../../../shared/components/app.form";
-import { AppSelectField } from "../../../shared/components/app.form.fields";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import {
   TableWrapper,
   TableCaption,
@@ -11,47 +11,65 @@ import {
   TableCell,
 } from "../../../shared/components/table";
 import { regions, districts, wards } from "../data";
+
 import {
+  defaultStreetValues,
   streetSchema,
   type StreetFormValues,
 } from "../schemas/street.form.schema";
 import { streetDummies } from "../types/street.type";
+import { AppSelectField } from "../../../shared/components/form/fields/app.select.field";
+import { AppFormProvider } from "../../../shared/components/form";
 
 export default function StreetsSection() {
+  const form = useForm<StreetFormValues>({
+    resolver: zodResolver(streetSchema),
+    defaultValues: defaultStreetValues,
+  });
+
+  async function onSubmit(data: StreetFormValues) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("FORM DATA::", data);
+  }
+
   return (
     <div className="w-full flex flex-col gap-5">
-      <AppForm<StreetFormValues>
-        schema={streetSchema}
-        onSubmit={() => {}}
-        className="w-full flex-col sm:flex-row flex sm:gap-5"
-      >
-        <div className="sm:grid sm:grid-cols-2 sm:gap-2 md:flex md:flex-wrap">
-          <div className="flex-1">
-            <AppSelectField
-              name=""
-              placeholder="Select Region"
-              widthClass="w-full sm:w-60 md:w-46"
-              options={regions}
-            />
+      <AppFormProvider {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full flex-col sm:flex-row flex sm:gap-5"
+        >
+          <div className="sm:grid sm:grid-cols-2 sm:gap-2 md:flex md:flex-wrap">
+            <div className="flex-1">
+              <AppSelectField
+                control={form.control}
+                name="region"
+                placeholder="Select Region"
+                widthClass="w-full sm:w-60 md:w-46"
+                options={regions}
+              />
+            </div>
+            <div className="flex-1">
+              <AppSelectField
+                control={form.control}
+                name="district"
+                placeholder="Select Districts"
+                widthClass="w-full sm:w-60 md:w-46"
+                options={districts}
+              />
+            </div>
+            <div className="flex-1">
+              <AppSelectField
+                control={form.control}
+                name="ward"
+                placeholder="Select Wards"
+                widthClass="w-full sm:w-60 md:w-46"
+                options={wards}
+              />
+            </div>
           </div>
-          <div className="flex-1">
-            <AppSelectField
-              name=""
-              placeholder="Select Districts"
-              widthClass="w-full sm:w-60 md:w-46"
-              options={districts}
-            />
-          </div>
-          <div className="flex-1">
-            <AppSelectField
-              name=""
-              placeholder="Select Wards"
-              widthClass="w-full sm:w-60 md:w-46"
-              options={wards}
-            />
-          </div>
-        </div>
-      </AppForm>
+        </form>
+      </AppFormProvider>
 
       <TableWrapper
         className="flex flex-col"

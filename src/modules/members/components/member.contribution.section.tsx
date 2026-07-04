@@ -1,6 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { AppSubmitButton } from "../../../shared/components/app.button";
-import { AppForm } from "../../../shared/components/app.form";
-import { AppTextField } from "../../../shared/components/app.form.fields";
+
 import {
   Table,
   TableBody,
@@ -19,8 +20,19 @@ import {
   type MemberContributionFilterFormValues,
 } from "../schema/member.contribution.filter.schema";
 import { memberContributionDummies } from "../types/contribution.type";
+import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
+import { AppFormProvider } from "../../../shared/components/form";
 
 export default function MemberContributionSection() {
+  const form = useForm<MemberContributionFilterFormValues>({
+    resolver: zodResolver(memberContributionFilterSchema),
+    defaultValues: defaultMemberContributionFilterFormValues,
+  });
+
+  async function onSubmit(data: MemberContributionFilterFormValues) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("FORM DATA::", data);
+  }
   return (
     <TableWrapper
       className="flex flex-col"
@@ -32,19 +44,20 @@ export default function MemberContributionSection() {
       //   }}
     >
       <TableCaption>
-        <AppForm<MemberContributionFilterFormValues>
-          schema={memberContributionFilterSchema}
-          defaultValues={defaultMemberContributionFilterFormValues}
-          className="w-full flex gap-5"
-          onSubmit={() => {}}
-        >
-          <AppTextField
-            name="receipt"
-            placeholder="Receipt"
-            className="w-full sm:w-96"
-          />
-          <AppSubmitButton label="Search" className="h-9" />
-        </AppForm>
+        <AppFormProvider {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full flex gap-5"
+          >
+            <AppTextField
+              control={form.control}
+              name="receipt"
+              placeholder="Receipt"
+              className="w-full sm:w-96"
+            />
+            <AppSubmitButton label="Search" className="h-9" />
+          </form>
+        </AppFormProvider>
       </TableCaption>
       <Table>
         <TableHeader>

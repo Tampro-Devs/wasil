@@ -1,17 +1,20 @@
-import type { SubmitHandler } from "react-hook-form";
-import { AppForm } from "../../../shared/components/app.form";
+import { useForm } from "react-hook-form";
+
 import {
   branchSchema,
   defaultBranchValues,
   type BranchFormValues,
 } from "../schemas/branch.form.schema";
 import { AppSubmitButton } from "../../../shared/components/app.button";
+
+import { regions } from "../../configs/data";
 import {
   AppSelectField,
-  AppTextField,
   type SelectOption,
-} from "../../../shared/components/app.form.fields";
-import { regions } from "../../configs/data";
+} from "../../../shared/components/form/fields/app.select.field";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AppFormProvider } from "../../../shared/components/form";
+import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
 
 const members: SelectOption[] = [
   {
@@ -56,40 +59,47 @@ const members: SelectOption[] = [
   },
 ];
 export default function BranchOnboardForm() {
-  const onSubmit: SubmitHandler<BranchFormValues> = async (data) => {
+  const form = useForm<BranchFormValues>({
+    resolver: zodResolver(branchSchema),
+    defaultValues: defaultBranchValues,
+  });
+
+  async function onSubmit(data: BranchFormValues) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log("FORM DATA::", data);
-  };
+  }
   return (
-    <AppForm<BranchFormValues>
-      schema={branchSchema}
-      defaultValues={defaultBranchValues}
-      onSubmit={onSubmit}
-    >
-      <AppTextField<BranchFormValues>
-        label="Branch Name"
-        name="name"
-        placeholder="Branch Name"
-      />
-      <AppSelectField<BranchFormValues>
-        label="Branch Location"
-        name="region"
-        placeholder="Select..."
-        options={regions}
-      />
-      <AppSelectField<BranchFormValues>
-        label="Branch Leader"
-        name="leader"
-        placeholder="Select..."
-        options={members}
-      />
-      <AppSelectField<BranchFormValues>
-        label="Branch Assistant Leader"
-        name="assistant"
-        placeholder="Select..."
-        options={members}
-      />
-      <AppSubmitButton label="Submit" className="w-32 mt-5" />
-    </AppForm>
+    <AppFormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <AppTextField
+          control={form.control}
+          label="Branch Name"
+          name="name"
+          placeholder="Branch Name"
+        />
+        <AppSelectField
+          control={form.control}
+          label="Branch Location"
+          name="region"
+          placeholder="Select..."
+          options={regions}
+        />
+        <AppSelectField
+          control={form.control}
+          label="Branch Leader"
+          name="leader"
+          placeholder="Select..."
+          options={members}
+        />
+        <AppSelectField
+          control={form.control}
+          label="Branch Assistant Leader"
+          name="assistant"
+          placeholder="Select..."
+          options={members}
+        />
+        <AppSubmitButton label="Submit" className="w-32 mt-5" />
+      </form>
+    </AppFormProvider>
   );
 }
