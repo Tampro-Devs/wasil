@@ -1,4 +1,4 @@
-import type { SelectOption } from "../../../shared/components/app.form.fields";
+import type { SelectOption } from "../../../shared/components/form/fields/app.select.field";
 import { regionDummies, type Region } from "../../configs/types/region.type";
 import { type Leader } from "./leadership.type";
 

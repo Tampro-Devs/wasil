@@ -1,4 +1,4 @@
-import type { SelectOption } from "../../../shared/components/app.form.fields";
+import type { SelectOption } from "../../../shared/components/form/fields/app.select.field";
 
 export interface Gender extends SelectOption {
   label: "Male" | "Female";
