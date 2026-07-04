@@ -1,5 +1,6 @@
-import { Pen, Plus, Trash } from "lucide-react";
-import AppButton from "../../../shared/components/app.button";
+import { LuPen, LuPlus, LuTrash } from "react-icons/lu";
+
+import { AppIconButton } from "../../../shared/components/app.button";
 import {
   AppContentContainer,
   AppContentBody,
@@ -7,6 +8,7 @@ import {
 } from "../../../shared/components/app.content.container";
 import { setPageHeader } from "../../../utils/general_hooks";
 import {
+  LoadingTableBody,
   Table,
   TableBody,
   TableCaption,
@@ -16,32 +18,65 @@ import {
   TableRow,
   TableWrapper,
 } from "../../../shared/components/table";
-import { educationLevelsDummies } from "../types/education.type";
-import { useMemo } from "react";
-import { shuffle } from "../../../utils/globals";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";
+import {
+  getEducationLevels,
+  removeEducationLevel,
+} from "../services/education.level.services";
+import DeleteAssuaranceDialog from "../../../shared/components/delete.assuarance.dialog";
+import { useState } from "react";
+import type { EducationLevel } from "../types/education.type";
+import { triggerToast } from "../../../utils/globals";
 
 export default function EducationConfigPage() {
-  // const { data: educations, isLoading } = useQuery({
-  //   queryKey: apiQueryKeys.educationLevels,
-  //   queryFn: () => {},
-  // });
-  const educations = useMemo(() => shuffle(educationLevelsDummies), []);
+  const [selectedLevel, setSelectedLevel] = useState<EducationLevel | null>(
+    null,
+  );
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  const { data: apiResponse, isLoading } = useQuery({
+    queryKey: apiQueryKeys.educationLevels,
+    queryFn: getEducationLevels,
+  });
+
+  const { mutateAsync: deleteLevelMutation, isPending: isRemoving } =
+    useMutation({
+      mutationKey: apiQueryKeys.educationLevels,
+      mutationFn: removeEducationLevel,
+      onSuccess: (response) => {
+        const responseCode = response.responseCode;
+        const message = response.message;
+        if (responseCode == 0) {
+          triggerToast(message ?? "Success", "success");
+          setShowDeleteDialog(false);
+        } else {
+          triggerToast(message ?? "Unknown error occured", "error");
+        }
+      },
+      onError: (error) => {
+        triggerToast(error.message, "error");
+      },
+    });
 
   setPageHeader("Education");
   return (
     <AppContentContainer>
       <AppContentHeader
         title="Manage Education Levels"
-        actions={
-          <AppButton size="xs" variant="secondary" onClick={() => {}}>
-            <Plus />
-          </AppButton>
-        }
+        actions={<AppIconButton Icon={LuPlus} onClick={() => {}} />}
       />
       <AppContentBody>
-        <TableWrapper>
+        <TableWrapper
+          error={
+            apiResponse?.message && (apiResponse.data?.length ?? 0) === 0
+              ? {
+                  title: "No Education Levels",
+                  message: apiResponse.message,
+                }
+              : undefined
+          }
+        >
           <TableCaption>
             <span className="font-bold me-1">Total:</span>
             <span className="text-xs">3</span>
@@ -58,45 +93,63 @@ export default function EducationConfigPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {educations?.map((level, index) => (
-                <TableRow key={index}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{level.title}</TableCell>
-                  <TableCell>
-                    <span
-                      className={`w-20 px-2 rounded-full ${level.category == "Sharia" ? "bg-green-500/20 text-green-400" : "bg-blue-500/20 text-blue-400"}`}
-                    >
-                      {level.category}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span
-                      className={`w-20 px-2 rounded-full font-bold ${level.isProffessional ? " text-cyan-500" : "text-mauve-500"}`}
-                    >
-                      {level.isProffessional
-                        ? "Professional"
-                        : "Non-Proffesional"}
-                    </span>
-                  </TableCell>
-                  <TableCell>{level.members}</TableCell>
-                  <TableCell>
-                    <div className="flex gap-3">
-                      <Pen
-                        size={20}
-                        className="text-green-400 cursor-pointer"
-                      />
-                      <Trash
-                        size={20}
-                        className="text-red-400 cursor-pointer"
-                      />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {isLoading ? (
+                <LoadingTableBody columns={6} />
+              ) : (
+                apiResponse?.data?.map((level, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{level.name}</TableCell>
+                    <TableCell>
+                      <span
+                        className={`w-20 px-2 rounded-full ${level.category == "Sharia" ? "bg-green-500/20 text-green-400" : "bg-blue-500/20 text-blue-400"}`}
+                      >
+                        {level.category}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <span
+                        className={`w-20 px-2 rounded-full font-bold ${level.proffessionalism === "Professional" ? " text-cyan-500" : "text-mauve-500"}`}
+                      >
+                        {level.proffessionalism}
+                      </span>
+                    </TableCell>
+                    <TableCell>{level.members}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-3">
+                        <LuPen
+                          size={20}
+                          className="text-green-400 cursor-pointer"
+                          onClick={() => {}}
+                        />
+                        <LuTrash
+                          size={20}
+                          className="text-red-400 cursor-pointer"
+                          onClick={() => {
+                            setSelectedLevel(level);
+                            setShowDeleteDialog(true);
+                          }}
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </TableWrapper>
       </AppContentBody>
+      {selectedLevel && (
+        <DeleteAssuaranceDialog
+          itemName={selectedLevel?.name}
+          isOpen={showDeleteDialog}
+          isRemoving={isRemoving}
+          setIsOpen={setShowDeleteDialog}
+          onRemoving={async () =>
+            await deleteLevelMutation(selectedLevel.level_id)
+          }
+        />
+      )}
     </AppContentContainer>
   );
 }
