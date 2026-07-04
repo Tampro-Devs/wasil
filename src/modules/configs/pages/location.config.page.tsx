@@ -13,7 +13,7 @@ import {
   AppContentContainer,
   AppContentHeader,
 } from "../../../shared/components/app.content.container";
-import AppButton from "../../../shared/components/app.button";
+import { AppIconButton } from "../../../shared/components/app.button";
 import SideLinkItem from "../../../shared/components/side.link.item";
 import { LuPlus } from "react-icons/lu";
 
@@ -108,13 +108,7 @@ export default function LocationsConfigPage() {
         <AppContentHeader
           title={locationTags[currentIndex].text}
           actions={
-            <AppButton
-              size="xs"
-              variant="secondary"
-              onClick={handleAddButtonClick}
-            >
-              <LuPlus />
-            </AppButton>
+            <AppIconButton Icon={LuPlus} onClick={handleAddButtonClick} />
           }
         />
         <AppContentBody className="w-full">

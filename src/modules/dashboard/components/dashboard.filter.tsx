@@ -30,8 +30,11 @@ export default function DashboardFilter() {
         <h1 className="font-bold text-sm">Filters</h1>
       </div>
       <AppFormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-0 sm:flex-row sm:gap-5 lg:flex-col lg:gap-0">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-2"
+        >
+          <div className="flex flex-col gap-2 sm:flex-row lg:flex-col">
             <div className="flex-1">
               <AppSelectField
                 control={form.control}
@@ -49,7 +52,7 @@ export default function DashboardFilter() {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-0 sm:flex-row sm:gap-5 lg:flex-col lg:gap-0">
+          <div className="flex flex-col gap-2 sm:flex-row lg:flex-col">
             <div className="flex-1">
               <AppSelectField
                 control={form.control}
@@ -67,7 +70,7 @@ export default function DashboardFilter() {
               />
             </div>
           </div>
-          <div className="flex gap-5 lg:flex-col lg:gap-0">
+          <div className="flex gap-2 lg:flex-col">
             <div className="flex-1">
               <AppDatePicker
                 control={form.control}

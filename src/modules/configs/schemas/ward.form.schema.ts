@@ -13,3 +13,15 @@ export const defaultWardValues: WardFormValues = {
   region: "",
   district: "",
 };
+
+export const wardFilterSchema = z.object({
+  region: z.string().trim().nonempty("You must select Region"),
+  district: z.string().trim().nonempty("You must select District"),
+});
+
+export type WardFilterFormValues = z.infer<typeof wardFilterSchema>;
+
+export const defaultWardFilterValues: WardFilterFormValues = {
+  region: "",
+  district: "",
+};

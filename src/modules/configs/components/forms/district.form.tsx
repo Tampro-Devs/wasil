@@ -28,7 +28,12 @@ export function DistrictForm({ isOpen, setIsOpen }: DistrictFormProps) {
   }
 
   return (
-    <AppModal isOpen={isOpen} setIsOpen={setIsOpen} title="Add District">
+    <AppModal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title="Add District"
+      className="w-sm"
+    >
       <AppFormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

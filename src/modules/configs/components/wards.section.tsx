@@ -9,27 +9,51 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  LoadingTableBody,
 } from "../../../shared/components/table";
-import { districts, regions } from "../data";
 
 import {
-  defaultWardValues,
-  wardSchema,
-  type WardFormValues,
+  defaultWardFilterValues,
+  wardFilterSchema,
+  type WardFilterFormValues,
 } from "../schemas/ward.form.schema";
-import { wardDummies } from "../types/ward.type";
-import { AppSelectField } from "../../../shared/components/form/fields/app.select.field";
+import { type SelectOption } from "../../../shared/components/form/fields/app.select.field";
 import { AppFormProvider } from "../../../shared/components/form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import WardServices from "../services/ward.services";
+import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";
+import RegionSelectInput from "./forms/inputs/region.select.input";
+import DistrictSelectInput from "./forms/inputs/district.select.input";
+import { AppSubmitButton } from "../../../shared/components/app.button";
 
 export default function WardsSection() {
-  const form = useForm<WardFormValues>({
-    resolver: zodResolver(wardSchema),
-    defaultValues: defaultWardValues,
+  const queryClient = useQueryClient();
+  const [selectedRegion, setSelectedRegion] = useState<SelectOption | null>(
+    null,
+  );
+  const [selectedDistrict, setSelectedDistrict] = useState<SelectOption | null>(
+    null,
+  );
+
+  const form = useForm<WardFilterFormValues>({
+    resolver: zodResolver(wardFilterSchema),
+    defaultValues: defaultWardFilterValues,
   });
 
-  async function onSubmit(data: WardFormValues) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("FORM DATA::", data);
+  const wardMutation = useMutation({
+    mutationFn: WardServices.getWards,
+  });
+
+  async function onSubmit(data: WardFilterFormValues) {
+    void (async () => {
+      await wardMutation.mutateAsync({
+        districtId: data.district,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: apiQueryKeys.wards,
+      });
+    })();
   }
 
   return (
@@ -39,25 +63,30 @@ export default function WardsSection() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full flex-col flex gap-5"
         >
-          <div className="sm:grid sm:grid-cols-2 md:flex md:flex-wrap">
-            <div className="flex-1">
-              <AppSelectField
-                control={form.control}
-                name="region"
-                placeholder="Select Region"
-                widthClass="w-full sm:w-60 md:w-46"
-                options={regions}
-              />
-            </div>
-            <div className="flex-1">
-              <AppSelectField
-                control={form.control}
-                name="district"
-                placeholder="Select Districts"
-                widthClass="w-full sm:w-60 md:w-46"
-                options={districts}
-              />
-            </div>
+          <div className="flex flex-col gap-2 sm:grid sm:grid-cols-2 md:flex  md:flex-row md:flex-wrap">
+            <RegionSelectInput
+              control={form.control}
+              name="region"
+              placeholder="Select Region"
+              widthClass="w-full sm:w-60 md:w-46"
+              onChange={(option) => {
+                if (!option) return null;
+                setSelectedRegion(option);
+              }}
+            />
+
+            <DistrictSelectInput
+              control={form.control}
+              regionId={selectedRegion?.value}
+              name="district"
+              placeholder="Select Districts"
+              widthClass="w-full sm:w-60 md:w-46"
+              onChange={(option) => {
+                if (!option) return null;
+                setSelectedDistrict(option);
+              }}
+            />
+            <AppSubmitButton className="w-full lg:w-xs" label="Submit" />
           </div>
         </form>
       </AppFormProvider>
@@ -71,7 +100,7 @@ export default function WardsSection() {
       >
         <TableCaption>
           <span className="font-bold me-1">District:</span>
-          <span className="text-xs">Morogoro Mjini</span>
+          <span className="text-xs">{selectedDistrict?.label}</span>
         </TableCaption>
         <Table>
           <TableHeader>
@@ -82,13 +111,17 @@ export default function WardsSection() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {wardDummies.map((ward, index) => (
-              <TableRow key={index}>
-                <TableCell>{ward.name}</TableCell>
-                <TableCell>100</TableCell>
-                <TableCell>200</TableCell>
-              </TableRow>
-            ))}
+            {wardMutation.isPending ? (
+              <LoadingTableBody columns={3} />
+            ) : (
+              wardMutation.data?.data?.map((ward, index) => (
+                <TableRow key={index}>
+                  <TableCell>{ward.name}</TableCell>
+                  <TableCell>100</TableCell>
+                  <TableCell>200</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableWrapper>

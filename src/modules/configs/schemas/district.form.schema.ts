@@ -11,3 +11,13 @@ export const defaultDistrictValues: DistrictFormValues = {
   name: "",
   region: "",
 };
+
+export const districtFormFilterSchema = z.object({
+  region: z.string().trim().nonempty("You must select Region"),
+});
+
+export type DistrictFormFilterValues = z.infer<typeof districtFormFilterSchema>;
+
+export const defaultDistrictFormFilterValues: DistrictFormFilterValues = {
+  region: "",
+};

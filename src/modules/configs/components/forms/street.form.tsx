@@ -28,7 +28,12 @@ export function StreetForm({ isOpen, setIsOpen }: StreetFormProps) {
     setIsOpen(false);
   }
   return (
-    <AppModal isOpen={isOpen} setIsOpen={setIsOpen} title="Add Street">
+    <AppModal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title="Add Street"
+      className="w-sm"
+    >
       <AppFormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

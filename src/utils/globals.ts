@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import type { SelectOption } from "../shared/components/form/fields/app.select.field";
 
 export function shortenNumber(value: number): string {
   if (value >= 1_000_000_000) {
@@ -68,4 +69,15 @@ export function toDate(value: unknown): Date | undefined {
 
   const d = new Date(value as any);
   return isNaN(d.getTime()) ? undefined : d;
+}
+
+export function toSelectOptions<
+  T,
+  LabelKey extends keyof T,
+  ValueKey extends keyof T,
+>(items: T[], labelKey: LabelKey, valueKey: ValueKey): SelectOption[] {
+  return items.map((item) => ({
+    label: String(item[labelKey]),
+    value: String(item[valueKey]),
+  }));
 }

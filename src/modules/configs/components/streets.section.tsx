@@ -9,27 +9,52 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  LoadingTableBody,
 } from "../../../shared/components/table";
-import { regions, districts, wards } from "../data";
 
 import {
-  defaultStreetValues,
-  streetSchema,
-  type StreetFormValues,
+  defaultStreetFilterValues,
+  streetFilterSchema,
+  type StreetFilterFormValues,
 } from "../schemas/street.form.schema";
-import { streetDummies } from "../types/street.type";
-import { AppSelectField } from "../../../shared/components/form/fields/app.select.field";
+import { type SelectOption } from "../../../shared/components/form/fields/app.select.field";
 import { AppFormProvider } from "../../../shared/components/form";
+import { AppSubmitButton } from "../../../shared/components/app.button";
+import RegionSelectInput from "./forms/inputs/region.select.input";
+import DistrictSelectInput from "./forms/inputs/district.select.input";
+import { useState } from "react";
+import WardSelectInput from "./forms/inputs/ward.select.input";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import StreetServices from "../services/street.services";
+import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";
 
 export default function StreetsSection() {
-  const form = useForm<StreetFormValues>({
-    resolver: zodResolver(streetSchema),
-    defaultValues: defaultStreetValues,
+  const queryClient = useQueryClient();
+  const [selectedRegion, setSelectedRegion] = useState<SelectOption | null>(
+    null,
+  );
+  const [selectedDistrict, setSelectedDistrict] = useState<SelectOption | null>(
+    null,
+  );
+  const [selectedWard, setSelectedWard] = useState<SelectOption | null>(null);
+  const form = useForm<StreetFilterFormValues>({
+    resolver: zodResolver(streetFilterSchema),
+    defaultValues: defaultStreetFilterValues,
   });
 
-  async function onSubmit(data: StreetFormValues) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("FORM DATA::", data);
+  const streetMutation = useMutation({
+    mutationFn: StreetServices.getStreets,
+  });
+
+  async function onSubmit(data: StreetFilterFormValues) {
+    void (async () => {
+      await streetMutation.mutateAsync({
+        wardId: data.ward,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: apiQueryKeys.streets,
+      });
+    })();
   }
 
   return (
@@ -39,34 +64,42 @@ export default function StreetsSection() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full flex-col sm:flex-row flex sm:gap-5"
         >
-          <div className="sm:grid sm:grid-cols-2 sm:gap-2 md:flex md:flex-wrap">
-            <div className="flex-1">
-              <AppSelectField
-                control={form.control}
-                name="region"
-                placeholder="Select Region"
-                widthClass="w-full sm:w-60 md:w-46"
-                options={regions}
-              />
-            </div>
-            <div className="flex-1">
-              <AppSelectField
-                control={form.control}
-                name="district"
-                placeholder="Select Districts"
-                widthClass="w-full sm:w-60 md:w-46"
-                options={districts}
-              />
-            </div>
-            <div className="flex-1">
-              <AppSelectField
-                control={form.control}
-                name="ward"
-                placeholder="Select Wards"
-                widthClass="w-full sm:w-60 md:w-46"
-                options={wards}
-              />
-            </div>
+          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-2 md:flex md:flex-row md:flex-wrap">
+            <RegionSelectInput
+              control={form.control}
+              name="region"
+              placeholder="Select Region"
+              widthClass="w-full lg:w-xs"
+              onChange={(option) => {
+                if (!option) return null;
+                setSelectedRegion(option);
+              }}
+            />
+
+            <DistrictSelectInput
+              control={form.control}
+              regionId={selectedRegion?.value}
+              name="district"
+              placeholder="Select Districts"
+              widthClass="w-full lg:w-xs"
+              onChange={(option) => {
+                if (!option) return null;
+                setSelectedDistrict(option);
+              }}
+            />
+
+            <WardSelectInput
+              control={form.control}
+              districtId={selectedDistrict?.value ?? ""}
+              name="ward"
+              placeholder="Select Wards"
+              widthClass="w-full lg:w-xs"
+              onChange={(option) => {
+                if (!option) return null;
+                setSelectedWard(option);
+              }}
+            />
+            <AppSubmitButton className="w-full lg:w-xs" label="Submit" />
           </div>
         </form>
       </AppFormProvider>
@@ -80,7 +113,7 @@ export default function StreetsSection() {
       >
         <TableCaption>
           <span className="font-bold me-1">Ward:</span>
-          <span className="text-xs">Ward 01</span>
+          <span className="text-xs">{selectedWard?.label}</span>
         </TableCaption>
         <Table>
           <TableHeader>
@@ -91,13 +124,17 @@ export default function StreetsSection() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {streetDummies.map((street, index) => (
-              <TableRow key={index}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{street.name}</TableCell>
-                <TableCell>10</TableCell>
-              </TableRow>
-            ))}
+            {streetMutation.isPending ? (
+              <LoadingTableBody columns={3} />
+            ) : (
+              streetMutation.data?.data?.map((street, index) => (
+                <TableRow key={index}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{street.name}</TableCell>
+                  <TableCell>10</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableWrapper>

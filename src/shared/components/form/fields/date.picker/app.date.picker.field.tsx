@@ -151,7 +151,7 @@ export function AppDatePickerField({
           setOpen((v) => !v);
           setView("calendar");
         }}
-        className="mb-3 flex w-full items-center rounded-xl border border-slate-300 bg-slate-300/30 p-2 text-sm"
+        className="flex w-full items-center rounded-xl border border-slate-300 bg-slate-300/30 p-2 text-sm"
       >
         <span className={value ? "text-gray-800" : "text-gray-400"}>
           {value ? formatDate(value) : placeholder}

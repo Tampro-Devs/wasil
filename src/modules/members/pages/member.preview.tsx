@@ -102,20 +102,20 @@ function MemberResidence({ member }: { member: Member }) {
         <div className="flex-1 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Region: </span>
           <span className="text-xs">
-            {member.residence.street.ward.district.region.name}
+            {member.residence.street.ward?.district?.region?.name}
           </span>
         </div>
         <div className="flex-1 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">District: </span>
           <span className="text-xs">
-            {member.residence.street.ward.district.name}
+            {member.residence.street.ward?.district?.name}
           </span>
         </div>
       </div>
       <div className="flex gap-3">
         <div className="flex-1 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Ward: </span>
-          <span className="text-xs">{member.residence.street.ward.name}</span>
+          <span className="text-xs">{member.residence.street.ward?.name}</span>
         </div>
         <div className="flex-1 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">Street: </span>

@@ -1,6 +1,13 @@
-import { Dialog, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import React, { Fragment } from "react";
 import { cn } from "../../utils/cn";
+import { LuX } from "react-icons/lu";
 
 interface ModalProps extends React.HTMLAttributes<HTMLDialogElement> {
   title?: string;
@@ -25,7 +32,7 @@ export default function AppModal({
     <>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
@@ -35,11 +42,11 @@ export default function AppModal({
             leaveTo="opacity-0"
           >
             <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
+          </TransitionChild>
 
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
+              <TransitionChild
                 as={Fragment}
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
@@ -49,22 +56,25 @@ export default function AppModal({
                 leaveTo="opacity-0 scale-95"
               >
                 <div className={cn("bg-white rounded-xl w-fit", className)}>
-                  <Dialog.Panel
+                  <DialogPanel
                     className={cn(
                       "w-full transform overflow-hidden rounded-xl text-left align-middle shadow-xl transition-all",
                       padding,
                     )}
                   >
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
-                    >
-                      {title}
-                    </Dialog.Title>
+                    <DialogTitle className="text-lg font-medium leading-6 text-gray-900">
+                      <div className="flex items-center justify-between">
+                        <span>{title}</span>
+                        <LuX
+                          className="text-red-400 cursor-pointer"
+                          onClick={closeModal}
+                        />
+                      </div>
+                    </DialogTitle>
                     {children}
-                  </Dialog.Panel>
+                  </DialogPanel>
                 </div>
-              </Transition.Child>
+              </TransitionChild>
             </div>
           </div>
         </Dialog>

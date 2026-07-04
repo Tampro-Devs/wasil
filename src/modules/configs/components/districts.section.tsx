@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
+  LoadingTableBody,
   Table,
   TableBody,
   TableCaption,
@@ -10,26 +11,45 @@ import {
   TableRow,
   TableWrapper,
 } from "../../../shared/components/table";
-import { regions } from "../data";
+
 import {
-  defaultDistrictValues,
-  districtSchema,
-  type DistrictFormValues,
+  defaultDistrictFormFilterValues,
+  districtFormFilterSchema,
+  type DistrictFormFilterValues,
 } from "../schemas/district.form.schema";
 
-import { districtDummies } from "../types/district.type";
 import { AppFormProvider } from "../../../shared/components/form";
-import { AppSelectField } from "../../../shared/components/form/fields/app.select.field";
+import RegionSelectInput from "./forms/inputs/region.select.input";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import DistrictServices from "../services/district.services";
+import { useState } from "react";
+import type { SelectOption } from "../../../shared/components/form/fields/app.select.field";
+import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";
+import { AppSubmitButton } from "../../../shared/components/app.button";
 
 export default function DistrictsSection() {
-  const form = useForm<DistrictFormValues>({
-    resolver: zodResolver(districtSchema),
-    defaultValues: defaultDistrictValues,
+  const queryClient = useQueryClient();
+  const [selectedRegion, setSelectedRegion] = useState<SelectOption | null>(
+    null,
+  );
+  const form = useForm<DistrictFormFilterValues>({
+    resolver: zodResolver(districtFormFilterSchema),
+    defaultValues: defaultDistrictFormFilterValues,
   });
 
-  async function onSubmit(data: DistrictFormValues) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("FORM DATA::", data);
+  const districtMutation = useMutation({
+    mutationFn: DistrictServices.getDistricts,
+  });
+
+  async function onSubmit(data: DistrictFormFilterValues) {
+    void (async () => {
+      await districtMutation.mutateAsync({
+        regionId: data.region,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: apiQueryKeys.districts,
+      });
+    })();
   }
 
   return (
@@ -39,13 +59,20 @@ export default function DistrictsSection() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full flex gap-5"
         >
-          <div className="flex-1">
-            <AppSelectField
+          <div className="flex gap-3 items-center">
+            <RegionSelectInput
               control={form.control}
               name="region"
               placeholder="Select Region"
               widthClass="w-full sm:w-60"
-              options={regions}
+              onChange={(option) => {
+                if (!option) return null;
+                setSelectedRegion(option);
+              }}
+            />
+            <AppSubmitButton
+              label="Submit"
+              loading={districtMutation.isPending}
             />
           </div>
         </form>
@@ -60,7 +87,7 @@ export default function DistrictsSection() {
       >
         <TableCaption>
           <span className="font-bold me-1">Region:</span>
-          <span className="text-xs">Morogoro</span>
+          <span className="text-xs">{selectedRegion?.label}</span>
         </TableCaption>
         <Table>
           <TableHeader>
@@ -71,13 +98,17 @@ export default function DistrictsSection() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {districtDummies.map((district, index) => (
-              <TableRow key={index}>
-                <TableCell>{district.name}</TableCell>
-                <TableCell>12</TableCell>
-                <TableCell>30</TableCell>
-              </TableRow>
-            ))}
+            {districtMutation.isPending ? (
+              <LoadingTableBody columns={3} />
+            ) : (
+              districtMutation.data?.data?.map((district, index) => (
+                <TableRow key={index}>
+                  <TableCell>{district.name}</TableCell>
+                  <TableCell>12</TableCell>
+                  <TableCell>30</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableWrapper>

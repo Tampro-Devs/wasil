@@ -5,8 +5,108 @@ export type EducationLevel = {
   name: string;
   category: "Sharia" | "Secular";
   members: number;
-  proffessionalism: string;
+  proffessionalism: "Professional" | "Non-Proffessional";
 };
+
+export const educationalCategories: SelectOption[] = [
+  {
+    label: "Sharia",
+    value: "Sharia",
+  },
+  {
+    label: "Secular",
+    value: "Secular",
+  },
+];
+
+export const proffessionalisms: SelectOption[] = [
+  {
+    label: "Professional",
+    value: "Professional",
+  },
+  {
+    label: "Non-Proffesional",
+    value: "Non-Proffesional",
+  },
+];
+
+export const educationLevels: SelectOption[] = [
+  // Secular Studies
+  {
+    value: "SEC-01",
+    label: "Primary Education",
+  },
+  {
+    value: "SEC-02",
+    label: "Ordinary Level (O-Level)",
+  },
+  {
+    value: "SEC-03",
+    label: "Advanced Level (A-Level)",
+  },
+  {
+    value: "SEC-04",
+    label: "Certificate",
+  },
+  {
+    value: "SEC-05",
+    label: "Diploma",
+  },
+  {
+    value: "SEC-06",
+    label: "Bachelor's Degree",
+  },
+  {
+    value: "SEC-07",
+    label: "Postgraduate Diploma",
+  },
+  {
+    value: "SEC-08",
+    label: "Master's Degree",
+  },
+  {
+    value: "SEC-09",
+    label: "Doctorate (PhD)",
+  },
+
+  // Islamic Studies
+  {
+    value: "ISL-01",
+    label: "Madrasa (Basic Quranic)",
+  },
+  {
+    value: "ISL-02",
+    label: "Hifdhul Quran (Memorization)",
+  },
+  {
+    value: "ISL-03",
+    label: "Msingi wa Dini (Islamic Foundation)",
+  },
+  {
+    value: "ISL-04",
+    label: "Thanawi (Islamic Secondary)",
+  },
+  {
+    value: "ISL-05",
+    label: "Diploma in Islamic Studies",
+  },
+  {
+    value: "ISL-06",
+    label: "Ijaza (Scholarly Authorization)",
+  },
+  {
+    value: "ISL-07",
+    label: "Bachelor of Islamic Sharia",
+  },
+  {
+    value: "ISL-08",
+    label: "Master of Islamic Studies",
+  },
+  {
+    value: "ISL-09",
+    label: "Doctorate in Islamic Sciences",
+  },
+];
 
 // export const educationLevelsDummies: EducationLevel[] = [
 //   // Secular Studies
@@ -139,81 +239,3 @@ export type EducationLevel = {
 //     isProffessional: true,
 //   },
 // ];
-
-export const educationLevels: SelectOption[] = [
-  // Secular Studies
-  {
-    value: "SEC-01",
-    label: "Primary Education",
-  },
-  {
-    value: "SEC-02",
-    label: "Ordinary Level (O-Level)",
-  },
-  {
-    value: "SEC-03",
-    label: "Advanced Level (A-Level)",
-  },
-  {
-    value: "SEC-04",
-    label: "Certificate",
-  },
-  {
-    value: "SEC-05",
-    label: "Diploma",
-  },
-  {
-    value: "SEC-06",
-    label: "Bachelor's Degree",
-  },
-  {
-    value: "SEC-07",
-    label: "Postgraduate Diploma",
-  },
-  {
-    value: "SEC-08",
-    label: "Master's Degree",
-  },
-  {
-    value: "SEC-09",
-    label: "Doctorate (PhD)",
-  },
-
-  // Islamic Studies
-  {
-    value: "ISL-01",
-    label: "Madrasa (Basic Quranic)",
-  },
-  {
-    value: "ISL-02",
-    label: "Hifdhul Quran (Memorization)",
-  },
-  {
-    value: "ISL-03",
-    label: "Msingi wa Dini (Islamic Foundation)",
-  },
-  {
-    value: "ISL-04",
-    label: "Thanawi (Islamic Secondary)",
-  },
-  {
-    value: "ISL-05",
-    label: "Diploma in Islamic Studies",
-  },
-  {
-    value: "ISL-06",
-    label: "Ijaza (Scholarly Authorization)",
-  },
-  {
-    value: "ISL-07",
-    label: "Bachelor of Islamic Sharia",
-  },
-  {
-    value: "ISL-08",
-    label: "Master of Islamic Studies",
-  },
-  {
-    value: "ISL-09",
-    label: "Doctorate in Islamic Sciences",
-  },
-];

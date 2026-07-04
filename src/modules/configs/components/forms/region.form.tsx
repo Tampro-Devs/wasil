@@ -26,7 +26,12 @@ export function RegionForm({ isOpen, setIsOpen }: RegionFormProps) {
     setIsOpen(false);
   }
   return (
-    <AppModal isOpen={isOpen} setIsOpen={setIsOpen} title="Add Region">
+    <AppModal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title="Add Region"
+      className="w-sm"
+    >
       <AppFormProvider {...form}>
         <form
           className="mt-2 flex flex-col gap-5"

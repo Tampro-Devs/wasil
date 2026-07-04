@@ -5,4 +5,13 @@ export const apiQueryKeys = {
 
   regions: ["regions"] as const,
   region: (regionId: string) => ["region", regionId] as const,
+
+  districts: ["districts"] as const,
+  district: (districtId: string) => ["district", districtId] as const,
+
+  wards: ["wards"] as const,
+  ward: (wardId: string) => ["ward", wardId] as const,
+
+  streets: ["streets"] as const,
+  street: (streetId: string) => ["street", streetId] as const,
 };

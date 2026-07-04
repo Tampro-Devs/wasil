@@ -28,7 +28,12 @@ export function WardForm({ isOpen, setIsOpen }: WardFormProps) {
     setIsOpen(false);
   }
   return (
-    <AppModal isOpen={isOpen} setIsOpen={setIsOpen} title="Add Ward">
+    <AppModal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title="Add Ward"
+      className="w-sm"
+    >
       <AppFormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

@@ -15,3 +15,17 @@ export const defaultStreetValues: StreetFormValues = {
   district: "",
   ward: "",
 };
+
+export const streetFilterSchema = z.object({
+  region: z.string().trim().nonempty("You must select Region"),
+  district: z.string().trim().nonempty("You must select District"),
+  ward: z.string().trim().nonempty("You must select Ward"),
+});
+
+export type StreetFilterFormValues = z.infer<typeof streetFilterSchema>;
+
+export const defaultStreetFilterValues: StreetFilterFormValues = {
+  region: "",
+  district: "",
+  ward: "",
+};

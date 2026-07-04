@@ -16,25 +16,23 @@ export function AppTextField<T extends FieldValues>({
   control,
 }: BaseFieldProps<T>) {
   return (
-    <div className="mb-3">
-      <FormField
-        control={control}
-        name={name}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{label}</FormLabel>
-            <FormControl>
-              <input
-                {...field}
-                type={type}
-                className="w-full h-7 p-1 text-xs bg-white border border-slate-200 rounded-lg"
-                placeholder={placeholder}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </div>
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+          <FormControl>
+            <input
+              {...field}
+              type={type}
+              className="w-full h-9 px-3 text-xs bg-slate-300/30 border border-slate-300 rounded-full"
+              placeholder={placeholder}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   );
 }
