@@ -8,7 +8,6 @@ import {
   AppContentHeader,
 } from "../../../../shared/components/app.content.container";
 import NotFound from "../../../../shared/components/not-found";
-import { CircleUser, Eye, Mail, MapPinHouse, Pen, Phone } from "lucide-react";
 import type { Leader } from "../../types/leadership.type";
 import AppButton from "../../../../shared/components/app.button";
 import {
@@ -23,6 +22,14 @@ import {
 } from "../../../../shared/components/table";
 import { membersDummies } from "../../../members/types/member.type";
 import { ROUTE_PATHS } from "../../../router/route.paths";
+import {
+  LuCircleUser,
+  LuEye,
+  LuMail,
+  LuMapPinHouse,
+  LuPen,
+  LuPhone,
+} from "react-icons/lu";
 
 export default function BranchPreview() {
   const { branchId } = useParams();
@@ -43,7 +50,7 @@ export default function BranchPreview() {
         <div className="flex flex-col">
           <span className="text-sm font-bold">{branch.name}</span>
           <div className="flex text-slate-700">
-            <MapPinHouse />
+            <LuMapPinHouse />
             <span className="text-xs">{branch.location.name}</span>
           </div>
         </div>
@@ -55,7 +62,7 @@ export default function BranchPreview() {
             navigate(ROUTE_PATHS.organisation.branches.onboard);
           }}
         >
-          <Pen size={20} />
+          <LuPen size={20} />
         </AppButton>
       </AppContentHeader>
       <AppContentBody className="mt-3">
@@ -93,7 +100,7 @@ export default function BranchPreview() {
                         member.memberId,
                       )}
                     >
-                      <Eye
+                      <LuEye
                         size={20}
                         className="text-slate-400 cursor-pointer"
                       />
@@ -113,7 +120,7 @@ function LeaderContainer({ leader }: { leader?: Leader }) {
   return (
     <div className="w-full sm:flex-1 flex flex-col border border-slate-300 px-3 pt-3 rounded-md">
       <div className="flex text-slate-700 pb-3 border-b border-b-slate-300">
-        <CircleUser />
+        <LuCircleUser />
         <div className="flex flex-col">
           <span className="font-bold text-sm">{leader?.title.name}</span>
           <span className="text-sm">{leader?.member.name}</span>
@@ -121,14 +128,14 @@ function LeaderContainer({ leader }: { leader?: Leader }) {
       </div>
       <div className="grid grid-cols-2 my-2 gap-1">
         <div className="flex py-3 text-slate-700 gap-1  border-r border-r-slate-300">
-          <Phone size={18} />
+          <LuPhone size={18} />
           <div className="flex flex-col">
             <span className="font-bold text-sm">Phone</span>
             <span className="text-xs">{leader?.member.phone}</span>
           </div>
         </div>
         <div className="flex py-3 text-slate-700 gap-1">
-          <Mail size={18} />
+          <LuMail size={18} />
           <div className="flex flex-col">
             <span className="font-bold text-sm">Email</span>
             <span className="text-xs">{leader?.member.email}</span>

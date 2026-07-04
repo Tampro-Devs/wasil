@@ -4,7 +4,6 @@ import RegionsSection from "../components/regions.section";
 import DistrictsSection from "../components/districts.section";
 import WardsSection from "../components/wards.section";
 import StreetsSection from "../components/streets.section";
-import { Plus } from "lucide-react";
 import { RegionForm } from "../components/forms/region.form";
 import { DistrictForm } from "../components/forms/district.form";
 import { WardForm } from "../components/forms/ward.form";
@@ -16,6 +15,7 @@ import {
 } from "../../../shared/components/app.content.container";
 import AppButton from "../../../shared/components/app.button";
 import SideLinkItem from "../../../shared/components/side.link.item";
+import { LuPlus } from "react-icons/lu";
 
 export default function LocationsConfigPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -113,7 +113,7 @@ export default function LocationsConfigPage() {
               variant="secondary"
               onClick={handleAddButtonClick}
             >
-              <Plus />
+              <LuPlus />
             </AppButton>
           }
         />

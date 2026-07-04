@@ -8,7 +8,6 @@ import {
   AppContentContainer,
   AppContentHeader,
 } from "../../../shared/components/app.content.container";
-import { Banknote, MapPinHouse } from "lucide-react";
 import {
   calculateAge,
   convertStringToDate,
@@ -17,6 +16,7 @@ import {
 import { useState } from "react";
 import MemberBasicInfoSection from "../components/member.basic.info.section";
 import MemberContributionSection from "../components/member.contribution.section";
+import { LuBanknote, LuMapPinHouse } from "react-icons/lu";
 
 const tabs = [
   {
@@ -95,7 +95,7 @@ function MemberResidence({ member }: { member: Member }) {
   return (
     <div className="w-full sm:flex-1 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
-        <MapPinHouse size={18} />
+        <LuMapPinHouse size={18} />
         <span className="text-sm">Residence</span>
       </div>
       <div className="flex gap-3 my-1">
@@ -134,7 +134,7 @@ function MemberContribution() {
   return (
     <div className="w-full sm:flex-1 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
-        <Banknote size={18} />
+        <LuBanknote size={18} />
         <span className="text-sm">Contribution</span>
       </div>
 
@@ -155,7 +155,7 @@ function MemberEducation() {
   return (
     <div className="w-full sm:flex-1 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
-        <Banknote size={18} />
+        <LuBanknote size={18} />
         <span className="text-sm">Education</span>
       </div>
 

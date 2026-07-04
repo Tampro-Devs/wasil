@@ -1,4 +1,4 @@
-import { CreditCard, Users } from "lucide-react";
+import { LuCreditCard, LuUsers } from "react-icons/lu";
 import {
   Table,
   TableBody,
@@ -24,7 +24,7 @@ export function DashboardContributionTable() {
       // }}
     >
       <TableCaption className="flex items-center gap-1">
-        <CreditCard />
+        <LuCreditCard />
         <span>Latest Contribution</span>
       </TableCaption>
       <Table>
@@ -56,7 +56,7 @@ export function DashboardAcquisitionTable() {
   return (
     <TableWrapper>
       <TableCaption className="flex items-center gap-1 mb-1">
-        <Users />
+        <LuUsers />
         <span>Latest Acquisition</span>
       </TableCaption>
       <Table>

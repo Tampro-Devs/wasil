@@ -1,9 +1,9 @@
 import React from "react";
 import { cn } from "../../utils/cn";
-import { useFormState, type FieldValues } from "react-hook-form";
-import { useAppFormContext } from "./app.form";
-import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { LuArrowLeft } from "react-icons/lu";
+import type { IconType } from "react-icons/lib";
+import AppSpinner from "./loading.indicators";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
 
@@ -17,6 +17,9 @@ interface AppButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   rightIcon?: React.ReactNode;
 }
 
+interface AppIconButtonProps extends AppButtonProps {
+  Icon: IconType;
+}
 export default function AppButton({
   variant = "primary",
   size = "md",
@@ -41,7 +44,7 @@ export default function AppButton({
     >
       {!loading && leftIcon && <span>{leftIcon}</span>}
 
-      <span>{loading ? "Loading..." : children}</span>
+      <span>{loading ? <AppSpinner /> : children}</span>
 
       {!loading && rightIcon && <span>{rightIcon}</span>}
     </button>
@@ -53,7 +56,7 @@ const variantClasses: Record<ButtonVariant, string> = {
     "bg-[var(--accent)] text-white hover:bg-[var(--accent-dark)] shadow-[var(--shadow-soft)]",
   secondary: "bg-[var(--primary)] text-white hover:bg-[var(--primary-light)]",
   outline:
-    "border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800",
+    "border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-white",
   ghost: "hover:bg-slate-100 dark:hover:bg-slate-800/10",
   danger: "bg-[var(--error)] text-white hover:opacity-90",
 };
@@ -70,25 +73,21 @@ interface SubmitButtonProps extends AppButtonProps {
   className?: string;
 }
 
-export function AppSubmitButton<T extends FieldValues>({
+export function AppSubmitButton({
   label,
   className,
   size,
+  loading,
 }: SubmitButtonProps) {
-  const form = useAppFormContext<T>();
-  const { isSubmitting, isValid, isDirty } = useFormState({
-    control: form.control,
-  });
-
   return (
     <AppButton
       type="submit"
       size={size}
-      loading={isSubmitting}
-      disabled={isSubmitting || (!isValid && isDirty)}
+      loading={loading}
+      disabled={loading}
       className={className}
     >
-      {isSubmitting ? "Loading..." : label}
+      {loading ? <AppSpinner /> : label}
     </AppButton>
   );
 }
@@ -100,10 +99,18 @@ export function AppBackButton({ label }: { label: string }) {
       variant="ghost"
       size="sm"
       className="text-blue-950 font-bold px-0 rounded-sm mb-3"
-      leftIcon={<ArrowLeft size={15} />}
+      leftIcon={<LuArrowLeft size={15} />}
       onClick={() => navigate(-1) || navigate("/")}
     >
       {label}
+    </AppButton>
+  );
+}
+
+export function AppIconButton({ Icon, ...props }: AppIconButtonProps) {
+  return (
+    <AppButton {...props} size="xs" className="size-7" variant="secondary">
+      <Icon />
     </AppButton>
   );
 }

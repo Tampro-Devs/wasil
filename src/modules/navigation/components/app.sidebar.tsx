@@ -2,7 +2,7 @@ import { navGroups } from "..";
 import { NavLink } from "react-router-dom";
 import { useSidebar } from "../context/sidebar.provider";
 import { useMediaQuery } from "../../../shared/hooks/use.mediaquery";
-import { X } from "lucide-react";
+import { LuX } from "react-icons/lu";
 
 export default function AppSidebar() {
   const isSmallDevice = useMediaQuery("(max-width: 767px)");
@@ -29,7 +29,7 @@ export default function AppSidebar() {
               {isOpen && "Wasil"}
             </span>
           </div>
-          {isSmallDevice && <X onClick={toggleSidebar} />}
+          {isSmallDevice && <LuX onClick={toggleSidebar} />}
         </div>
         {navGroups.map((group, index) => (
           <div className={`mb-3 w-full`} key={index}>

@@ -1,4 +1,3 @@
-import { Plus } from "lucide-react";
 import AppButton from "../../../../shared/components/app.button";
 import {
   AppContentBody,
@@ -13,6 +12,7 @@ import DistrictLeadersSection from "../../components/district.leaders.section";
 import WardLeadersSection from "../../components/ward.leaders.section";
 import StreetLeadersSection from "../../components/street.leaders.section";
 import SideLinkItem from "../../../../shared/components/side.link.item";
+import { LuPlus } from "react-icons/lu";
 
 export default function LeadershipMainPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -69,7 +69,7 @@ export default function LeadershipMainPage() {
           title={sideLinksTags[currentIndex].text}
           actions={
             <AppButton size="xs" variant="secondary" onClick={() => {}}>
-              <Plus />
+              <LuPlus />
             </AppButton>
           }
         />

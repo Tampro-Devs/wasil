@@ -1,9 +1,9 @@
-import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import type { IconType } from "react-icons/lib";
 
 interface NavigationItemInterface {
   title: string;
-  icon: LucideIcon;
+  icon: IconType;
   path: string;
 }
 

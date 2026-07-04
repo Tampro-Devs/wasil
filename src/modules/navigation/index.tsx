@@ -1,17 +1,18 @@
-import {
-  BanknoteArrowUp,
-  BookOpenText,
-  BriefcaseConveyorBelt,
-  Building,
-  LayoutDashboard,
-  MapPinHouse,
-  ShieldUser,
-  University,
-  Users,
-  Wallet,
-} from "lucide-react";
 import type { NavigationGroup } from "./types";
 import { ROUTE_PATHS } from "../router/route.paths";
+import {
+  LuBookOpenText,
+  LuBriefcaseConveyorBelt,
+  LuBuilding2,
+  LuLayoutDashboard,
+  LuMapPinHouse,
+  LuUniversity,
+  LuUsers,
+  LuWallet,
+} from "react-icons/lu";
+import { LiaUserShieldSolid } from "react-icons/lia";
+
+import { PiMoneyWavy } from "react-icons/pi";
 
 export const navGroups: NavigationGroup[] = [
   {
@@ -19,7 +20,7 @@ export const navGroups: NavigationGroup[] = [
     items: [
       {
         title: "Dashboard",
-        icon: LayoutDashboard,
+        icon: LuLayoutDashboard,
         path: ROUTE_PATHS.dashboard.root,
       },
     ],
@@ -29,17 +30,17 @@ export const navGroups: NavigationGroup[] = [
     items: [
       {
         title: "Organization",
-        icon: Building,
+        icon: LuBuilding2,
         path: ROUTE_PATHS.organisation.root,
       },
       {
         title: "Leadership",
-        icon: BriefcaseConveyorBelt,
+        icon: LuBriefcaseConveyorBelt,
         path: ROUTE_PATHS.organisation.leadership.root,
       },
       {
         title: "Branches",
-        icon: University,
+        icon: LuUniversity,
         path: ROUTE_PATHS.organisation.branches.root,
       },
     ],
@@ -49,7 +50,7 @@ export const navGroups: NavigationGroup[] = [
     items: [
       {
         title: "Members",
-        icon: Users,
+        icon: LuUsers,
         path: ROUTE_PATHS.membership.members.root,
       },
     ],
@@ -59,12 +60,12 @@ export const navGroups: NavigationGroup[] = [
     items: [
       {
         title: "Finance",
-        icon: Wallet,
+        icon: LuWallet,
         path: ROUTE_PATHS.finance.finance.root,
       },
       {
         title: "Contribution",
-        icon: BanknoteArrowUp,
+        icon: PiMoneyWavy,
         path: ROUTE_PATHS.finance.finance.contribution,
       },
     ],
@@ -74,17 +75,17 @@ export const navGroups: NavigationGroup[] = [
     items: [
       {
         title: "Roles",
-        icon: ShieldUser,
+        icon: LiaUserShieldSolid,
         path: ROUTE_PATHS.configs.roles.root,
       },
       {
         title: "Locations",
-        icon: MapPinHouse,
+        icon: LuMapPinHouse,
         path: ROUTE_PATHS.configs.locations.root,
       },
       {
         title: "Education",
-        icon: BookOpenText,
+        icon: LuBookOpenText,
         path: ROUTE_PATHS.configs.education.root,
       },
     ],

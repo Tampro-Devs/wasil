@@ -1,4 +1,3 @@
-import { Eye, Pen, Plus, Trash } from "lucide-react";
 import AppButton from "../../../../shared/components/app.button";
 import {
   AppContentContainer,
@@ -19,6 +18,7 @@ import { branchDummies } from "../../types/branch.type";
 import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "../../../router/route.paths";
 import { setPageHeader } from "../../../../utils/general_hooks";
+import { LuEye, LuPen, LuPlus, LuTrash } from "react-icons/lu";
 
 export default function BranchMainPage() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function BranchMainPage() {
               navigate(ROUTE_PATHS.organisation.branches.onboard);
             }}
           >
-            <Plus />
+            <LuPlus />
           </AppButton>
         }
       />
@@ -72,16 +72,16 @@ export default function BranchMainPage() {
                           branch.branchId,
                         )}
                       >
-                        <Eye
+                        <LuEye
                           size={20}
                           className="text-slate-400 cursor-pointer"
                         />
                       </Link>
-                      <Pen
+                      <LuPen
                         size={20}
                         className="text-green-400 cursor-pointer"
                       />
-                      <Trash
+                      <LuTrash
                         size={20}
                         className="text-red-400 cursor-pointer"
                       />

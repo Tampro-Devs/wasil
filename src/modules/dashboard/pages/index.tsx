@@ -1,4 +1,3 @@
-import { Building2, CreditCard, UsersRound } from "lucide-react";
 import DashboardFilter from "../components/dashboard.filter";
 import DashboardEvents from "../components/dashboard.events";
 import {
@@ -7,10 +6,10 @@ import {
 } from "../components/dashboard.tables";
 import { setPageHeader } from "../../../utils/general_hooks";
 import { shortenNumber } from "../../../utils/globals";
+import { LuBuilding2, LuCreditCard, LuUsersRound } from "react-icons/lu";
 
 export default function DashboardPage() {
   setPageHeader("Overview");
-
   return (
     <div className="mt-3 flex flex-col xl:flex-row gap-5">
       <div className="lg:hidden">
@@ -21,14 +20,14 @@ export default function DashboardPage() {
           <StatCard
             title="Member Acquisition"
             statValue={100}
-            Icon={UsersRound}
+            Icon={LuUsersRound}
           />
           <StatCard
             title="Total Contribution"
             statValue={100000}
-            Icon={CreditCard}
+            Icon={LuCreditCard}
           />
-          <StatCard title="Active Branches" statValue={1} Icon={Building2} />
+          <StatCard title="Active Branches" statValue={1} Icon={LuBuilding2} />
         </div>
         <DashboardAcquisitionTable />
         <DashboardContributionTable />

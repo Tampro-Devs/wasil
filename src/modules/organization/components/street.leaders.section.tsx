@@ -12,7 +12,7 @@ import {
 import { streets } from "../../configs/data";
 import { Link } from "react-router-dom";
 import { ROUTE_PATHS } from "../../router/route.paths";
-import { Eye, Pen, Trash } from "lucide-react";
+import { LuEye, LuPen, LuTrash } from "react-icons/lu";
 
 export default function StreetLeadersSection() {
   const leaders = useFindBy(leadersDummies, "title", leadershipDummies[6]);
@@ -63,10 +63,13 @@ export default function StreetLeadersSection() {
                       leader.member.memberId,
                     )}
                   >
-                    <Eye size={20} className="text-slate-400 cursor-pointer" />
+                    <LuEye
+                      size={20}
+                      className="text-slate-400 cursor-pointer"
+                    />
                   </Link>
-                  <Pen size={20} className="text-green-400 cursor-pointer" />
-                  <Trash size={20} className="text-red-400 cursor-pointer" />
+                  <LuPen size={20} className="text-green-400 cursor-pointer" />
+                  <LuTrash size={20} className="text-red-400 cursor-pointer" />
                 </div>
               </TableCell>
             </TableRow>

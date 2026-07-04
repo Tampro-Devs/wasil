@@ -1,5 +1,5 @@
-import { Cog, LogOut, User, UserCog } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { LuCog, LuLogOut, LuUser, LuUserCog } from "react-icons/lu";
 
 interface DropDownItemContent {
   title: string;
@@ -33,7 +33,7 @@ export default function UserButton() {
         onClick={() => setIsOpen(!isOpen)}
         className="group cursor-pointer rounded-full p-1 bg-slate-300 hover:bg-slate-500 transition-colors duration-300"
       >
-        <User className="text-gray-500 group-hover:text-white" />
+        <LuUser className="text-gray-500 group-hover:text-white" />
       </button>
       <UserDropDown isOpen={isOpen} />
     </div>
@@ -53,9 +53,9 @@ function UserDropDown({ isOpen }: { isOpen: boolean }) {
           <span className="text-xs">Member</span>
         </div>
       </div>
-      <DropDownItem title="Profile" link="" ItemIcon={UserCog} />
-      <DropDownItem title="Settings" link="" ItemIcon={Cog} />
-      <DropDownItem title="Log Out" link="" ItemIcon={LogOut} />
+      <DropDownItem title="Profile" link="" ItemIcon={LuUserCog} />
+      <DropDownItem title="Settings" link="" ItemIcon={LuCog} />
+      <DropDownItem title="Log Out" link="" ItemIcon={LuLogOut} />
     </div>
   );
 }

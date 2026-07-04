@@ -1,14 +1,15 @@
-import { Ban, MoveLeft, type LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type React from "react";
 import { cn } from "../../utils/cn";
 import AppButton from "./app.button";
+import type { IconType } from "react-icons/lib";
+import { LuBan, LuMoveLeft } from "react-icons/lu";
 
 interface NotFoundContentProps extends React.HTMLAttributes<HTMLDivElement> {
   isContent: boolean;
   title?: string;
   message?: string;
-  Icon?: LucideIcon;
+  Icon?: IconType;
   Action?: React.ReactNode;
 }
 
@@ -16,7 +17,7 @@ interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   message?: string;
   Action?: React.ReactNode;
-  Icon: LucideIcon;
+  Icon: IconType;
 }
 
 export default function NotFound({
@@ -32,7 +33,7 @@ export default function NotFound({
     <ContentNotFound
       title={title}
       message={message}
-      Icon={Icon ?? Ban}
+      Icon={Icon ?? LuBan}
       className={className}
       Action={Action}
       {...props}
@@ -66,7 +67,7 @@ function PageNotFound({ title, message }: { title: string; message: string }) {
             <h1 className="text-xl md:text-3xl mt-5">{title}</h1>
             <h1 className="text-xs">{message}</h1>
             <AppButton
-              leftIcon={<MoveLeft />}
+              leftIcon={<LuMoveLeft />}
               className="mt-3"
               variant="primary"
               onClick={() => navigate(-1) || navigate("/")}

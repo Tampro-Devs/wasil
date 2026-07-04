@@ -1,4 +1,3 @@
-import { Eye, Pen, Plus, Trash } from "lucide-react";
 import {
   AppContentContainer,
   AppContentBody,
@@ -16,6 +15,7 @@ import {
 } from "../../../shared/components/table";
 import { setPageHeader } from "../../../utils/general_hooks";
 import AppButton from "../../../shared/components/app.button";
+import { LuEye, LuPen, LuPlus, LuTrash } from "react-icons/lu";
 
 export default function RolesConfigPage() {
   setPageHeader("System Roles");
@@ -25,7 +25,7 @@ export default function RolesConfigPage() {
         title="Manage Roles"
         actions={
           <AppButton size="xs" variant="secondary" onClick={() => {}}>
-            <Plus />
+            <LuPlus />
           </AppButton>
         }
       />
@@ -52,15 +52,15 @@ export default function RolesConfigPage() {
                   <TableCell>100</TableCell>
                   <TableCell>
                     <div className="flex gap-3">
-                      <Eye
+                      <LuEye
                         size={20}
                         className="text-slate-400 cursor-pointer"
                       />
-                      <Pen
+                      <LuPen
                         size={20}
                         className="text-green-400 cursor-pointer"
                       />
-                      <Trash
+                      <LuTrash
                         size={20}
                         className="text-red-400 cursor-pointer"
                       />
