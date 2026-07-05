@@ -14,4 +14,10 @@ export const apiQueryKeys = {
 
   streets: ["streets"] as const,
   street: (streetId: string) => ["street", streetId] as const,
+
+  roles: ["roles"] as const,
+  role: (roleId: string) => ["role", roleId] as const,
+
+  users: ["users"] as const,
+  user: (userId: string) => ["user", userId] as const,
 };
