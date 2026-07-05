@@ -1,6 +1,6 @@
-import type { Role } from "../../configs/types/role.type";
+import type { Role } from "../../users/types/role.type";
 
-export interface User {
+export interface UserData {
   user_id: string;
   first_name: string;
   middle_name: string;

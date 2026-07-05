@@ -9,13 +9,13 @@ import { ROUTE_PATHS } from "../../router/route.paths";
 import { AppSubmitButton } from "../../../shared/components/app.button";
 import { useMutation } from "@tanstack/react-query";
 import { triggerToast } from "../../../utils/globals";
-import type { User } from "../types";
 import { useDispatch } from "react-redux";
 import { signIn } from "../services/reducers/auth.session.slice";
 import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
 import { AppFormProvider } from "../../../shared/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthServices from "../services/api.services";
+import type { UserData } from "../types";
 
 export default function SignInForm() {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function SignInForm() {
 
       const responseCode = responseData.responseCode;
       if (responseCode === 0) {
-        const user = responseData.data as User;
+        const user = responseData.data as UserData;
         dispatch(signIn(user));
         navigate(ROUTE_PATHS.dashboard.root, { replace: true });
       } else {
