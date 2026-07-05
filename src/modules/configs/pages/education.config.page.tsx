@@ -28,6 +28,7 @@ import { triggerToast } from "../../../utils/globals";
 import EducationLevelForm from "../components/forms/education.level.form";
 
 export default function EducationConfigPage() {
+  setPageHeader("Education");
   const queryClient = useQueryClient();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -59,7 +60,6 @@ export default function EducationConfigPage() {
       },
     });
 
-  setPageHeader("Education");
   return (
     <>
       <AppContentContainer>
