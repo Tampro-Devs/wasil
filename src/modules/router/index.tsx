@@ -19,6 +19,7 @@ import { AppPublicRoute } from "./components/app.public.route";
 import { ROUTE_PATHS } from "./route.paths";
 import RolesManagementPage from "../users/pages/roles.management.page";
 import UsersManagementPage from "../users/pages/users.management.page";
+import RolePreviewPage from "../users/pages/role.preview.page";
 
 export const router: RouteConfig[] = [
   {
@@ -112,6 +113,11 @@ export const router: RouteConfig[] = [
         title: "Roles",
         path: ROUTE_PATHS.users.roles.root,
         element: <RolesManagementPage />,
+      },
+      {
+        title: "Preview Role",
+        path: `${ROUTE_PATHS.users.roles.root}/:roleId`,
+        element: <RolePreviewPage />,
       },
       {
         title: "Users",

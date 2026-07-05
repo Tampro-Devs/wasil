@@ -48,10 +48,8 @@ export const ROUTE_PATHS = {
   users: {
     roles: {
       root: rolesBase,
-
-      permissions: {
-        root: `${rolesBase}/permissions`,
-      },
+      preview: (roleId: string) => `${rolesBase}/${roleId}`,
+      permissions: { root: `${rolesBase}/permissions` },
     },
     users: {
       root: usersBase,

@@ -25,9 +25,12 @@ import { triggerToast } from "../../../utils/globals";
 import type { Role } from "../types/role.type";
 import DeleteAssuaranceDialog from "../../../shared/components/delete.assuarance.dialog";
 import { RoleForm } from "../components/forms/role.form";
+import { Link } from "react-router-dom";
+import { ROUTE_PATHS } from "../../router/route.paths";
 
 export default function RolesManagementPage() {
   setPageHeader("System Roles");
+
   const queryClient = useQueryClient();
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -104,10 +107,14 @@ export default function RolesManagementPage() {
                       <TableCell>{role.total_permissions}</TableCell>
                       <TableCell>
                         <div className="flex gap-3">
-                          <LuEye
-                            size={20}
-                            className="text-slate-400 cursor-pointer"
-                          />
+                          <Link
+                            to={ROUTE_PATHS.users.roles.preview(role.role_id)}
+                          >
+                            <LuEye
+                              size={20}
+                              className="text-slate-400 cursor-pointer"
+                            />
+                          </Link>
                           <LuPen
                             size={20}
                             className="text-green-400 cursor-pointer"
