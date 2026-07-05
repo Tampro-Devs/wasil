@@ -17,7 +17,7 @@ import { setPageHeader } from "../../../utils/general_hooks";
 import AppButton from "../../../shared/components/app.button";
 import { LuEye, LuPen, LuPlus, LuTrash } from "react-icons/lu";
 
-export default function RolesConfigPage() {
+export default function RolesManagementPage() {
   setPageHeader("System Roles");
   return (
     <AppContentContainer>

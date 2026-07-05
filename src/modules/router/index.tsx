@@ -1,7 +1,6 @@
 import SignInPage from "../auth/pages/signin.page";
 import EducationConfigPage from "../configs/pages/education.config.page";
 import LocationsConfigPage from "../configs/pages/location.config.page";
-import RolesConfigPage from "../configs/pages/roles.config.page";
 import DashboardPage from "../dashboard/pages";
 import FinanceMainPage from "../finance/pages";
 import ContributionMainPage from "../finance/pages/contribution.page";
@@ -18,6 +17,8 @@ import LeadershipMainPage from "../organization/pages/leadership";
 import { AppProtectedRoute } from "./components/app.protected.route";
 import { AppPublicRoute } from "./components/app.public.route";
 import { ROUTE_PATHS } from "./route.paths";
+import RolesManagementPage from "../users/pages/roles.management.page";
+import UsersManagementPage from "../users/pages/users.management.page";
 
 export const router: RouteConfig[] = [
   {
@@ -106,13 +107,19 @@ export const router: RouteConfig[] = [
         path: ROUTE_PATHS.finance.finance.contribution,
         element: <ContributionMainPage />,
       },
-
-      // Configs
+      // Users
       {
         title: "Roles",
-        path: ROUTE_PATHS.configs.roles.root,
-        element: <RolesConfigPage />,
+        path: ROUTE_PATHS.users.roles.root,
+        element: <RolesManagementPage />,
       },
+      {
+        title: "Users",
+        path: ROUTE_PATHS.users.users.root,
+        element: <UsersManagementPage />,
+      },
+
+      // Configs
       {
         title: "Locations",
         path: ROUTE_PATHS.configs.locations.root,

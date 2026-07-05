@@ -11,6 +11,7 @@ import {
   LuWallet,
 } from "react-icons/lu";
 import { LiaUserShieldSolid } from "react-icons/lia";
+import { FaUsersGear } from "react-icons/fa6";
 
 import { PiMoneyWavy } from "react-icons/pi";
 
@@ -71,13 +72,23 @@ export const navGroups: NavigationGroup[] = [
     ],
   },
   {
-    label: "Configs",
+    label: "Users",
     items: [
       {
         title: "Roles",
         icon: LiaUserShieldSolid,
-        path: ROUTE_PATHS.configs.roles.root,
+        path: ROUTE_PATHS.users.roles.root,
       },
+      {
+        title: "Users",
+        icon: FaUsersGear,
+        path: ROUTE_PATHS.users.users.root,
+      },
+    ],
+  },
+  {
+    label: "Configs",
+    items: [
       {
         title: "Locations",
         icon: LuMapPinHouse,

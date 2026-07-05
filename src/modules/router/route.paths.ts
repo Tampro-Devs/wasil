@@ -1,5 +1,6 @@
 const configsBase = "/configs";
-const rolesBase = `${configsBase}/roles`;
+const usersBase = "/users";
+const rolesBase = `/roles`;
 const membershipBase = "/members";
 
 const organisationBase = "/organisation";
@@ -44,6 +45,19 @@ export const ROUTE_PATHS = {
     },
   },
 
+  users: {
+    roles: {
+      root: rolesBase,
+
+      permissions: {
+        root: `${rolesBase}/permissions`,
+      },
+    },
+    users: {
+      root: usersBase,
+    },
+  },
+
   configs: {
     locations: {
       root: `${configsBase}/locations`,
@@ -51,14 +65,6 @@ export const ROUTE_PATHS = {
 
     education: {
       root: `${configsBase}/education`,
-    },
-
-    roles: {
-      root: rolesBase,
-
-      permissions: {
-        root: `${rolesBase}/permissions`,
-      },
     },
   },
 };
