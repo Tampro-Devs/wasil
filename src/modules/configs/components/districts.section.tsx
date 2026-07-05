@@ -80,10 +80,15 @@ export default function DistrictsSection() {
 
       <TableWrapper
         className="flex flex-col"
-        // error={{
-        //   title: "No Morogoro Districts Found",
-        //   message: "Click plus icon to add one",
-        // }}
+        error={
+          districtMutation.data?.message &&
+          (districtMutation.data.data?.length ?? 0) === 0
+            ? {
+                title: "No Districts",
+                message: districtMutation.data.message,
+              }
+            : undefined
+        }
       >
         <TableCaption>
           <span className="font-bold me-1">Region:</span>

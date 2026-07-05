@@ -106,10 +106,15 @@ export default function StreetsSection() {
 
       <TableWrapper
         className="flex flex-col"
-        // error={{
-        //   title: "No Streets Found",
-        //   message: "Click plus icon to add one",
-        // }}
+        error={
+          streetMutation.data?.message &&
+          (streetMutation.data.data?.length ?? 0) === 0
+            ? {
+                title: "No Streets",
+                message: streetMutation.data.message,
+              }
+            : undefined
+        }
       >
         <TableCaption>
           <span className="font-bold me-1">Ward:</span>

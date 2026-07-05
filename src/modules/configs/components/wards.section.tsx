@@ -93,10 +93,15 @@ export default function WardsSection() {
 
       <TableWrapper
         className="flex flex-col"
-        // error={{
-        //   title: "No Morogoro Districts Found",
-        //   message: "Click plus icon to add one",
-        // }}
+        error={
+          wardMutation.data?.message &&
+          (wardMutation.data.data?.length ?? 0) === 0
+            ? {
+                title: "No Ward",
+                message: wardMutation.data.message,
+              }
+            : undefined
+        }
       >
         <TableCaption>
           <span className="font-bold me-1">District:</span>

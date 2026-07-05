@@ -29,7 +29,7 @@ export default function RegionsSection() {
       error={
         apiResponse?.message && (apiResponse.data?.length ?? 0) === 0
           ? {
-              title: "No Education Levels",
+              title: "No Regions",
               message: apiResponse.message,
             }
           : undefined
