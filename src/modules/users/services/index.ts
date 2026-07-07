@@ -7,6 +7,10 @@ const UsersServiceEndpoint = {
     update: `${USERS_BASE_URL}/update-role`,
     delete: `${USERS_BASE_URL}/remove-role`,
   },
+  permission: {
+    set: `${USERS_BASE_URL}/set-role-permissions`,
+    get: `${USERS_BASE_URL}/get-role-permissions`,
+  },
   user: {
     add: `${USERS_BASE_URL}/add-user`,
     get: `${USERS_BASE_URL}/get-users`,
