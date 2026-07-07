@@ -14,7 +14,7 @@ import { AppFormProvider } from "../../../../shared/components/form";
 import { AppTextField } from "../../../../shared/components/form/fields/app.text.field";
 import { AppSelectField } from "../../../../shared/components/form/fields/app.select.field";
 import { AppDatePicker } from "../../../../shared/components/form/fields/date.picker/app.date.picker";
-import { AppCheckboxField } from "../../../../shared/components/form/fields/app.checkbox.field";
+import { AppCheckboxFormField } from "../../../../shared/components/form/fields/app.checkbox.field";
 
 export default function MemberRegistrationForm() {
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ export default function MemberRegistrationForm() {
             <div className="flex-1 border-b-2 border-b-slate-300"></div>
           </div>
 
-          <AppCheckboxField
+          <AppCheckboxFormField
             control={form.control}
             name="residenceCategory"
             label="This is the permanent residence"
