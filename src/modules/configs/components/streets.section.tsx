@@ -20,10 +20,10 @@ import {
 import { type SelectOption } from "../../../shared/components/form/fields/app.select.field";
 import { AppFormProvider } from "../../../shared/components/form";
 import { AppSubmitButton } from "../../../shared/components/app.button";
-import RegionSelectInput from "./forms/inputs/region.select.input";
-import DistrictSelectInput from "./forms/inputs/district.select.input";
+import RegionSelectInput from "../../../shared/components/form/inputs/region.select.input";
+import DistrictSelectInput from "../../../shared/components/form/inputs/district.select.input";
 import { useState } from "react";
-import WardSelectInput from "./forms/inputs/ward.select.input";
+import WardSelectInput from "../../../shared/components/form/inputs/ward.select.input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import StreetServices from "../services/street.services";
 import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";

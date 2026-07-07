@@ -23,8 +23,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import WardServices from "../services/ward.services";
 import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";
-import RegionSelectInput from "./forms/inputs/region.select.input";
-import DistrictSelectInput from "./forms/inputs/district.select.input";
+import RegionSelectInput from "../../../shared/components/form/inputs/region.select.input";
+import DistrictSelectInput from "../../../shared/components/form/inputs/district.select.input";
 import { AppSubmitButton } from "../../../shared/components/app.button";
 
 export default function WardsSection() {

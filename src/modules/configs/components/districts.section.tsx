@@ -19,7 +19,7 @@ import {
 } from "../schemas/district.form.schema";
 
 import { AppFormProvider } from "../../../shared/components/form";
-import RegionSelectInput from "./forms/inputs/region.select.input";
+import RegionSelectInput from "../../../shared/components/form/inputs/region.select.input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import DistrictServices from "../services/district.services";
 import { useState } from "react";
