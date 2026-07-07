@@ -6,99 +6,91 @@ import {
   type BranchFormValues,
 } from "../schemas/branch.form.schema";
 import { AppSubmitButton } from "../../../shared/components/app.button";
-
-import { regions } from "../../configs/data";
-import {
-  AppSelectField,
-  type SelectOption,
-} from "../../../shared/components/form/fields/app.select.field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppFormProvider } from "../../../shared/components/form";
 import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
+import MemberSelectInput from "../../../shared/components/form/inputs/leader.select.input";
+import RegionSelectInput from "../../../shared/components/form/inputs/region.select.input";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import BranchServices from "../services/branch.services";
+import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";
+import { triggerToast } from "../../../utils/globals";
+import { useNavigate } from "react-router-dom";
 
-const members: SelectOption[] = [
-  {
-    value: "Member-01",
-    label: "Abubakr Salim Mwinyi",
-  },
-  {
-    value: "Member-02",
-    label: "Fatuma Hassan Ally",
-  },
-  {
-    value: "Member-03",
-    label: "Omar Juma Kikwete",
-  },
-  {
-    value: "Member-04",
-    label: "Mariam Abdalla Rashid",
-  },
-  {
-    value: "Member-05",
-    label: "Yusuf Hamisi Msigwa",
-  },
-  {
-    value: "Member-06",
-    label: "Zainab Idris Kombo",
-  },
-  {
-    value: "Member-07",
-    label: "Khalid Nuhu Tambwe",
-  },
-  {
-    value: "Member-08",
-    label: "Safia Mtumwa Seif",
-  },
-  {
-    value: "Member-09",
-    label: "Ibrahim Suleiman Mgeni",
-  },
-  {
-    value: "Member-10",
-    label: "Rehema Bakari Chande",
-  },
-];
 export default function BranchOnboardForm() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const form = useForm<BranchFormValues>({
     resolver: zodResolver(branchSchema),
     defaultValues: defaultBranchValues,
   });
 
+  const branchMutation = useMutation({
+    mutationFn: BranchServices.addBranch,
+    onSuccess: (response) => {
+      if (response.responseCode === 0) {
+        navigate(-1);
+      } else {
+        const message = response.message;
+        triggerToast(message ?? "Unknown error occurred", "error");
+      }
+    },
+    onError: (error) => {
+      triggerToast(error.message, "error");
+    },
+  });
+
   async function onSubmit(data: BranchFormValues) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("FORM DATA::", data);
+    void (async () => {
+      await branchMutation.mutateAsync(data);
+      await queryClient.invalidateQueries({
+        queryKey: apiQueryKeys.branches,
+      });
+    })();
   }
+
   return (
     <AppFormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-2"
+      >
         <AppTextField
           control={form.control}
           label="Branch Name"
           name="name"
           placeholder="Branch Name"
         />
-        <AppSelectField
+
+        <RegionSelectInput
           control={form.control}
-          label="Branch Location"
-          name="region"
-          placeholder="Select..."
-          options={regions}
+          name="location_id"
+          label="Region"
+          placeholder="Select Region"
+          widthClass="w-full"
         />
-        <AppSelectField
+        <MemberSelectInput
           control={form.control}
-          label="Branch Leader"
+          label="Leader"
           name="leader"
+          widthClass="w-full"
           placeholder="Select..."
-          options={members}
         />
-        <AppSelectField
+        <MemberSelectInput
           control={form.control}
-          label="Branch Assistant Leader"
-          name="assistant"
+          name="assistant_leader"
+          label="Assistant Leader"
+          widthClass="w-full"
           placeholder="Select..."
-          options={members}
         />
-        <AppSubmitButton label="Submit" className="w-32 mt-5" />
+        <div className="flex justify-end">
+          <AppSubmitButton
+            label="Submit"
+            className="w-32"
+            loading={branchMutation.isPending}
+          />
+        </div>
       </form>
     </AppFormProvider>
   );

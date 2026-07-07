@@ -1,16 +1,14 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useFindBy } from "../../../../shared/hooks/global.hooks";
-import { branchDummies } from "../../types/branch.type";
 import { setPageHeader } from "../../../../utils/general_hooks";
 import {
   AppContentBody,
   AppContentContainer,
   AppContentHeader,
 } from "../../../../shared/components/app.content.container";
-import NotFound from "../../../../shared/components/not-found";
 import type { Leader } from "../../types/leadership.type";
 import AppButton from "../../../../shared/components/app.button";
 import {
+  LoadingTableBody,
   Table,
   TableBody,
   TableCaption,
@@ -20,7 +18,7 @@ import {
   TableRow,
   TableWrapper,
 } from "../../../../shared/components/table";
-import { membersDummies } from "../../../members/types/member.type";
+import { type Member } from "../../../members/types/member.type";
 import { ROUTE_PATHS } from "../../../router/route.paths";
 import {
   LuCircleUser,
@@ -30,28 +28,79 @@ import {
   LuPen,
   LuPhone,
 } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import BranchServices from "../../services/branch.services";
+import { useMutation } from "@tanstack/react-query";
+import type { Branch } from "../../types/branch.type";
+import NotFound from "../../../../shared/components/not-found";
+import { getFullName } from "../../../../utils/globals";
 
 export default function BranchPreview() {
   const { branchId } = useParams();
   const navigate = useNavigate();
 
-  const branchList = useFindBy(branchDummies, "branchId", `${branchId}`);
-
-  const branch = branchList.length > 0 ? branchList[0] : null;
-
+  const [branch, setBranch] = useState<Branch | null>(null);
+  const [members, setMembers] = useState<Member[] | []>([]);
+  const [branchResponseMsg, setBranchResponseMsg] = useState<string | null>(
+    null,
+  );
+  const [memberResponseMsg, setMemberResponseMsg] = useState<string | null>(
+    null,
+  );
   setPageHeader("Branch Preview", "Back To Branches");
-  if (branch == null) {
-    return <NotFound isContent={true} />;
+
+  const branchMutation = useMutation({
+    mutationFn: BranchServices.getBranchDetails,
+    onSuccess: (response) => {
+      const responseCode = response.responseCode;
+      const message = response.message;
+      if (responseCode == 0) {
+        setBranch(response.data);
+      } else {
+        setBranchResponseMsg(message);
+      }
+    },
+  });
+
+  const branchMembersMutation = useMutation({
+    mutationFn: BranchServices.getBranchMembers,
+    onSuccess: (response) => {
+      const responseCode = response.responseCode;
+      const message = response.message;
+      if (responseCode == 0) {
+        setMembers(response.data);
+      } else {
+        setMemberResponseMsg(message);
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (!branchId) return;
+    void (async () => {
+      await branchMutation.mutateAsync(branchId);
+      await branchMembersMutation.mutateAsync(branchId);
+    })();
+  }, [branchId]);
+
+  if (branchResponseMsg) {
+    return (
+      <NotFound
+        isContent={true}
+        title="Branch Details Error"
+        message={branchResponseMsg}
+      />
+    );
   }
 
   return (
     <AppContentContainer className="mt-3">
       <AppContentHeader>
         <div className="flex flex-col">
-          <span className="text-sm font-bold">{branch.name}</span>
+          <span className="text-sm font-bold">{branch?.name}</span>
           <div className="flex text-slate-700">
             <LuMapPinHouse />
-            <span className="text-xs">{branch.location.name}</span>
+            <span className="text-xs">{branch?.location?.name}</span>
           </div>
         </div>
         <AppButton
@@ -68,12 +117,21 @@ export default function BranchPreview() {
       <AppContentBody className="mt-3">
         <div className="flex flex-wrap sm:flex-row gap-3 mb-5">
           <LeaderContainer leader={branch?.leader} />
-          <LeaderContainer leader={branch?.assistant} />
+          <LeaderContainer leader={branch?.assistant_leader} />
         </div>
-        <TableWrapper>
+        <TableWrapper
+          error={
+            memberResponseMsg && (members.length ?? 0) === 0
+              ? {
+                  title: "No Roles",
+                  message: memberResponseMsg,
+                }
+              : undefined
+          }
+        >
           <TableCaption>
             <span className="font-bold me-1">Members:</span>
-            <span className="text-xs">{branch.members}</span>
+            <span className="text-xs">{branch?.total_members}</span>
           </TableCaption>
           <Table>
             <TableHeader>
@@ -87,27 +145,38 @@ export default function BranchPreview() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {membersDummies.map((member, index) => (
-                <TableRow key={index}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{member.name}</TableCell>
-                  <TableCell>{member.email}</TableCell>
-                  <TableCell>{member.phone}</TableCell>
-                  <TableCell>Barabara ya 16</TableCell>
-                  <TableCell>
-                    <Link
-                      to={ROUTE_PATHS.membership.members.preview(
-                        member.memberId,
-                      )}
-                    >
-                      <LuEye
-                        size={20}
-                        className="text-slate-400 cursor-pointer"
-                      />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {branchMembersMutation.isPending ? (
+                <LoadingTableBody columns={6} />
+              ) : (
+                members?.map((member, index) => {
+                  const fullName = getFullName({
+                    first_name: member.first_name,
+                    middle_name: member.middle_name,
+                    last_name: member.last_name,
+                  });
+                  return (
+                    <TableRow key={index}>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{fullName}</TableCell>
+                      <TableCell>{member.email}</TableCell>
+                      <TableCell>{member.phone}</TableCell>
+                      <TableCell>{member.residence.name}</TableCell>
+                      <TableCell>
+                        <Link
+                          to={ROUTE_PATHS.membership.members.preview(
+                            member.memberId,
+                          )}
+                        >
+                          <LuEye
+                            size={20}
+                            className="text-slate-400 cursor-pointer"
+                          />
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              )}
             </TableBody>
           </Table>
         </TableWrapper>
@@ -122,8 +191,8 @@ function LeaderContainer({ leader }: { leader?: Leader }) {
       <div className="flex text-slate-700 pb-3 border-b border-b-slate-300">
         <LuCircleUser />
         <div className="flex flex-col">
-          <span className="font-bold text-sm">{leader?.title.name}</span>
-          <span className="text-sm">{leader?.member.name}</span>
+          <span className="font-bold text-sm">{leader?.title?.name}</span>
+          <span className="text-sm">{leader?.full_name}</span>
         </div>
       </div>
       <div className="grid grid-cols-2 my-2 gap-1">
@@ -131,14 +200,14 @@ function LeaderContainer({ leader }: { leader?: Leader }) {
           <LuPhone size={18} />
           <div className="flex flex-col">
             <span className="font-bold text-sm">Phone</span>
-            <span className="text-xs">{leader?.member.phone}</span>
+            <span className="text-xs">{leader?.phone}</span>
           </div>
         </div>
         <div className="flex py-3 text-slate-700 gap-1">
           <LuMail size={18} />
           <div className="flex flex-col">
             <span className="font-bold text-sm">Email</span>
-            <span className="text-xs">{leader?.member.email}</span>
+            <span className="text-xs">{leader?.email}</span>
           </div>
         </div>
       </div>
