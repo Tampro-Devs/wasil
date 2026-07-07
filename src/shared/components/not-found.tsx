@@ -3,7 +3,8 @@ import type React from "react";
 import { cn } from "../../utils/cn";
 import AppButton from "./app.button";
 import type { IconType } from "react-icons/lib";
-import { LuBan, LuMoveLeft } from "react-icons/lu";
+import { LuMoveLeft } from "react-icons/lu";
+import { PiFolderOpen } from "react-icons/pi";
 
 interface NotFoundContentProps extends React.HTMLAttributes<HTMLDivElement> {
   isContent: boolean;
@@ -33,7 +34,7 @@ export default function NotFound({
     <ContentNotFound
       title={title}
       message={message}
-      Icon={Icon ?? LuBan}
+      Icon={Icon ?? PiFolderOpen}
       className={className}
       Action={Action}
       {...props}
@@ -97,7 +98,7 @@ function ContentNotFound({
       )}
       {...props}
     >
-      <Icon className="text-slate-400 my-5" size={40} />
+      <Icon className="text-slate-400 my-5" size={60} />
       <span className="text-slate-400 font-bold">{title}</span>
       <span className="text-slate-400 text-sm">{message}</span>
       {Action && Action}
