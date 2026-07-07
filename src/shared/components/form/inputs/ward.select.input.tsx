@@ -1,18 +1,16 @@
 import type { Control, FieldPath, FieldValues } from "react-hook-form";
-import {
-  AppSelectField,
-  type SelectOption,
-} from "../../../../../shared/components/form/fields/app.select.field";
+import { AppSelectField, type SelectOption } from "../fields/app.select.field";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiQueryKeys } from "../../../../../api.service.config/query.config/query.keys";
-import { toSelectOptions } from "../../../../../utils/globals";
-import WardServices from "../../../services/ward.services";
+import { apiQueryKeys } from "../../../../api.service.config/query.config/query.keys";
+import { toSelectOptions } from "../../../../utils/globals";
+import WardServices from "../../../../modules/configs/services/ward.services";
 import { useEffect, useState } from "react";
 
 interface Props<T extends FieldValues> {
   districtId?: string;
   name: FieldPath<T>;
   placeholder: string;
+  label?: string;
   widthClass: string;
   control: Control<T, any, T>;
   onChange?: (value: SelectOption | null) => void | null;
@@ -21,6 +19,7 @@ interface Props<T extends FieldValues> {
 export default function WardSelectInput<T extends FieldValues>({
   districtId,
   name,
+  label,
   placeholder,
   control,
   widthClass,
@@ -53,6 +52,7 @@ export default function WardSelectInput<T extends FieldValues>({
     <AppSelectField
       control={control}
       name={name}
+      label={label}
       placeholder={placeholder}
       widthClass={widthClass}
       isLoading={wardOptionsMutation.isPending}

@@ -30,7 +30,7 @@ export function AppSelectField<T extends FieldValues>({
   placeholder,
   disabled,
   onChange = (_value: SelectOption | null) => {},
-  widthClass = "w-full",
+  widthClass,
   isLoading = false,
 }: SelectFieldProps<T>) {
   return (
