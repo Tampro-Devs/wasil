@@ -32,6 +32,7 @@ import { useForm } from "react-hook-form";
 import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
 import { AppFormProvider } from "../../../shared/components/form";
 import { AppSelectField } from "../../../shared/components/form/fields/app.select.field";
+import { getFullName } from "../../../utils/globals";
 
 export default function MembersMainPage() {
   const navigate = useNavigate();
@@ -135,34 +136,41 @@ export default function MembersMainPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {membersDummies.map((member, index) => (
-                <TableRow key={index}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{member.name}</TableCell>
-                  <TableCell>{member.residence.street.name}</TableCell>
-                  <TableCell>{member.email}</TableCell>
-                  <TableCell>{member.phone}</TableCell>
+              {membersDummies.map((member, index) => {
+                const fullName = getFullName({
+                  first_name: member.first_name,
+                  middle_name: member.middle_name,
+                  last_name: member.last_name,
+                });
+                return (
+                  <TableRow key={index}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{fullName}</TableCell>
+                    <TableCell>{member.residence.name}</TableCell>
+                    <TableCell>{member.email}</TableCell>
+                    <TableCell>{member.phone}</TableCell>
 
-                  <TableCell>
-                    <div className="flex gap-3">
-                      <Link
-                        to={ROUTE_PATHS.membership.members.preview(
-                          member.memberId,
-                        )}
-                      >
-                        <LuEye
+                    <TableCell>
+                      <div className="flex gap-3">
+                        <Link
+                          to={ROUTE_PATHS.membership.members.preview(
+                            member.memberId,
+                          )}
+                        >
+                          <LuEye
+                            size={20}
+                            className="text-slate-400 cursor-pointer"
+                          />
+                        </Link>
+                        <LuTrash
                           size={20}
-                          className="text-slate-400 cursor-pointer"
+                          className="text-red-400 cursor-pointer"
                         />
-                      </Link>
-                      <LuTrash
-                        size={20}
-                        className="text-red-400 cursor-pointer"
-                      />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableWrapper>

@@ -81,3 +81,19 @@ export function toSelectOptions<
     value: String(item[valueKey]),
   }));
 }
+
+type PersonName = {
+  first_name?: string | null;
+  middle_name?: string | null;
+  last_name?: string | null;
+};
+
+export function getFullName({
+  first_name,
+  middle_name,
+  last_name,
+}: PersonName): string {
+  return [first_name, middle_name, last_name]
+    .filter((name): name is string => !!name?.trim())
+    .join(" ");
+}

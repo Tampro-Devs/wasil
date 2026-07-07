@@ -111,7 +111,7 @@ export default function FinanceMainPage() {
             <TableBody>
               <TableRow>
                 <TableCell>1</TableCell>
-                <TableCell>{membersDummies[0].name}</TableCell>
+                <TableCell>{membersDummies[0].first_name}</TableCell>
                 <TableCell>ER45677</TableCell>
                 <TableCell>{formatMoney(10000)}</TableCell>
                 <TableCell>{convertStringToDate("2026-05-24")}</TableCell>

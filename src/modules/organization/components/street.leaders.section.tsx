@@ -43,7 +43,7 @@ export default function StreetLeadersSection() {
           {streetLeaders.map((leader, index) => (
             <TableRow key={index}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>{leader.member.name}</TableCell>
+              <TableCell>{leader.full_name}</TableCell>
               <TableCell>
                 <div className="flex flex-col text-sm">
                   <span>{leader.title.name}</span>
@@ -52,15 +52,15 @@ export default function StreetLeadersSection() {
               </TableCell>
               <TableCell>
                 <div className="flex flex-col text-sm">
-                  <span>{leader.member.email}</span>
-                  <span>{leader.member.phone}</span>
+                  <span>{leader.email}</span>
+                  <span>{leader.phone}</span>
                 </div>
               </TableCell>
               <TableCell>
                 <div className="flex gap-3">
                   <Link
                     to={ROUTE_PATHS.membership.members.preview(
-                      leader.member.memberId,
+                      leader.member_id,
                     )}
                   >
                     <LuEye

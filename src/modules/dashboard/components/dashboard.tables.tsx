@@ -9,7 +9,7 @@ import {
   TableRow,
   TableWrapper,
 } from "../../../shared/components/table";
-import { formatMoney } from "../../../utils/globals";
+import { formatMoney, getFullName } from "../../../utils/globals";
 import { membersDummies } from "../../members/types/member.type";
 
 export function DashboardContributionTable() {
@@ -69,19 +69,26 @@ export function DashboardAcquisitionTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {membersDummies.map((member, index) => (
-            <TableRow key={index}>
-              <TableCell>{member.name}</TableCell>
-              <TableCell>{member.gender}</TableCell>
-              <TableCell>{member.branch?.name}</TableCell>
-              <TableCell>
-                <div className="flex flex-col">
-                  <span>{member.email}</span>
-                  <span>{member.phone}</span>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+          {membersDummies.map((member, index) => {
+            const fullName = getFullName({
+              first_name: member.first_name,
+              middle_name: member.middle_name,
+              last_name: member.last_name,
+            });
+            return (
+              <TableRow key={index}>
+                <TableCell>{fullName}</TableCell>
+                <TableCell>{member.gender}</TableCell>
+                <TableCell>{member.branch?.name}</TableCell>
+                <TableCell>
+                  <div className="flex flex-col">
+                    <span>{member.email}</span>
+                    <span>{member.phone}</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableWrapper>

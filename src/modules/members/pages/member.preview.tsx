@@ -12,6 +12,7 @@ import {
   calculateAge,
   convertStringToDate,
   formatMoney,
+  getFullName,
 } from "../../../utils/globals";
 import { useState } from "react";
 import MemberBasicInfoSection from "../components/member.basic.info.section";
@@ -52,7 +53,13 @@ export default function MemberPreviewPage() {
     <AppContentContainer>
       <AppContentHeader>
         <div className="flex flex-col">
-          <span className="font-bold">{member.name}</span>
+          <span className="font-bold">
+            {getFullName({
+              first_name: member.first_name,
+              middle_name: member.middle_name,
+              last_name: member.last_name,
+            })}
+          </span>
           <div className="flex gap-2 items-center">
             <span className="w-fit px-3 text-xs rounded-full bg-blue-900 text-white">
               {member.gender}
@@ -102,29 +109,29 @@ function MemberResidence({ member }: { member: Member }) {
         <div className="flex-1 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Region: </span>
           <span className="text-xs">
-            {member.residence.street.ward?.district?.region?.name}
+            {member.residence.ward?.district?.region?.name}
           </span>
         </div>
         <div className="flex-1 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">District: </span>
           <span className="text-xs">
-            {member.residence.street.ward?.district?.name}
+            {member.residence.ward?.district?.name}
           </span>
         </div>
       </div>
       <div className="flex gap-3">
         <div className="flex-1 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Ward: </span>
-          <span className="text-xs">{member.residence.street.ward?.name}</span>
+          <span className="text-xs">{member.residence.ward?.name}</span>
         </div>
         <div className="flex-1 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">Street: </span>
-          <span className="text-xs">{member.residence.street.name}</span>
+          <span className="text-xs">{member.residence.name}</span>
         </div>
       </div>
       <div className="flex items-center gap-1">
         <span className="text-sm font-bold">House No: </span>
-        <span className="text-xs">{member.residence.houseNo}</span>
+        <span className="text-xs">{member.house_no}</span>
       </div>
     </div>
   );
