@@ -1,5 +1,3 @@
-import { type Member } from "../../members/types/member.type";
-
 export interface Leadership {
   name: string;
   level: "HQ" | "Branch" | "District" | "Ward" | "Street";
@@ -7,26 +5,16 @@ export interface Leadership {
 }
 
 export interface Leader {
-  member: Member;
+  full_name: string;
+  member_id: string;
+  phone: string;
+  email: string;
+  gender: string;
+  dob: string;
   title: Leadership;
 }
 
-export const leadershipDummies: Leadership[] = [
-  { name: "Amir Mkoa", level: "Branch", category: "Leader" },
-  { name: "Naibu Amir Mkoa", level: "Branch", category: "Assistant" },
-
-  { name: "Amir Taifa", level: "HQ", category: "Leader" },
-  { name: "Naibu Amir Taifa", level: "HQ", category: "Assistant" },
-
-  { name: "Amir Wilaya", level: "District", category: "Leader" },
-  { name: "Naibu Amir Wilaya", level: "District", category: "Assistant" },
-
-  { name: "Amir Kata", level: "Ward", category: "Leader" },
-  { name: "Naibu Amir Kata", level: "Ward", category: "Assistant" },
-
-  { name: "Amir Mtaa", level: "Ward", category: "Leader" },
-  { name: "Naibu Amir Mtaa", level: "Ward", category: "Assistant" },
-];
+export const leadershipDummies: Leadership[] = [];
 
 export const leadersDummies: Leader[] = [
   // { member: membersDummies[0], title: leadershipDummies[0] },
