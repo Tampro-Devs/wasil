@@ -1,4 +1,4 @@
-import AppButton from "../../../../shared/components/app.button";
+import { AppIconButton } from "../../../../shared/components/app.button";
 import {
   AppContentBody,
   AppContentContainer,
@@ -67,11 +67,7 @@ export default function LeadershipMainPage() {
       <AppContentContainer className="flex-1">
         <AppContentHeader
           title={sideLinksTags[currentIndex].text}
-          actions={
-            <AppButton size="xs" variant="secondary" onClick={() => {}}>
-              <LuPlus />
-            </AppButton>
-          }
+          actions={<AppIconButton Icon={LuPlus} />}
         />
         <AppContentBody>{sideLinksTags[currentIndex].section}</AppContentBody>
       </AppContentContainer>
