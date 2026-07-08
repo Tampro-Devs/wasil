@@ -103,7 +103,7 @@ export default function MemberPreviewPage() {
         <div className="flex flex-wrap gap-5 mb-3">
           <MemberResidence member={member} />
           <MemberContribution />
-          <MemberEducation />
+          <MemberEducation member={member} />
         </div>
 
         <div className="w-fit flex gap-5 bg-slate-300/30 rounded-full px-2 py-1 mt-3">
@@ -182,7 +182,7 @@ function MemberContribution() {
   );
 }
 
-function MemberEducation() {
+function MemberEducation({ member }: { member: MemberInfo }) {
   return (
     <div className="w-full sm:flex-1 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
@@ -193,12 +193,12 @@ function MemberEducation() {
       <div className="flex px-2 py-3 border-b border-b-slate-300/50 gap-2 items-center">
         <span className="text-sm font-bold">Level: </span>
         <span className={`text-sm text-center rounded-full`}>
-          Bachelor's Degree
+          {member.edu_level?.name}
         </span>
       </div>
 
       <div className="flex p-2 gap-2 items-center">
-        <span className="text-xs">Bachelor of Science with Education</span>
+        <span className="text-xs">{member.proffession}</span>
       </div>
     </div>
   );
