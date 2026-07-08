@@ -80,7 +80,7 @@ export default function StreetsSection() {
               control={form.control}
               regionId={selectedRegion?.value}
               name="district"
-              placeholder="Select Districts"
+              placeholder="Select District"
               widthClass="w-full lg:w-xs"
               onChange={(option) => {
                 if (!option) return null;

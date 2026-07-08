@@ -10,7 +10,7 @@ interface Props<T extends FieldValues> {
   wardId: string;
   name: FieldPath<T>;
   placeholder: string;
-  label: string;
+  label?: string;
   widthClass: string;
   control: Control<T, any, T>;
   onChange?: (value: SelectOption | null) => void | null;
