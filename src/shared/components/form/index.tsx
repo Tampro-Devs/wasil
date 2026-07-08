@@ -56,7 +56,7 @@ export function FormItem({ children }: React.PropsWithChildren) {
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div className="space-y-2">{children}</div>
+      <div className="space-y-2 flex flex-col">{children}</div>
     </FormItemContext.Provider>
   );
 }
