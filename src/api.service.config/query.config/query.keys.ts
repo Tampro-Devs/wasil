@@ -20,4 +20,10 @@ export const apiQueryKeys = {
 
   users: ["users"] as const,
   user: (userId: string) => ["user", userId] as const,
+
+  leaders: ["leaders"] as const,
+  leader: (leaderId: string) => ["leader", leaderId] as const,
+
+  branches: ["branches"] as const,
+  branch: (branchId: string) => ["branch", branchId] as const,
 };
