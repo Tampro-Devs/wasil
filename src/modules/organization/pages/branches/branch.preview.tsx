@@ -60,6 +60,9 @@ export default function BranchPreview() {
         setBranchResponseMsg(message);
       }
     },
+    onError: (error) => {
+      setBranchResponseMsg(error.message);
+    },
   });
 
   const branchMembersMutation = useMutation({
@@ -72,6 +75,9 @@ export default function BranchPreview() {
       } else {
         setMemberResponseMsg(message);
       }
+    },
+    onError: (error) => {
+      setMemberResponseMsg(error.message);
     },
   });
 
@@ -123,7 +129,7 @@ export default function BranchPreview() {
           error={
             memberResponseMsg && (members.length ?? 0) === 0
               ? {
-                  title: "No Roles",
+                  title: "No Members",
                   message: memberResponseMsg,
                 }
               : undefined
@@ -164,7 +170,7 @@ export default function BranchPreview() {
                       <TableCell>
                         <Link
                           to={ROUTE_PATHS.membership.members.preview(
-                            member.memberId,
+                            member.member_id,
                           )}
                         >
                           <LuEye
