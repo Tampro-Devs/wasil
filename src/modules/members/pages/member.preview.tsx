@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { type Member, type MemberInfo } from "../types/member.type";
+import { type MemberInfo } from "../types/member.type";
 import NotFound from "../../../shared/components/not-found";
 import { setPageHeader } from "../../../utils/general_hooks";
 import {
