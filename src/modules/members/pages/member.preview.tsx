@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useFindBy } from "../../../shared/hooks/global.hooks";
-import { membersDummies, type Member } from "../types/member.type";
+import { type Member, type MemberInfo } from "../types/member.type";
 import NotFound from "../../../shared/components/not-found";
 import { setPageHeader } from "../../../utils/general_hooks";
 import {
@@ -14,38 +13,67 @@ import {
   formatMoney,
   getFullName,
 } from "../../../utils/globals";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MemberBasicInfoSection from "../components/member.basic.info.section";
 import MemberContributionSection from "../components/member.contribution.section";
 import { LuBanknote, LuMapPinHouse } from "react-icons/lu";
-
-const tabs = [
-  {
-    title: "Basic",
-    component: <MemberBasicInfoSection />,
-  },
-  {
-    title: "Contribution",
-    component: <MemberContributionSection />,
-  },
-];
+import { useMutation } from "@tanstack/react-query";
+import MemberServices from "../services/member.services";
 
 export default function MemberPreviewPage() {
   const { memberId } = useParams();
-  const memberList = useFindBy(membersDummies, "memberId", `${memberId}`);
 
+  const [member, setMember] = useState<MemberInfo | null>(null);
+  const [memberResponseMsg, setMemberResponseMsg] = useState<string | null>(
+    null,
+  );
+
+  const tabs = [
+    {
+      title: "Basic",
+      component: <MemberBasicInfoSection member={member} />,
+    },
+    {
+      title: "Contribution",
+      component: <MemberContributionSection member={member} />,
+    },
+  ];
   const [currentTab, setCurrentTab] = useState(tabs[0]);
-
-  const member = memberList.length > 0 ? memberList[0] : null;
-
   setPageHeader("Member Preview", "Back To Members");
 
-  if (member == null) {
+  const memberMutation = useMutation({
+    mutationFn: MemberServices.getMemberDetails,
+    onSuccess: (response) => {
+      const responseCode = response.responseCode;
+      const message = response.message;
+      if (responseCode == 0) {
+        setMember(response.data);
+        setCurrentTab(tabs[0]);
+      } else {
+        setMemberResponseMsg(message);
+      }
+    },
+    onError: (error) => {
+      setMemberResponseMsg(error.message);
+    },
+  });
+
+  useEffect(() => {
+    if (!memberId) return;
+    void (async () => {
+      await memberMutation.mutateAsync(memberId);
+    })();
+  }, [memberId]);
+
+  if (memberResponseMsg || member == null) {
     return (
       <NotFound
         isContent={true}
-        title="Member Not Found"
-        message="Member you are trying to preview is not found, kindly confirm availability"
+        title="Error"
+        message={
+          memberResponseMsg ??
+          "Member you are trying to preview is not found, kindly confirm availability"
+        }
       />
     );
   }
@@ -98,7 +126,7 @@ export default function MemberPreviewPage() {
   );
 }
 
-function MemberResidence({ member }: { member: Member }) {
+function MemberResidence({ member }: { member: MemberInfo }) {
   return (
     <div className="w-full sm:flex-1 flex flex-col border border-slate-300/30 p-2 rounded-sm">
       <div className="flex border-b border-b-slate-300/50">
@@ -108,21 +136,17 @@ function MemberResidence({ member }: { member: Member }) {
       <div className="flex gap-3 my-1">
         <div className="flex-1 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Region: </span>
-          <span className="text-xs">
-            {member.residence.ward?.district?.region?.name}
-          </span>
+          <span className="text-xs">{member.region?.name}</span>
         </div>
         <div className="flex-1 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">District: </span>
-          <span className="text-xs">
-            {member.residence.ward?.district?.name}
-          </span>
+          <span className="text-xs">{member.district?.name}</span>
         </div>
       </div>
       <div className="flex gap-3">
         <div className="flex-1 flex border-b border-b-slate-300/50 p-1 border-r border-r-slate-600/30 gap-2 items-center">
           <span className="text-sm font-bold">Ward: </span>
-          <span className="text-xs">{member.residence.ward?.name}</span>
+          <span className="text-xs">{member.ward?.name}</span>
         </div>
         <div className="flex-1 flex border-b border-b-slate-300/50 gap-2 items-center">
           <span className="text-sm font-bold">Street: </span>

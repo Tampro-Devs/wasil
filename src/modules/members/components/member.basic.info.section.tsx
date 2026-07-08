@@ -1,27 +1,32 @@
 import type { IconType } from "react-icons/lib";
 import { LuBriefcaseBusiness, LuBuilding2 } from "react-icons/lu";
 import { PiToolbox } from "react-icons/pi";
+import type { MemberInfo } from "../types/member.type";
 
-export default function MemberBasicInfoSection() {
+export default function MemberBasicInfoSection({
+  member,
+}: {
+  member: MemberInfo | null;
+}) {
   return (
     <div className="mt-1 pt-1 border-t border-t-slate-300">
       <div className="flex flex-col">
         <InfoContainer
           title="Proffession"
-          content="Teacher"
+          content={member?.proffession}
           Icon={LuBriefcaseBusiness}
         />
         <InfoContainer
           title="Work Title"
-          content="Head of School"
+          content={member?.work_title}
           Icon={PiToolbox}
         />
         <InfoContainer
           title="Institution"
-          content="Morogoro Secondary School"
+          content={member?.institution}
           Icon={LuBuilding2}
         />
-        <div className="flex flex-col py-1 border-t border-t-slate-300">
+        {/* <div className="flex flex-col py-1 border-t border-t-slate-300">
           <span className="mb-1 font-bold">Member's Opinion</span>
           <span className="text-xs">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit
@@ -32,7 +37,7 @@ export default function MemberBasicInfoSection() {
             incidunt, ipsa fugit necessitatibus esse optio neque eligendi
             quibusdam dolores. Optio eum est eveniet.
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -44,7 +49,7 @@ function InfoContainer({
   Icon,
 }: {
   title: string;
-  content: string;
+  content?: string;
   Icon: IconType;
 }) {
   return (

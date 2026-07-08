@@ -22,8 +22,13 @@ import {
 import { memberContributionDummies } from "../types/contribution.type";
 import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
 import { AppFormProvider } from "../../../shared/components/form";
+import type { MemberInfo } from "../types/member.type";
 
-export default function MemberContributionSection() {
+export default function MemberContributionSection({
+  member,
+}: {
+  member: MemberInfo | null;
+}) {
   const form = useForm<MemberContributionFilterFormValues>({
     resolver: zodResolver(memberContributionFilterSchema),
     defaultValues: defaultMemberContributionFilterFormValues,

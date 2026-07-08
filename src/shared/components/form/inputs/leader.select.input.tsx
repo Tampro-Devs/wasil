@@ -6,6 +6,7 @@ import type { ResponseResource } from "../../../../utils/response.resource";
 import { apiQueryKeys } from "../../../../api.service.config/query.config/query.keys";
 import { toSelectOptions } from "../../../../utils/globals";
 import MemberServices from "../../../../modules/members/services/member.services";
+import { defaultMemberFilterValues } from "../../../../modules/members/schema/member.filter.schema";
 
 interface Props<T extends FieldValues> {
   name: FieldPath<T>;
@@ -30,7 +31,7 @@ export default function MemberSelectInput<T extends FieldValues>({
     SelectOption[]
   >({
     queryKey: apiQueryKeys.leaders,
-    queryFn: MemberServices.getMembers,
+    queryFn: () => MemberServices.getMembers(defaultMemberFilterValues),
     select: (response) => toSelectOptions(response.data, "first_name", "user"),
   });
   return (
