@@ -21,6 +21,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import EducationLevelServices from "../../services/education.level.services";
 import { apiQueryKeys } from "../../../../api.service.config/query.config/query.keys";
 import { useCallback, useEffect } from "react";
+
 interface EducationalLevelFormProps extends FormModalProps {
   educationLevel: EducationLevel | null;
 }
