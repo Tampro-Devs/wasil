@@ -4,7 +4,7 @@ import {
   signinSchema,
   type SignInFormValues,
 } from "../schema/signing.form.schema";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "../../router/route.paths";
 import { AppSubmitButton } from "../../../shared/components/app.button";
 import { useMutation } from "@tanstack/react-query";
@@ -16,10 +16,13 @@ import { AppFormProvider } from "../../../shared/components/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthServices from "../services/api.services";
 import type { UserData } from "../types";
+import { FiEye, FiEyeOff, FiLock, FiMail } from "react-icons/fi";
+import { useState } from "react";
 
 export default function SignInForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signinSchema),
@@ -52,26 +55,50 @@ export default function SignInForm() {
 
   return (
     <AppFormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <AppTextField
-          control={form.control}
-          type="email"
-          name="email"
-          label="Email"
-          placeholder="Enter your login email"
-        />
-        <AppTextField
-          control={form.control}
-          type="password"
-          name="password"
-          label="Password"
-          placeholder="*************"
-        />
-        <AppSubmitButton
-          label="Sign In"
-          className="mt-3"
-          loading={signInMutation.isPending}
-        />
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-3"
+      >
+        <div className="flex flex-col gap-5">
+          <AppTextField
+            control={form.control}
+            type="email"
+            name="email"
+            label="Email"
+            placeholder="Enter your login email"
+            LeadingIcon={<FiMail className="h-5 w-5 shrink-0 text-gray-400" />}
+          />
+          <AppTextField
+            control={form.control}
+            type={showPassword ? "text" : "password"}
+            name="password"
+            label="Password"
+            placeholder="*************"
+            LeadingIcon={<FiLock className="h-5 w-5 shrink-0 text-gray-400" />}
+            Suffix={
+              <button
+                type="button"
+                onClick={() => setShowPassword((s) => !s)}
+                className="shrink-0 text-gray-400 hover:text-gray-600 transition cursor-pointer"
+              >
+                {showPassword ? (
+                  <FiEyeOff className="h-5 w-5" />
+                ) : (
+                  <FiEye className="h-5 w-5" />
+                )}
+              </button>
+            }
+          />
+        </div>
+        <div className="flex justify-end">
+          <NavLink
+            to={ROUTE_PATHS.auth.forgotPassword}
+            className="text-xs text-[#16224f] hover:underline"
+          >
+            Forgot password?
+          </NavLink>
+        </div>
+        <AppSubmitButton label="Sign In" loading={signInMutation.isPending} />
       </form>
     </AppFormProvider>
   );

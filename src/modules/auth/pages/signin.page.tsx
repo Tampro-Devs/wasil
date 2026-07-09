@@ -1,37 +1,19 @@
+import { FiUser } from "react-icons/fi";
 import SignInForm from "../components/signin.form";
-import { Bounce, ToastContainer } from "react-toastify";
 
 export default function SignInPage() {
   return (
-    <div className="h-screen w-screen overflow-hidden">
-      <div className="h-full w-full flex flex-col items-center justify-center">
-        <div className="border border-gray-300/30 p-5 rounded-md w-[20rem] md:w-100 bg-gray-200">
-          <div className="flex items-center gap-1">
-            <div className="bg-white p-1 rounded-full">
-              <img src="/images/logo.png" className="size-5" alt="" />
-            </div>
-            <span className="font-bold text-lg text-blue-950">Wasil</span>
-          </div>
-          <div className="my-5">
-            <span className="text-2xl font-bold">Sign In</span>
-          </div>
-
-          <SignInForm />
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Bounce}
-          />
+    <>
+      <div className="flex flex-col items-center text-center mb-10">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#eaf0fb]">
+          <FiUser className="h-7 w-7 text-[#16224f]" />
         </div>
+        <h2 className="mt-5 text-3xl text-[#16224f]">Sign In</h2>
+        <p className="mt-1 text-sm text-gray-500">
+          Enter your credentials to continue
+        </p>
       </div>
-    </div>
+      <SignInForm />
+    </>
   );
 }
