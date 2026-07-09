@@ -6,7 +6,7 @@ import type { MemberRegisterFormValues } from "../schema/member.register.for.sch
 import type { Member, MemberInfo } from "../types/member.type";
 
 const MemberServices = {
-  async addMember(
+  async registerMember(
     data: MemberRegisterFormValues,
   ): Promise<ResponseResource<Member | null>> {
     const response = await apiService.post<ResponseResource<Member | null>>(

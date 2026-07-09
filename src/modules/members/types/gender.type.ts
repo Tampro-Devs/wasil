@@ -2,16 +2,16 @@ import type { SelectOption } from "../../../shared/components/form/fields/app.se
 
 export interface Gender extends SelectOption {
   label: "Male" | "Female";
-  value: "male" | "female";
+  value: "Male" | "Female";
 }
 
 export const genders: Gender[] = [
   {
     label: "Male",
-    value: "male",
+    value: "Male",
   },
   {
     label: "Female",
-    value: "female",
+    value: "Female",
   },
 ];
