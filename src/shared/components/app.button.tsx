@@ -53,7 +53,7 @@ export default function AppButton({
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--accent)] text-white hover:bg-[var(--accent-dark)] shadow-[var(--shadow-soft)]",
+    "bg-[#16224f] py-3.5 text-xs font-semibold text-white transition hover:bg-[#0f1a3d] active:scale-[0.99]",
   secondary: "bg-[var(--primary)] text-white hover:bg-[var(--primary-light)]",
   outline:
     "border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-white",
@@ -85,7 +85,7 @@ export function AppSubmitButton({
       size={size}
       loading={loading}
       disabled={loading}
-      className={`min-w-32 h-7 p-0 ${className}`}
+      className={`min-w-32 h-9 p-0 ${className}`}
     >
       {loading ? <AppSpinner /> : label}
     </AppButton>
