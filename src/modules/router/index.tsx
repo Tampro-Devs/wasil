@@ -20,16 +20,42 @@ import { ROUTE_PATHS } from "./route.paths";
 import RolesManagementPage from "../users/pages/roles.management.page";
 import UsersManagementPage from "../users/pages/users.management.page";
 import RolePreviewPage from "../users/pages/role.preview.page";
+import AuthLayout from "../navigation/components/auth.layout";
+import ActivateAccountPage from "../auth/pages/activate.account.page";
+import RequestPasswordChangePage from "../auth/pages/request.password.change.page";
+import ResetPasswordPage from "../auth/pages/reset.password.page";
 
 export const router: RouteConfig[] = [
   {
     title: "Sign In",
-    path: ROUTE_PATHS.auth.signIn,
+    path: ROUTE_PATHS.auth.root,
     element: (
       <AppPublicRoute>
-        <SignInPage />
+        <AuthLayout />
       </AppPublicRoute>
     ),
+    children: [
+      {
+        title: "Sign In",
+        path: ROUTE_PATHS.auth.signIn,
+        element: <SignInPage />,
+      },
+      {
+        title: "Activate Account",
+        path: `${ROUTE_PATHS.auth.activateAccount.root}/:token`,
+        element: <ActivateAccountPage />,
+      },
+      {
+        title: "Forgot Password",
+        path: ROUTE_PATHS.auth.forgotPassword,
+        element: <RequestPasswordChangePage />,
+      },
+      {
+        title: "Reset Password",
+        path: ROUTE_PATHS.auth.passwordReset,
+        element: <ResetPasswordPage />,
+      },
+    ],
   },
   {
     title: "Dashboard",

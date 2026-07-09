@@ -1,3 +1,5 @@
+const authBase = "/auth";
+
 const configsBase = "/configs";
 const usersBase = "/users";
 const rolesBase = `/roles`;
@@ -11,7 +13,15 @@ const contributionBase = `/contribution`;
 
 export const ROUTE_PATHS = {
   auth: {
-    signIn: "sign-in",
+    root: authBase,
+    signIn: `${authBase}/sign-in`,
+    passwordReset: `${authBase}/reset-password`,
+    forgotPassword: `${authBase}/forgot-password`,
+
+    activateAccount: {
+      root: `${authBase}/activate-account`,
+      activate: (token: string) => `${authBase}/activate-account/${token}`,
+    },
   },
 
   dashboard: {
