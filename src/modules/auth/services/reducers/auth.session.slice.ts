@@ -1,8 +1,8 @@
-import type { User } from "../../types";
+import type { UserData } from "../../types";
 import { createSlice } from "@reduxjs/toolkit";
 
 type AuthSessionState = {
-  user: User | null;
+  user: UserData | null;
   token: string | null;
   isSessionExpired: boolean;
 };
