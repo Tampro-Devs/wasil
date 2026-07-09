@@ -14,6 +14,8 @@ export function AppTextField<T extends FieldValues>({
   label,
   placeholder,
   control,
+  LeadingIcon,
+  Suffix,
 }: BaseFieldProps<T>) {
   return (
     <FormField
@@ -23,12 +25,16 @@ export function AppTextField<T extends FieldValues>({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <input
-              {...field}
-              type={type}
-              className="w-full h-9 px-3 text-xs bg-slate-300/30 border border-slate-300 rounded-full"
-              placeholder={placeholder}
-            />
+            <div className="w-full h-10 flex items-center gap-3 rounded-xl bg-slate-300/30 border border-slate-300 px-4 focus-within:border-[#182f81] focus-within:ring-1 focus-within:ring-[#182f81] transition">
+              {LeadingIcon}
+              <input
+                {...field}
+                type={type}
+                placeholder={placeholder}
+                className="w-full bg-transparent text-xs text-gray-800 placeholder:text-gray-400 outline-none"
+              />
+              {Suffix}
+            </div>
           </FormControl>
           <FormMessage />
         </FormItem>

@@ -20,6 +20,8 @@ export interface BaseFieldProps<T extends FieldValues> {
   control: Control<T, any, T>;
   type?: "text" | "email" | "password" | "url" | "tel";
   className?: string;
+  LeadingIcon?: React.ReactNode;
+  Suffix?: React.ReactNode;
 }
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
