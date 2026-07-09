@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "../../../../../utils/cn";
-import { toDate } from "../../../../../utils/globals";
+import { formatDateToString, toDate } from "../../../../../utils/globals";
 
 const MONTHS = [
   "January",
@@ -23,7 +23,7 @@ type View = "calendar" | "month" | "year";
 
 interface DatePickerFieldProps {
   value?: Date;
-  onChange: (value: Date | undefined) => void;
+  onChange: (value: string | undefined) => void;
   disabled?: boolean;
   placeholder?: string;
   minYear?: number;
@@ -54,6 +54,10 @@ function getFirstDay(y: number, m: number) {
   return new Date(y, m, 1).getDay();
 }
 
+function getYearPageStart(year: number, minYear: number) {
+  return minYear + Math.floor((year - minYear) / 12) * 12;
+}
+
 export function AppDatePickerField({
   value,
   onChange,
@@ -66,20 +70,19 @@ export function AppDatePickerField({
   const containerRef = useRef<HTMLDivElement>(null);
   const selectedDate = toDate(value);
 
+  const initialYear = selectedDate?.getFullYear() ?? today.getFullYear();
+  const initialMonth = selectedDate?.getMonth() ?? today.getMonth();
+
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<View>("calendar");
+  const [viewYear, setViewYear] = useState(initialYear);
+  const [viewMonth, setViewMonth] = useState(initialMonth);
 
-  const [viewYear, setViewYear] = useState(
-    selectedDate?.getFullYear() ?? today.getFullYear(),
-  );
-  const [viewMonth, setViewMonth] = useState(
-    selectedDate?.getMonth() ?? today.getMonth(),
-  );
-  const [yearPage, setYearPage] = useState(
-    Math.floor((selectedDate?.getFullYear() ?? today.getFullYear()) / 12),
+  // store the FIRST YEAR in the visible 12-year block
+  const [yearPageStart, setYearPageStart] = useState(
+    getYearPageStart(initialYear, minYear),
   );
 
-  // close outside click
   useEffect(() => {
     function onClick(e: MouseEvent) {
       if (
@@ -96,12 +99,13 @@ export function AppDatePickerField({
   }, []);
 
   useEffect(() => {
-    if (value) {
-      setViewYear(value.getFullYear());
-      setViewMonth(value.getMonth());
-      setYearPage(Math.floor(value.getFullYear() / 12));
-    }
-  }, [value]);
+    const parsed = toDate(value);
+    if (!parsed) return;
+
+    setViewYear(parsed.getFullYear());
+    setViewMonth(parsed.getMonth());
+    setYearPageStart(getYearPageStart(parsed.getFullYear(), minYear));
+  }, [value, minYear]);
 
   const daysInMonth = getDaysInMonth(viewYear, viewMonth);
   const firstDay = getFirstDay(viewYear, viewMonth);
@@ -116,17 +120,15 @@ export function AppDatePickerField({
   }, [firstDay, daysInMonth]);
 
   const years = useMemo(() => {
-    const start = yearPage * 12;
+    const start = Math.max(minYear, yearPageStart);
     const end = Math.min(start + 12, maxYear + 1);
 
-    return Array.from({ length: end - start }, (_, i) => start + i).filter(
-      (y) => y >= minYear && y <= maxYear,
-    );
-  }, [yearPage, minYear, maxYear]);
+    return Array.from({ length: end - start }, (_, i) => start + i);
+  }, [yearPageStart, minYear, maxYear]);
 
   function selectDate(day: number) {
     const d = new Date(viewYear, viewMonth, day);
-    onChange(d);
+    onChange(formatDateToString(d));
     setOpen(false);
     setView("calendar");
   }
@@ -137,13 +139,34 @@ export function AppDatePickerField({
 
   function todayClick() {
     const d = new Date();
-    onChange(d);
+    onChange(formatDateToString(d));
+    setViewYear(d.getFullYear());
+    setViewMonth(d.getMonth());
+    setYearPageStart(getYearPageStart(d.getFullYear(), minYear));
     setOpen(false);
+    setView("calendar");
+  }
+
+  function goPrevMonth() {
+    if (viewMonth === 0) {
+      setViewMonth(11);
+      setViewYear((y) => y - 1);
+    } else {
+      setViewMonth((m) => m - 1);
+    }
+  }
+
+  function goNextMonth() {
+    if (viewMonth === 11) {
+      setViewMonth(0);
+      setViewYear((y) => y + 1);
+    } else {
+      setViewMonth((m) => m + 1);
+    }
   }
 
   return (
     <div ref={containerRef} className="relative w-full select-none">
-      {/* Trigger */}
       <button
         type="button"
         disabled={disabled}
@@ -154,31 +177,28 @@ export function AppDatePickerField({
         className="flex w-full items-center rounded-xl border border-slate-300 bg-slate-300/30 p-2 text-sm"
       >
         <span className={value ? "text-gray-800" : "text-gray-400"}>
-          {value ? formatDate(value) : placeholder}
+          {value ? formatDate(toDate(value) ?? value) : placeholder}
         </span>
       </button>
 
-      {/* Dropdown */}
       {open && (
         <div className="absolute z-50 mt-2 w-[288px] rounded-2xl border bg-white p-4 shadow-2xl">
-          {/* CALENDAR */}
           {view === "calendar" && (
             <>
               <div className="mb-3 flex justify-between">
-                <button
-                  onClick={() => setViewMonth((m) => (m === 0 ? 11 : m - 1))}
-                >
+                <button type="button" onClick={goPrevMonth}>
                   ‹
                 </button>
 
                 <div className="flex gap-2">
-                  <button onClick={() => setView("month")}>
+                  <button type="button" onClick={() => setView("month")}>
                     {MONTHS[viewMonth].slice(0, 3)}
                   </button>
 
                   <button
+                    type="button"
                     onClick={() => {
-                      setYearPage(Math.floor(viewYear / 12));
+                      setYearPageStart(getYearPageStart(viewYear, minYear));
                       setView("year");
                     }}
                   >
@@ -186,9 +206,7 @@ export function AppDatePickerField({
                   </button>
                 </div>
 
-                <button
-                  onClick={() => setViewMonth((m) => (m === 11 ? 0 : m + 1))}
-                >
+                <button type="button" onClick={goNextMonth}>
                   ›
                 </button>
               </div>
@@ -211,7 +229,10 @@ export function AppDatePickerField({
                       className={cn(
                         "h-8 text-sm",
                         value &&
-                          isSameDay(new Date(viewYear, viewMonth, day), value)
+                          isSameDay(
+                            new Date(viewYear, viewMonth, day),
+                            toDate(value) ?? value,
+                          )
                           ? "bg-blue-900 text-white"
                           : isToday(new Date(viewYear, viewMonth, day))
                             ? "border border-blue-300"
@@ -225,18 +246,24 @@ export function AppDatePickerField({
               </div>
 
               <div className="mt-3 flex justify-between text-xs">
-                <button onClick={todayClick}>Today</button>
-                {value && <button onClick={clear}>Clear</button>}
+                <button type="button" onClick={todayClick}>
+                  Today
+                </button>
+                {value && (
+                  <button type="button" onClick={clear}>
+                    Clear
+                  </button>
+                )}
               </div>
             </>
           )}
 
-          {/* MONTH */}
           {view === "month" && (
             <div className="grid grid-cols-3 gap-2">
               {MONTHS.map((m, i) => (
                 <button
                   key={m}
+                  type="button"
                   onClick={() => {
                     setViewMonth(i);
                     setView("calendar");
@@ -248,21 +275,49 @@ export function AppDatePickerField({
             </div>
           )}
 
-          {/* YEAR */}
           {view === "year" && (
-            <div className="grid grid-cols-3 gap-2">
-              {years.map((y) => (
+            <>
+              <div className="mb-3 flex items-center justify-between">
                 <button
-                  key={y}
-                  onClick={() => {
-                    setViewYear(y);
-                    setView("month");
-                  }}
+                  type="button"
+                  onClick={() =>
+                    setYearPageStart((prev) => Math.max(minYear, prev - 12))
+                  }
                 >
-                  {y}
+                  ‹
                 </button>
-              ))}
-            </div>
+
+                <span className="text-sm font-medium">
+                  {years[0]} - {years[years.length - 1]}
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setYearPageStart((prev) =>
+                      prev + 12 <= maxYear ? prev + 12 : prev,
+                    )
+                  }
+                >
+                  ›
+                </button>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                {years.map((y) => (
+                  <button
+                    key={y}
+                    type="button"
+                    onClick={() => {
+                      setViewYear(y);
+                      setView("month");
+                    }}
+                  >
+                    {y}
+                  </button>
+                ))}
+              </div>
+            </>
           )}
         </div>
       )}
