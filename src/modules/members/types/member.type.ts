@@ -15,6 +15,7 @@ export interface Member {
   gender: "Male" | "Female";
   email: string;
   phone: string;
+  status: number;
   dob: string;
   branch?: Branch;
   house_no: number;
@@ -30,6 +31,7 @@ export interface MemberInfo {
   gender: "Male" | "Female";
   email: string;
   phone: string;
+  status: string;
   dob: string;
   branch?: Branch;
   house_no: number;

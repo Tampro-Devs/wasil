@@ -41,6 +41,7 @@ import RegionSelectInput from "../../../shared/components/form/inputs/region.sel
 import DistrictSelectInput from "../../../shared/components/form/inputs/district.select.input";
 import WardSelectInput from "../../../shared/components/form/inputs/ward.select.input";
 import StreetSelectInput from "../../../shared/components/form/inputs/street.select.input";
+import StatusContainer from "../components/status.container";
 
 export default function MembersMainPage() {
   const navigate = useNavigate();
@@ -187,6 +188,7 @@ export default function MembersMainPage() {
                 <TableHead>Residence</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
+                <TableHead>Account Status</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
@@ -207,6 +209,9 @@ export default function MembersMainPage() {
                       <TableCell>{member.residence.name}</TableCell>
                       <TableCell>{member.email}</TableCell>
                       <TableCell>{member.phone}</TableCell>
+                      <TableCell>
+                        <StatusContainer status={member.status} />
+                      </TableCell>
 
                       <TableCell>
                         <div className="flex gap-3">
