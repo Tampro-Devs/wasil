@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { LuCog, LuLogOut, LuUser, LuUserCog } from "react-icons/lu";
+import { useDispatch } from "react-redux";
+import { signOut } from "../../auth/services/reducers/auth.session.slice";
+import { ROUTE_PATHS } from "../../router/route.paths";
+import { useNavigate } from "react-router-dom";
 
 interface DropDownItemContent {
   title: string;
   link: string;
   ItemIcon: React.ElementType;
+  onClick: () => void;
 }
 export default function UserButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,6 +46,8 @@ export default function UserButton() {
 }
 
 function UserDropDown({ isOpen }: { isOpen: boolean }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div
       className={`absolute right-0 w-48 rounded-sm bg-slate-200 shadow shadow-slate-400/30 transition-all duration-200 ease-in-out origin-top-right p-1
@@ -53,16 +60,37 @@ function UserDropDown({ isOpen }: { isOpen: boolean }) {
           <span className="text-xs">Member</span>
         </div>
       </div>
-      <DropDownItem title="Profile" link="" ItemIcon={LuUserCog} />
-      <DropDownItem title="Settings" link="" ItemIcon={LuCog} />
-      <DropDownItem title="Log Out" link="" ItemIcon={LuLogOut} />
+      <DropDownItem
+        title="Profile"
+        link=""
+        ItemIcon={LuUserCog}
+        onClick={() => {}}
+      />
+      <DropDownItem
+        title="Settings"
+        link=""
+        ItemIcon={LuCog}
+        onClick={() => {}}
+      />
+      <DropDownItem
+        title="Log Out"
+        link=""
+        ItemIcon={LuLogOut}
+        onClick={() => {
+          dispatch(signOut());
+          navigate(ROUTE_PATHS.auth.signIn);
+        }}
+      />
     </div>
   );
 }
 
-function DropDownItem({ title, ItemIcon }: DropDownItemContent) {
+function DropDownItem({ title, ItemIcon, onClick }: DropDownItemContent) {
   return (
-    <button className="cursor-pointer rounded-sm w-full my-1 py-2 px-1 border-b border-b-gray-400/30 transition-colors hover:bg-slate-300 hover:border-b-gray-400/10">
+    <button
+      className="cursor-pointer rounded-sm w-full my-1 py-2 px-1 border-b border-b-gray-400/30 transition-colors hover:bg-slate-300 hover:border-b-gray-400/10"
+      onClick={onClick}
+    >
       <div className="flex items-center gap-1 text-gray-700">
         <ItemIcon className="size-4" />
         <span className="text-xs">{title}</span>
