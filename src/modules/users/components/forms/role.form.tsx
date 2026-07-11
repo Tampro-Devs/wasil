@@ -89,7 +89,12 @@ export function RoleForm({ isOpen, setIsOpen, role }: RoleFormProps) {
         >
           <AppTextField control={form.control} name="name" label="Name" />
           <div className="flex justify-end">
-            <AppSubmitButton label="Add" size="sm" className="w-fit px-10" />
+            <AppSubmitButton
+              label="Add"
+              size="sm"
+              className="w-fit px-10"
+              loading={roleMutation.isPending}
+            />
           </div>
         </form>
       </AppFormProvider>

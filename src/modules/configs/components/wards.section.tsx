@@ -86,7 +86,11 @@ export default function WardsSection() {
                 setSelectedDistrict(option);
               }}
             />
-            <AppSubmitButton className="w-full lg:w-xs" label="Submit" />
+            <AppSubmitButton
+              className="w-full lg:w-xs"
+              label="Submit"
+              loading={wardMutation.isPending}
+            />
           </div>
         </form>
       </AppFormProvider>

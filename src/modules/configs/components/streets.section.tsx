@@ -99,7 +99,11 @@ export default function StreetsSection() {
                 setSelectedWard(option);
               }}
             />
-            <AppSubmitButton className="w-full lg:w-xs" label="Submit" />
+            <AppSubmitButton
+              className="w-full lg:w-xs"
+              label="Submit"
+              loading={streetMutation.isPending}
+            />
           </div>
         </form>
       </AppFormProvider>

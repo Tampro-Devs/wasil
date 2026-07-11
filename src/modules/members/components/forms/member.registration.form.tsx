@@ -254,7 +254,7 @@ export default function MemberRegistrationForm({
           </div>
         </div>
         <div className="flex justify-end">
-          <AppSubmitButton label="Submit" />
+          <AppSubmitButton label="Submit" loading={memberMutation.isPending} />
         </div>
       </form>
     </AppFormProvider>
