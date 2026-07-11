@@ -33,9 +33,11 @@ export default function BranchSelectInput<T extends FieldValues>({
   >({
     queryKey: apiQueryKeys.branches,
     queryFn: BranchServices.getBranches,
+    staleTime: 0,
+    refetchOnMount: "always",
     select: (response) => {
       setBranches(response.data);
-      return toSelectOptions(response.data, "name", "branch_id");
+      return toSelectOptions(response.data, ["name"], "branch_id");
     },
   });
   return (

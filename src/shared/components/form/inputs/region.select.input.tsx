@@ -31,7 +31,7 @@ export default function RegionSelectInput<T extends FieldValues>({
   >({
     queryKey: apiQueryKeys.regions,
     queryFn: RegionServices.getRegions,
-    select: (response) => toSelectOptions(response.data, "name", "region_id"),
+    select: (response) => toSelectOptions(response.data, ["name"], "region_id"),
   });
   return (
     <AppSelectField

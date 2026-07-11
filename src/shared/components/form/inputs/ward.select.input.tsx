@@ -31,7 +31,11 @@ export default function WardSelectInput<T extends FieldValues>({
   const wardOptionsMutation = useMutation({
     mutationFn: WardServices.getWards,
     onSuccess: (response) => {
-      const options = toSelectOptions(response.data, "name", "ward_id");
+      let options: SelectOption[] = [];
+      if (response.data) {
+        options = toSelectOptions(response.data, ["name"], "ward_id");
+        setWardOptions(options);
+      }
       setWardOptions(options);
     },
   });
@@ -43,7 +47,7 @@ export default function WardSelectInput<T extends FieldValues>({
         districtId: districtId,
       });
       await queryClient.invalidateQueries({
-        queryKey: apiQueryKeys.districts,
+        queryKey: apiQueryKeys.streets,
       });
     })();
   }, [districtId]);

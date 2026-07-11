@@ -50,7 +50,7 @@ export function AppSelectField<T extends FieldValues>({
               onBlur={field.onBlur}
               menuPortalTarget={document.body}
               ref={field.ref}
-              value={options.find((opt) => opt.value === field.value) ?? null}
+              value={options?.find((opt) => opt.value === field.value) ?? null}
               onChange={(selected: SingleValue<SelectOption>) => {
                 field.onChange(selected?.value ?? "");
                 onChange(selected);

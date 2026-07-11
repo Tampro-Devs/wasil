@@ -31,7 +31,11 @@ export default function DistrictSelectInput<T extends FieldValues>({
   const districtOptionsMutation = useMutation({
     mutationFn: DistrictServices.getDistricts,
     onSuccess: (response) => {
-      const options = toSelectOptions(response.data, "name", "district_id");
+      let options: SelectOption[] = [];
+      if (response.data) {
+        options = toSelectOptions(response.data, ["name"], "district_id");
+        setDistrictOptions(options);
+      }
       setDistrictOptions(options);
     },
   });

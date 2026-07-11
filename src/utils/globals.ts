@@ -70,14 +70,16 @@ export function toDate(value: unknown): Date | undefined {
   const d = new Date(value as any);
   return isNaN(d.getTime()) ? undefined : d;
 }
-
 export function toSelectOptions<
   T,
-  LabelKey extends keyof T,
   ValueKey extends keyof T,
->(items: T[], labelKey: LabelKey, valueKey: ValueKey): SelectOption[] {
+  LabelKey extends keyof T,
+>(items: T[], labelKeys: LabelKey[], valueKey: ValueKey): SelectOption[] {
   return items.map((item) => ({
-    label: String(item[labelKey]),
+    label: labelKeys
+      .map((key) => item[key])
+      .filter(Boolean)
+      .join(" "),
     value: String(item[valueKey]),
   }));
 }

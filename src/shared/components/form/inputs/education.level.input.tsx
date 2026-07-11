@@ -31,7 +31,7 @@ export default function EducationLevelSelectInput<T extends FieldValues>({
   >({
     queryKey: apiQueryKeys.educationLevels,
     queryFn: EducationLevelServices.getEducationLevels,
-    select: (response) => toSelectOptions(response.data, "name", "level_id"),
+    select: (response) => toSelectOptions(response.data, ["name"], "level_id"),
   });
   return (
     <AppSelectField

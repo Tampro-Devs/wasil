@@ -1,12 +1,13 @@
 import type { Control, FieldPath, FieldValues } from "react-hook-form";
 import { AppSelectField, type SelectOption } from "../fields/app.select.field";
-import { useQuery } from "@tanstack/react-query";
-import type { Member } from "../../../../modules/members/types/member.type";
-import type { ResponseResource } from "../../../../utils/response.resource";
-import { apiQueryKeys } from "../../../../api.service.config/query.config/query.keys";
+import { useMutation } from "@tanstack/react-query";
 import { toSelectOptions } from "../../../../utils/globals";
 import MemberServices from "../../../../modules/members/services/member.services";
-import { defaultMemberFilterValues } from "../../../../modules/members/schema/member.filter.schema";
+import {
+  defaultMemberFilterValues,
+  type MemberFilterFormValues,
+} from "../../../../modules/members/schema/member.filter.schema";
+import { useEffect, useState } from "react";
 
 interface Props<T extends FieldValues> {
   name: FieldPath<T>;
@@ -14,6 +15,7 @@ interface Props<T extends FieldValues> {
   widthClass: string;
   label?: string;
   control: Control<T, any, T>;
+  filters?: MemberFilterFormValues;
   onChange?: (value: SelectOption | null) => void | null;
 }
 
@@ -23,17 +25,33 @@ export default function MemberSelectInput<T extends FieldValues>({
   control,
   label,
   widthClass,
+  filters = defaultMemberFilterValues,
   onChange = (_value: SelectOption | null) => {},
 }: Props<T>) {
-  const memberOptions = useQuery<
-    ResponseResource<Member[]>,
-    Error,
-    SelectOption[]
-  >({
-    queryKey: apiQueryKeys.leaders,
-    queryFn: () => MemberServices.getMembers(defaultMemberFilterValues),
-    select: (response) => toSelectOptions(response.data, "first_name", "user"),
+  const [memberOptions, setMemberOptions] = useState<SelectOption[]>([]);
+
+  const memberOptionsMutation = useMutation({
+    mutationFn: MemberServices.getMembers,
+    onSuccess: (response) => {
+      let options: SelectOption[] = [];
+      if (response.data) {
+        options = toSelectOptions(
+          response.data,
+          ["first_name", "middle_name", "last_name"],
+          "member_id",
+        );
+      }
+      setMemberOptions(options);
+    },
   });
+
+  useEffect(() => {
+    if (!filters) return;
+    void (async () => {
+      await memberOptionsMutation.mutateAsync(filters);
+    })();
+  }, [filters]);
+
   return (
     <AppSelectField
       control={control}
@@ -41,8 +59,8 @@ export default function MemberSelectInput<T extends FieldValues>({
       label={label}
       placeholder={placeholder}
       widthClass={widthClass}
-      isLoading={memberOptions.isLoading}
-      options={memberOptions.data ?? []}
+      isLoading={memberOptionsMutation.isPending}
+      options={memberOptions}
       onChange={onChange}
     />
   );
