@@ -13,9 +13,19 @@ import WardLeadersSection from "../../components/ward.leaders.section";
 import StreetLeadersSection from "../../components/street.leaders.section";
 import SideLinkItem from "../../../../shared/components/side.link.item";
 import { LuPlus } from "react-icons/lu";
+import HQLeaderForm from "../../components/forms/hq.leader.form";
+import BranchLeaderForm from "../../components/forms/branch.leader.form";
+import DistricLeaderForm from "../../components/forms/district.leader.form";
+import WardLeaderForm from "../../components/forms/ward.leader.form";
+import StreetLeaderForm from "../../components/forms/street.leader.form";
 
 export default function LeadershipMainPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isOpenHQForm, setIsOpenHQForm] = useState(false);
+  const [isOpenBranchForm, setIsOpenBranchForm] = useState(false);
+  const [isOpenDistrictForm, setIsOpenDistrictForm] = useState(false);
+  const [isOpenWardForm, setIsOpenWardForm] = useState(false);
+  const [isOpenStreetForm, setIsOpenStreetForm] = useState(false);
   setPageHeader("Leadership");
 
   const sideLinksTags = [
@@ -46,6 +56,58 @@ export default function LeadershipMainPage() {
       section: <StreetLeadersSection />,
     },
   ];
+
+  function handleAddButtonClick() {
+    console.log(currentIndex);
+    switch (currentIndex) {
+      case 0:
+        setIsOpenHQForm(true);
+        setIsOpenBranchForm(false);
+        setIsOpenDistrictForm(false);
+        setIsOpenWardForm(false);
+        setIsOpenStreetForm(false);
+        break;
+
+      case 1:
+        setIsOpenHQForm(false);
+        setIsOpenBranchForm(true);
+        setIsOpenDistrictForm(false);
+        setIsOpenWardForm(false);
+        setIsOpenStreetForm(false);
+        break;
+
+      case 2:
+        setIsOpenHQForm(false);
+        setIsOpenBranchForm(false);
+        setIsOpenDistrictForm(true);
+        setIsOpenWardForm(false);
+        setIsOpenStreetForm(false);
+        break;
+
+      case 3:
+        setIsOpenHQForm(false);
+        setIsOpenBranchForm(false);
+        setIsOpenDistrictForm(false);
+        setIsOpenWardForm(true);
+        setIsOpenStreetForm(false);
+        break;
+
+      case 4:
+        setIsOpenHQForm(false);
+        setIsOpenBranchForm(false);
+        setIsOpenDistrictForm(false);
+        setIsOpenWardForm(false);
+        setIsOpenStreetForm(true);
+        break;
+
+      default:
+        setIsOpenBranchForm(false);
+        setIsOpenDistrictForm(false);
+        setIsOpenWardForm(false);
+        setIsOpenStreetForm(false);
+        break;
+    }
+  }
   return (
     <div className="flex flex-col lg:flex-row gap-5 mt-3">
       <AppContentContainer className="w-full lg:w-44 h-fit">
@@ -67,9 +129,30 @@ export default function LeadershipMainPage() {
       <AppContentContainer className="flex-1">
         <AppContentHeader
           title={sideLinksTags[currentIndex].text}
-          actions={<AppIconButton Icon={LuPlus} />}
+          actions={
+            <AppIconButton Icon={LuPlus} onClick={handleAddButtonClick} />
+          }
         />
-        <AppContentBody>{sideLinksTags[currentIndex].section}</AppContentBody>
+        <AppContentBody>
+          <HQLeaderForm isOpen={isOpenHQForm} setIsOpen={setIsOpenHQForm} />
+          <BranchLeaderForm
+            isOpen={isOpenBranchForm}
+            setIsOpen={setIsOpenBranchForm}
+          />
+          <DistricLeaderForm
+            isOpen={isOpenDistrictForm}
+            setIsOpen={setIsOpenDistrictForm}
+          />
+          <WardLeaderForm
+            isOpen={isOpenWardForm}
+            setIsOpen={setIsOpenWardForm}
+          />
+          <StreetLeaderForm
+            isOpen={isOpenStreetForm}
+            setIsOpen={setIsOpenStreetForm}
+          />
+          {sideLinksTags[currentIndex].section}
+        </AppContentBody>
       </AppContentContainer>
     </div>
   );
