@@ -106,7 +106,7 @@ export default function MembersMainPage() {
                 <div className="flex-1">
                   <RegionSelectInput
                     control={form.control}
-                    name="region"
+                    name="branch"
                     placeholder="Select Region"
                     widthClass="w-full lg:w-xs"
                     onChange={(option) => {
@@ -152,7 +152,11 @@ export default function MembersMainPage() {
                 </div>
               </div>
               <div className="flex justify-center">
-                <AppSubmitButton label="Submit" className="w-96" />
+                <AppSubmitButton
+                  label="Submit"
+                  className="w-96"
+                  loading={membersMutation.isPending}
+                />
               </div>
             </div>
           </form>
