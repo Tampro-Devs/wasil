@@ -1,10 +1,40 @@
-export interface Leadership {
+import type { SelectOption } from "../../../shared/components/form/fields/app.select.field";
+import type { Member } from "../../members/types/member.type";
+
+export const LEADERSHIP_CATEGORY = {
+  HQ: 1,
+  BRANCH: 2,
+  DISTRICT: 3,
+  WARD: 4,
+  STREET: 5,
+};
+
+export const LEADERSHIP_TYPE = {
+  AMIR: 1,
+  ASSISTANT: 2,
+};
+
+interface Station {
+  station_id: string;
   name: string;
+}
+
+export interface Leadership {
+  leadership_id: string;
+  title: string;
   level: "HQ" | "Branch" | "District" | "Ward" | "Street";
   category: "Leader" | "Assistant";
 }
 
 export interface Leader {
+  leader_id: string;
+  member: Member;
+  leadership: Leadership;
+  type: number;
+  station: Station;
+}
+
+export interface BranchLeader {
   full_name: string;
   member_id: string;
   phone: string;
@@ -14,17 +44,11 @@ export interface Leader {
   title: Leadership;
 }
 
-export const leadershipDummies: Leadership[] = [];
-
-export const leadersDummies: Leader[] = [
-  // { member: membersDummies[0], title: leadershipDummies[0] },
-  // { member: membersDummies[2], title: leadershipDummies[1] },
-  // { member: membersDummies[6], title: leadershipDummies[2] },
-  // { member: membersDummies[8], title: leadershipDummies[3] },
-  // { member: membersDummies[4], title: leadershipDummies[4] },
-  // { member: membersDummies[5], title: leadershipDummies[5] },
-  // { member: membersDummies[6], title: leadershipDummies[6] },
-  // { member: membersDummies[7], title: leadershipDummies[7] },
-  // { member: membersDummies[8], title: leadershipDummies[8] },
-  // { member: membersDummies[9], title: leadershipDummies[9] },
+export const leadershipTypes: SelectOption[] = [
+  { label: "AMIR", value: `${LEADERSHIP_TYPE.AMIR}` },
+  { label: "ASSISTANT", value: `${LEADERSHIP_TYPE.ASSISTANT}` },
 ];
+
+export function getLeaderTypeName(type: number) {
+  return type === LEADERSHIP_TYPE.AMIR ? "AMIR" : "ASSISTANT";
+}
