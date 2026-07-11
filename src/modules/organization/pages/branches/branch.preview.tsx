@@ -5,7 +5,7 @@ import {
   AppContentContainer,
   AppContentHeader,
 } from "../../../../shared/components/app.content.container";
-import type { Leader } from "../../types/leadership.type";
+import type { BranchLeader } from "../../types/leadership.type";
 import AppButton from "../../../../shared/components/app.button";
 import {
   LoadingTableBody,
@@ -191,13 +191,13 @@ export default function BranchPreview() {
   );
 }
 
-function LeaderContainer({ leader }: { leader?: Leader }) {
+function LeaderContainer({ leader }: { leader?: BranchLeader }) {
   return (
     <div className="w-full sm:flex-1 flex flex-col border border-slate-300 px-3 pt-3 rounded-md">
       <div className="flex text-slate-700 pb-3 border-b border-b-slate-300">
         <LuCircleUser />
         <div className="flex flex-col">
-          <span className="font-bold text-sm">{leader?.title?.name}</span>
+          <span className="font-bold text-sm">{leader?.title?.title}</span>
           <span className="text-sm">{leader?.full_name}</span>
         </div>
       </div>

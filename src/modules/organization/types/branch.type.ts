@@ -1,13 +1,13 @@
 import type { SelectOption } from "../../../shared/components/form/fields/app.select.field";
 import { type Region } from "../../configs/types/region.type";
-import { type Leader } from "./leadership.type";
+import { type BranchLeader } from "./leadership.type";
 
 export interface Branch {
   branch_id: string;
   name: string;
   location: Region;
-  leader?: Leader;
-  assistant_leader?: Leader;
+  leader?: BranchLeader;
+  assistant_leader?: BranchLeader;
   total_members: number;
 }
 
