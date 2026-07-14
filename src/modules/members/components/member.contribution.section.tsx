@@ -37,6 +37,7 @@ export default function MemberContributionSection({
   async function onSubmit(data: MemberContributionFilterFormValues) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log("FORM DATA::", data);
+    console.log("FORM DATA::", member);
   }
   return (
     <TableWrapper
