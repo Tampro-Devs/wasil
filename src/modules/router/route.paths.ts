@@ -1,12 +1,16 @@
+import type { UserData } from "../auth/types";
+
 const authBase = "/auth";
 
 const configsBase = "/configs";
 const usersBase = "/users";
 const rolesBase = `/roles`;
-const membershipBase = "/members";
+const membersBase = "/members";
+const membershipBase = "/membership";
 
 const organisationBase = "/organisation";
 const branchBase = `/branches`;
+const myBranchBase = "/my-branch";
 const leadershipBase = `/leadership`;
 const financeBase = `/finance`;
 const contributionBase = `/contribution`;
@@ -26,6 +30,7 @@ export const ROUTE_PATHS = {
 
   dashboard: {
     root: "/",
+    unauthorised: "/unauthorised",
   },
 
   organisation: {
@@ -38,13 +43,21 @@ export const ROUTE_PATHS = {
       preview: (branchId: string) => `${branchBase}/${branchId}`,
       onboard: `${branchBase}/onboard`,
     },
+    myBranch: {
+      root: myBranchBase,
+      preview: (user: UserData) => `${myBranchBase}/${user.branch.branch_id}`,
+    },
   },
 
   membership: {
     members: {
-      root: `${membershipBase}`,
-      register: `${membershipBase}/register`,
-      preview: (memberId: string) => `${membershipBase}/${memberId}`,
+      root: `${membersBase}`,
+      register: `${membersBase}/register`,
+      preview: (memberId: string) => `${membersBase}/${memberId}`,
+    },
+    myMembership: {
+      root: membershipBase,
+      preview: (user: UserData) => `${membershipBase}/${user.member_id}`,
     },
   },
 
