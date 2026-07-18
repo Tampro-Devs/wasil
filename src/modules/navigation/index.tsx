@@ -10,10 +10,13 @@ import {
   LuUsers,
   LuWallet,
 } from "react-icons/lu";
+import { TbUserScreen } from "react-icons/tb";
 import { LiaUserShieldSolid } from "react-icons/lia";
-import { FaUsersGear } from "react-icons/fa6";
+import { FaBuildingUser, FaUsersGear } from "react-icons/fa6";
 
 import { PiMoneyWavy } from "react-icons/pi";
+import { AUTH_PERMISSIONS } from "../auth/types/permissions";
+import { AUTH_ROLES } from "../auth/types/roles";
 
 export const navGroups: NavigationGroup[] = [
   {
@@ -23,6 +26,7 @@ export const navGroups: NavigationGroup[] = [
         title: "Dashboard",
         icon: LuLayoutDashboard,
         path: ROUTE_PATHS.dashboard.root,
+        isAvailable: false,
       },
     ],
   },
@@ -33,6 +37,7 @@ export const navGroups: NavigationGroup[] = [
         title: "Organization",
         icon: LuBuilding2,
         path: ROUTE_PATHS.organisation.root,
+        isAvailable: false,
       },
       {
         title: "Leadership",
@@ -43,6 +48,12 @@ export const navGroups: NavigationGroup[] = [
         title: "Branches",
         icon: LuUniversity,
         path: ROUTE_PATHS.organisation.branches.root,
+        permissions: [AUTH_PERMISSIONS.BRANCH_VIEW],
+      },
+      {
+        title: "My Branch",
+        icon: FaBuildingUser,
+        path: ROUTE_PATHS.organisation.myBranch.preview,
       },
     ],
   },
@@ -53,6 +64,12 @@ export const navGroups: NavigationGroup[] = [
         title: "Members",
         icon: LuUsers,
         path: ROUTE_PATHS.membership.members.root,
+        permissions: [AUTH_PERMISSIONS.MEMBER_VIEW],
+      },
+      {
+        title: "My Membership",
+        icon: TbUserScreen,
+        path: ROUTE_PATHS.membership.myMembership.preview,
       },
     ],
   },
@@ -63,41 +80,50 @@ export const navGroups: NavigationGroup[] = [
         title: "Finance",
         icon: LuWallet,
         path: ROUTE_PATHS.finance.finance.root,
+        isAvailable: false,
       },
       {
         title: "Contribution",
         icon: PiMoneyWavy,
         path: ROUTE_PATHS.finance.finance.contribution,
+        isAvailable: false,
       },
     ],
   },
   {
     label: "Users",
+    roles: [AUTH_ROLES.SUPER_ADMIN],
     items: [
       {
         title: "Roles",
         icon: LiaUserShieldSolid,
         path: ROUTE_PATHS.users.roles.root,
+        roles: [AUTH_ROLES.SUPER_ADMIN],
       },
       {
         title: "Users",
         icon: FaUsersGear,
         path: ROUTE_PATHS.users.users.root,
+        roles: [AUTH_ROLES.SUPER_ADMIN],
+        isAvailable: false,
       },
     ],
   },
   {
     label: "Configs",
+    roles: [AUTH_ROLES.SUPER_ADMIN],
     items: [
       {
         title: "Locations",
         icon: LuMapPinHouse,
         path: ROUTE_PATHS.configs.locations.root,
+        roles: [AUTH_ROLES.SUPER_ADMIN],
       },
       {
         title: "Education",
         icon: LuBookOpenText,
         path: ROUTE_PATHS.configs.education.root,
+        roles: [AUTH_ROLES.SUPER_ADMIN],
       },
     ],
   },

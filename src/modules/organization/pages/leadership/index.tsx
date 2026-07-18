@@ -18,6 +18,8 @@ import BranchLeaderForm from "../../components/forms/branch.leader.form";
 import DistricLeaderForm from "../../components/forms/district.leader.form";
 import WardLeaderForm from "../../components/forms/ward.leader.form";
 import StreetLeaderForm from "../../components/forms/street.leader.form";
+import { Can } from "../../../auth/components/can";
+import { AUTH_PERMISSIONS } from "../../../auth/types/permissions";
 
 export default function LeadershipMainPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,7 +60,6 @@ export default function LeadershipMainPage() {
   ];
 
   function handleAddButtonClick() {
-    console.log(currentIndex);
     switch (currentIndex) {
       case 0:
         setIsOpenHQForm(true);
@@ -130,27 +131,31 @@ export default function LeadershipMainPage() {
         <AppContentHeader
           title={sideLinksTags[currentIndex].text}
           actions={
-            <AppIconButton Icon={LuPlus} onClick={handleAddButtonClick} />
+            <Can permissions={[AUTH_PERMISSIONS.LEADER_ADD]}>
+              <AppIconButton Icon={LuPlus} onClick={handleAddButtonClick} />
+            </Can>
           }
         />
         <AppContentBody>
-          <HQLeaderForm isOpen={isOpenHQForm} setIsOpen={setIsOpenHQForm} />
-          <BranchLeaderForm
-            isOpen={isOpenBranchForm}
-            setIsOpen={setIsOpenBranchForm}
-          />
-          <DistricLeaderForm
-            isOpen={isOpenDistrictForm}
-            setIsOpen={setIsOpenDistrictForm}
-          />
-          <WardLeaderForm
-            isOpen={isOpenWardForm}
-            setIsOpen={setIsOpenWardForm}
-          />
-          <StreetLeaderForm
-            isOpen={isOpenStreetForm}
-            setIsOpen={setIsOpenStreetForm}
-          />
+          <Can permissions={[AUTH_PERMISSIONS.LEADER_ADD]}>
+            <HQLeaderForm isOpen={isOpenHQForm} setIsOpen={setIsOpenHQForm} />
+            <BranchLeaderForm
+              isOpen={isOpenBranchForm}
+              setIsOpen={setIsOpenBranchForm}
+            />
+            <DistricLeaderForm
+              isOpen={isOpenDistrictForm}
+              setIsOpen={setIsOpenDistrictForm}
+            />
+            <WardLeaderForm
+              isOpen={isOpenWardForm}
+              setIsOpen={setIsOpenWardForm}
+            />
+            <StreetLeaderForm
+              isOpen={isOpenStreetForm}
+              setIsOpen={setIsOpenStreetForm}
+            />
+          </Can>
           {sideLinksTags[currentIndex].section}
         </AppContentBody>
       </AppContentContainer>

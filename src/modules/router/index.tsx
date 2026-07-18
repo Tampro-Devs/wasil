@@ -24,21 +24,24 @@ import AuthLayout from "../navigation/components/auth.layout";
 import ActivateAccountPage from "../auth/pages/activate.account.page";
 import RequestPasswordChangePage from "../auth/pages/request.password.change.page";
 import ResetPasswordPage from "../auth/pages/reset.password.page";
+import Unauthorised from "../navigation/components/unauthorised";
+import { AUTH_PERMISSIONS } from "../auth/types/permissions";
+import { AUTH_ROLES } from "../auth/types/roles";
 
 export const router: RouteConfig[] = [
   {
     title: "Sign In",
     path: ROUTE_PATHS.auth.root,
-    element: (
-      <AppPublicRoute>
-        <AuthLayout />
-      </AppPublicRoute>
-    ),
+    element: <AuthLayout />,
     children: [
       {
         title: "Sign In",
         path: ROUTE_PATHS.auth.signIn,
-        element: <SignInPage />,
+        element: (
+          <AppPublicRoute>
+            <SignInPage />
+          </AppPublicRoute>
+        ),
       },
       {
         title: "Activate Account",
@@ -89,7 +92,11 @@ export const router: RouteConfig[] = [
       {
         title: "Branches",
         path: ROUTE_PATHS.organisation.branches.root,
-        element: <BranchMainPage />,
+        element: (
+          <AppProtectedRoute permissions={[AUTH_PERMISSIONS.BRANCH_VIEW]}>
+            <BranchMainPage />
+          </AppProtectedRoute>
+        ),
       },
 
       {
@@ -99,16 +106,30 @@ export const router: RouteConfig[] = [
       },
 
       {
+        title: "My Branch",
+        path: `${ROUTE_PATHS.organisation.myBranch.root}/:branchId`,
+        element: <BranchPreview />,
+      },
+
+      {
         title: "Onboard Branch",
-        path: `${ROUTE_PATHS.organisation.branches.onboard}/`,
-        element: <BranchOnboardingPage />,
+        path: ROUTE_PATHS.organisation.branches.onboard,
+        element: (
+          <AppProtectedRoute permissions={[AUTH_PERMISSIONS.BRANCH_ADD]}>
+            <BranchOnboardingPage />
+          </AppProtectedRoute>
+        ),
       },
 
       // Members
       {
         title: "Members",
         path: ROUTE_PATHS.membership.members.root,
-        element: <MembersMainPage />,
+        element: (
+          <AppProtectedRoute permissions={[AUTH_PERMISSIONS.MEMBER_VIEW]}>
+            <MembersMainPage />
+          </AppProtectedRoute>
+        ),
       },
 
       {
@@ -118,9 +139,19 @@ export const router: RouteConfig[] = [
       },
 
       {
+        title: "My Membership",
+        path: `${ROUTE_PATHS.membership.myMembership.root}/:memberId`,
+        element: <MemberPreviewPage />,
+      },
+
+      {
         title: "Member Registration",
-        path: `${ROUTE_PATHS.membership.members.register}`,
-        element: <MemberRegistrationPage />,
+        path: ROUTE_PATHS.membership.members.register,
+        element: (
+          <AppProtectedRoute permissions={[AUTH_PERMISSIONS.MEMBER_ADD]}>
+            <MemberRegistrationPage />
+          </AppProtectedRoute>
+        ),
       },
 
       // Finance
@@ -138,29 +169,55 @@ export const router: RouteConfig[] = [
       {
         title: "Roles",
         path: ROUTE_PATHS.users.roles.root,
-        element: <RolesManagementPage />,
+        element: (
+          <AppProtectedRoute roles={[AUTH_ROLES.SUPER_ADMIN]}>
+            <RolesManagementPage />
+          </AppProtectedRoute>
+        ),
       },
       {
         title: "Preview Role",
         path: `${ROUTE_PATHS.users.roles.root}/:roleId`,
-        element: <RolePreviewPage />,
+        element: (
+          <AppProtectedRoute roles={[AUTH_ROLES.SUPER_ADMIN]}>
+            <RolePreviewPage />
+          </AppProtectedRoute>
+        ),
       },
       {
         title: "Users",
         path: ROUTE_PATHS.users.users.root,
-        element: <UsersManagementPage />,
+        element: (
+          <AppProtectedRoute roles={[AUTH_ROLES.SUPER_ADMIN]}>
+            <UsersManagementPage />
+          </AppProtectedRoute>
+        ),
       },
 
       // Configs
       {
         title: "Locations",
         path: ROUTE_PATHS.configs.locations.root,
-        element: <LocationsConfigPage />,
+        element: (
+          <AppProtectedRoute roles={[AUTH_ROLES.SUPER_ADMIN]}>
+            <LocationsConfigPage />
+          </AppProtectedRoute>
+        ),
       },
       {
         title: "Education",
         path: ROUTE_PATHS.configs.education.root,
-        element: <EducationConfigPage />,
+        element: (
+          <AppProtectedRoute roles={[AUTH_ROLES.SUPER_ADMIN]}>
+            <EducationConfigPage />
+          </AppProtectedRoute>
+        ),
+      },
+      // ERORRS
+      {
+        title: "Unauthorised",
+        path: ROUTE_PATHS.dashboard.unauthorised,
+        element: <Unauthorised />,
       },
     ],
   },

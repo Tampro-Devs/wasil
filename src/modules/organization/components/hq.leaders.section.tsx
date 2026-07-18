@@ -10,12 +10,14 @@ import {
   TableWrapper,
 } from "../../../shared/components/table";
 import { ROUTE_PATHS } from "../../router/route.paths";
-import { LuEye, LuPen, LuTrash } from "react-icons/lu";
+import { LuEye } from "react-icons/lu";
 import { useQuery } from "@tanstack/react-query";
 import { apiQueryKeys } from "../../../api.service.config/query.config/query.keys";
 import { LeaderServices } from "../services/leader.services";
 import { LEADERSHIP_CATEGORY } from "../types/leadership.type";
 import { getFullName } from "../../../utils/globals";
+import { Can } from "../../auth/components/can";
+import { AUTH_PERMISSIONS } from "../../auth/types/permissions";
 
 export default function HQLeadersSection() {
   const { data: apiResponse, isLoading } = useQuery({
@@ -44,7 +46,9 @@ export default function HQLeadersSection() {
             <TableHead>Name</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Contacts</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>
+              <Can permissions={[AUTH_PERMISSIONS.MEMBER_VIEW]}>Action</Can>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -69,26 +73,28 @@ export default function HQLeadersSection() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="flex gap-3">
-                      <Link
-                        to={ROUTE_PATHS.membership.members.preview(
-                          leader.member.member_id,
-                        )}
-                      >
-                        <LuEye
-                          size={15}
-                          className="text-slate-400 cursor-pointer"
-                        />
-                      </Link>
-                      <LuPen
+                    <Can permissions={[AUTH_PERMISSIONS.MEMBER_VIEW]}>
+                      <div className="flex gap-3">
+                        <Link
+                          to={ROUTE_PATHS.membership.members.preview(
+                            leader.member.member_id,
+                          )}
+                        >
+                          <LuEye
+                            size={15}
+                            className="text-slate-400 cursor-pointer"
+                          />
+                        </Link>
+                        {/* <LuPen
                         size={15}
                         className="text-green-400 cursor-pointer"
                       />
                       <LuTrash
                         size={15}
                         className="text-red-400 cursor-pointer"
-                      />
-                    </div>
+                      /> */}
+                      </div>
+                    </Can>
                   </TableCell>
                 </TableRow>
               );

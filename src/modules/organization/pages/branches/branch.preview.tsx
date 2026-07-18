@@ -34,6 +34,8 @@ import { useMutation } from "@tanstack/react-query";
 import type { Branch } from "../../types/branch.type";
 import NotFound from "../../../../shared/components/not-found";
 import { getFullName } from "../../../../utils/globals";
+import { AUTH_PERMISSIONS } from "../../../auth/types/permissions";
+import { Can } from "../../../auth/components/can";
 
 export default function BranchPreview() {
   const { branchId } = useParams();
@@ -47,7 +49,10 @@ export default function BranchPreview() {
   const [memberResponseMsg, setMemberResponseMsg] = useState<string | null>(
     null,
   );
-  setPageHeader("Branch Preview", "Back To Branches");
+
+  setPageHeader("Branch Preview", "Back To Branches", [
+    AUTH_PERMISSIONS.BRANCH_VIEW,
+  ]);
 
   const branchMutation = useMutation({
     mutationFn: BranchServices.getBranchDetails,
@@ -109,16 +114,18 @@ export default function BranchPreview() {
             <span className="text-xs">{branch?.location?.name}</span>
           </div>
         </div>
-        <AppButton
-          size="xs"
-          variant="secondary"
-          className="size-8"
-          onClick={() => {
-            navigate(ROUTE_PATHS.organisation.branches.onboard);
-          }}
-        >
-          <LuPen size={20} />
-        </AppButton>
+        <Can permissions={[AUTH_PERMISSIONS.BRANCH_CHANGE]}>
+          <AppButton
+            size="xs"
+            variant="secondary"
+            className="size-8"
+            onClick={() => {
+              navigate(ROUTE_PATHS.organisation.branches.onboard);
+            }}
+          >
+            <LuPen size={20} />
+          </AppButton>
+        </Can>
       </AppContentHeader>
       <AppContentBody className="mt-3">
         <div className="flex flex-wrap sm:flex-row gap-3 mb-5">
@@ -147,7 +154,9 @@ export default function BranchPreview() {
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead>Location</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead>
+                  <Can permissions={[AUTH_PERMISSIONS.MEMBER_VIEW]}>Action</Can>
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -168,16 +177,18 @@ export default function BranchPreview() {
                       <TableCell>{member.phone}</TableCell>
                       <TableCell>{member.residence.name}</TableCell>
                       <TableCell>
-                        <Link
-                          to={ROUTE_PATHS.membership.members.preview(
-                            member.member_id,
-                          )}
-                        >
-                          <LuEye
-                            size={20}
-                            className="text-slate-400 cursor-pointer"
-                          />
-                        </Link>
+                        <Can permissions={[AUTH_PERMISSIONS.MEMBER_VIEW]}>
+                          <Link
+                            to={ROUTE_PATHS.membership.members.preview(
+                              member.member_id,
+                            )}
+                          >
+                            <LuEye
+                              size={20}
+                              className="text-slate-400 cursor-pointer"
+                            />
+                          </Link>
+                        </Can>
                       </TableCell>
                     </TableRow>
                   );

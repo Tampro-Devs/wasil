@@ -3,8 +3,11 @@ import { NavLink } from "react-router-dom";
 import { useSidebar } from "../context/sidebar.provider";
 import { useMediaQuery } from "../../../shared/hooks/use.mediaquery";
 import { LuX } from "react-icons/lu";
+import { Can } from "../../auth/components/can";
+import { useAppSelector } from "../../../shared/store";
 
 export default function AppSidebar() {
+  const user = useAppSelector((state) => state.authSession.user);
   const isSmallDevice = useMediaQuery("(max-width: 767px)");
   const { isOpen, toggleSidebar } = useSidebar();
   return (
@@ -32,25 +35,48 @@ export default function AppSidebar() {
           {isSmallDevice && <LuX onClick={toggleSidebar} />}
         </div>
         {navGroups.map((group, index) => (
-          <div className={`mb-3 w-full`} key={index}>
-            <div className="font-bold text-gray-500 text-md capitalize mb-3">
-              {isOpen ? group.label : "..."}
-            </div>
-            {group.items.map((item, index) => (
-              <div key={index} className="mb-3">
-                <NavLink
-                  to={item.path}
-                  onClick={isSmallDevice ? toggleSidebar : () => {}}
-                  className={({ isActive }) =>
-                    `flex items-center gap-1 bg-gray-50/10 p-2 rounded-md mx-3 h-8 hover:transition-colors duration-500 ${isActive ? "bg-gray-300" : "hover:bg-gray-300/30"}`
-                  }
-                >
-                  <item.icon className="size-4" />
-                  {isOpen && <span className="text-xs">{item.title}</span>}
-                </NavLink>
+          <Can key={index} permissions={group.permissions} roles={group.roles}>
+            <div className={`mb-3 w-full`}>
+              <div className="font-bold text-gray-500 text-md capitalize mb-3">
+                {isOpen ? group.label : "..."}
               </div>
-            ))}
-          </div>
+              {group.items.map((item, index) => (
+                <Can
+                  key={index}
+                  permissions={item.permissions}
+                  roles={group.roles}
+                >
+                  <div className="mb-3">
+                    <NavLink
+                      to={
+                        item.isAvailable == false
+                          ? "#"
+                          : typeof item.path === "function"
+                            ? item.path(user)
+                            : item.path
+                      }
+                      onClick={isSmallDevice ? toggleSidebar : () => {}}
+                      className={({ isActive }) =>
+                        `flex items-center gap-1 bg-gray-50/10 p-2 rounded-md mx-3 h-8 hover:transition-colors duration-500 ${isActive && item.isAvailable != false ? "bg-gray-300" : item.isAvailable != false && "hover:bg-gray-300/30"} ${item.isAvailable == false && "cursor-not-allowed"}`
+                      }
+                    >
+                      <item.icon className="size-4" />
+                      {isOpen && (
+                        <span className="text-xs">
+                          {item.title}
+                          {item.isAvailable == false && (
+                            <span className="bg-orange-300/30 text-orange-500 ms-1 px-1 rounded-full text-xs">
+                              Coming Soon
+                            </span>
+                          )}
+                        </span>
+                      )}
+                    </NavLink>
+                  </div>
+                </Can>
+              ))}
+            </div>
+          </Can>
         ))}
       </aside>
     </>

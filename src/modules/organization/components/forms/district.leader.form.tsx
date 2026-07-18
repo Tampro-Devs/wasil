@@ -137,7 +137,7 @@ export default function DistricLeaderForm({
             widthClass="w-full"
             onChange={(option) => {
               if (!option) return null;
-              console.log(option);
+
               setSelectedDistrict(option.value);
             }}
           />
