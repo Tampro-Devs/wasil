@@ -10,7 +10,6 @@ import {
 import {
   calculateAge,
   convertStringToDate,
-  formatMoney,
   getFullName,
 } from "../../../utils/globals";
 import { useEffect, useState } from "react";
@@ -171,12 +170,12 @@ function MemberContribution() {
 
       <div className="flex px-2 py-3 border-b border-b-slate-300/50 gap-2 items-center">
         <span className="text-sm font-bold">Total Amount: </span>
-        <span className="text-xs">{formatMoney(30000)}</span>
+        <span className="text-xs">{}</span>
       </div>
 
       <div className="flex p-2 gap-2 items-center">
         <span className="text-sm font-bold">Total Month(s): </span>
-        <span className="text-xs">3</span>
+        <span className="text-xs"></span>
       </div>
     </div>
   );

@@ -9,8 +9,7 @@ import {
   TableRow,
   TableWrapper,
 } from "../../../shared/components/table";
-import { formatMoney, getFullName } from "../../../utils/globals";
-import { membersDummies } from "../../members/types/member.type";
+import { formatMoney } from "../../../utils/globals";
 
 export function DashboardContributionTable() {
   return (
@@ -69,7 +68,7 @@ export function DashboardAcquisitionTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {membersDummies.map((member, index) => {
+          {/* {membersDummies.map((member, index) => {
             const fullName = getFullName({
               first_name: member.first_name,
               middle_name: member.middle_name,
@@ -88,7 +87,7 @@ export function DashboardAcquisitionTable() {
                 </TableCell>
               </TableRow>
             );
-          })}
+          })} */}
         </TableBody>
       </Table>
     </TableWrapper>

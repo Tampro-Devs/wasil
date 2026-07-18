@@ -16,7 +16,6 @@ const PermissionServices = {
   async setRolePermissions(
     data: RolePermissionsValue,
   ): Promise<ResponseResource<Role | null>> {
-    console.log(data);
     const response = await apiService.put<ResponseResource<Role | null>>(
       UsersServiceEndpoint.permission.set,
       data,

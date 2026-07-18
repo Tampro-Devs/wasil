@@ -45,5 +45,3 @@ export interface MemberInfo {
   institution: string;
   edu_level?: EducationLevel;
 }
-
-export const membersDummies: Member[] = [];

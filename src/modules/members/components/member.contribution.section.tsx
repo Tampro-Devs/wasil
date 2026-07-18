@@ -6,20 +6,17 @@ import {
   Table,
   TableBody,
   TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
   TableWrapper,
 } from "../../../shared/components/table";
-import { formatMoney } from "../../../utils/globals";
 
 import {
   defaultMemberContributionFilterFormValues,
   memberContributionFilterSchema,
   type MemberContributionFilterFormValues,
 } from "../schema/member.contribution.filter.schema";
-import { memberContributionDummies } from "../types/contribution.type";
 import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
 import { AppFormProvider } from "../../../shared/components/form";
 import type { MemberInfo } from "../types/member.type";
@@ -53,7 +50,7 @@ export default function MemberContributionSection({
         <AppFormProvider {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full flex gap-5"
+            className="w-full items-center flex gap-5 mb-3"
           >
             <AppTextField
               control={form.control}
@@ -75,14 +72,14 @@ export default function MemberContributionSection({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {memberContributionDummies.map((contribution, index) => (
+          {/* {memberContributionDummies.map((contribution, index) => (
             <TableRow key={index}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>{contribution.receipt}</TableCell>
               <TableCell>{formatMoney(contribution.amount)}</TableCell>
               <TableCell>{contribution.date}</TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </TableWrapper>

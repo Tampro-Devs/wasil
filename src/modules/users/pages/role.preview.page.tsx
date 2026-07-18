@@ -79,9 +79,8 @@ export default function RolePreviewPage() {
   });
 
   async function submitRolePermissions() {
-    console.log("HAIJAPITA");
     if (!roleId || permissions.length <= 0) return;
-    console.log("IMEPITA");
+
     const rolePermissionData: RolePermissionsValue = {
       role_id: roleId,
       permissions: permissions,

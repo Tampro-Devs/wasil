@@ -22,7 +22,6 @@ import {
 } from "../../../utils/globals";
 import { regions, districts, wards } from "../../configs/data";
 
-import { membersDummies } from "../../members/types/member.type";
 import {
   defaultFinanceFilterValues,
   financeFilterSchema,
@@ -111,7 +110,7 @@ export default function FinanceMainPage() {
             <TableBody>
               <TableRow>
                 <TableCell>1</TableCell>
-                <TableCell>{membersDummies[0].first_name}</TableCell>
+                <TableCell>User Test Name</TableCell>
                 <TableCell>ER45677</TableCell>
                 <TableCell>{formatMoney(10000)}</TableCell>
                 <TableCell>{convertStringToDate("2026-05-24")}</TableCell>

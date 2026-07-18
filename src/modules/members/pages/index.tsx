@@ -27,7 +27,7 @@ import {
 } from "../schema/member.filter.schema";
 import { type Member } from "../types/member.type";
 import { ROUTE_PATHS } from "../../router/route.paths";
-import { LuEye, LuPlus, LuTrash } from "react-icons/lu";
+import { LuEye, LuPlus } from "react-icons/lu";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { AppTextField } from "../../../shared/components/form/fields/app.text.field";
@@ -42,6 +42,8 @@ import DistrictSelectInput from "../../../shared/components/form/inputs/district
 import WardSelectInput from "../../../shared/components/form/inputs/ward.select.input";
 import StreetSelectInput from "../../../shared/components/form/inputs/street.select.input";
 import StatusContainer from "../components/status.container";
+import { Can } from "../../auth/components/can";
+import { AUTH_PERMISSIONS } from "../../auth/types/permissions";
 
 export default function MembersMainPage() {
   const navigate = useNavigate();
@@ -177,12 +179,14 @@ export default function MembersMainPage() {
               <span className="font-bold me-1">Members:</span>
               <span className="text-xs">{members?.length}</span>
             </div>
-            <AppIconButton
-              Icon={LuPlus}
-              onClick={() => {
-                navigate(ROUTE_PATHS.membership.members.register);
-              }}
-            />
+            <Can permissions={[AUTH_PERMISSIONS.MEMBER_ADD]}>
+              <AppIconButton
+                Icon={LuPlus}
+                onClick={() => {
+                  navigate(ROUTE_PATHS.membership.members.register);
+                }}
+              />
+            </Can>
           </TableCaption>
           <Table>
             <TableHeader>
@@ -229,10 +233,10 @@ export default function MembersMainPage() {
                               className="text-slate-400 cursor-pointer"
                             />
                           </Link>
-                          <LuTrash
+                          {/* <LuTrash
                             size={20}
                             className="text-red-400 cursor-pointer"
-                          />
+                          /> */}
                         </div>
                       </TableCell>
                     </TableRow>
