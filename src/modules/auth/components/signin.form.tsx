@@ -38,7 +38,10 @@ export default function SignInForm() {
       if (responseCode === 0) {
         const user = responseData.data as UserData;
         dispatch(signIn(user));
-        navigate(ROUTE_PATHS.dashboard.root, { replace: true });
+        navigate(ROUTE_PATHS.membership.myMembership.preview(user), {
+          replace: true,
+        });
+        // navigate(ROUTE_PATHS.dashboard.root, { replace: true });
       } else {
         const message = responseData.message;
         triggerToast(message, "error");

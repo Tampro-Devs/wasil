@@ -10,12 +10,17 @@ type AppProtectedRouteProps = {
 
 export function AppPublicRoute({
   children,
-  redirectTo = ROUTE_PATHS.dashboard.root,
+  // redirectTo = ROUTE_PATHS.dashboard.root,
 }: AppProtectedRouteProps) {
   const user = useAppSelector((state) => state.authSession.user);
 
   if (user) {
-    return <Navigate to={redirectTo} replace={true} />;
+    return (
+      <Navigate
+        to={ROUTE_PATHS.membership.myMembership.preview(user)}
+        replace={true}
+      />
+    );
   }
   return <>{children}</>;
 }
