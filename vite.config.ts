@@ -12,5 +12,6 @@ export default defineConfig({
     envCompatible(),
     babel({ presets: [reactCompilerPreset()] }),
   ],
-  base: "/wasil",
+  base: "/",
+  // base: "/wasil",
 });
