@@ -182,16 +182,24 @@ export function AppDatePickerField({
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-2 w-[288px] rounded-2xl border bg-white p-4 shadow-2xl">
+        <div className="absolute z-50 mt-2 w-[288px] rounded-2xl border border-slate-300 bg-white p-4 shadow-2xl">
           {view === "calendar" && (
             <>
               <div className="mb-3 flex justify-between">
-                <button type="button" onClick={goPrevMonth}>
+                <button
+                  type="button"
+                  onClick={goPrevMonth}
+                  className="h-fit w-3 cursor-pointer rounded-sm hover:bg-blue-900 hover:text-white"
+                >
                   ‹
                 </button>
 
                 <div className="flex gap-2">
-                  <button type="button" onClick={() => setView("month")}>
+                  <button
+                    type="button"
+                    onClick={() => setView("month")}
+                    className="cursor-pointer hover:text-blue-700"
+                  >
                     {MONTHS[viewMonth].slice(0, 3)}
                   </button>
 
@@ -201,12 +209,17 @@ export function AppDatePickerField({
                       setYearPageStart(getYearPageStart(viewYear, minYear));
                       setView("year");
                     }}
+                    className="cursor-pointer hover:text-blue-700"
                   >
                     {viewYear}
                   </button>
                 </div>
 
-                <button type="button" onClick={goNextMonth}>
+                <button
+                  type="button"
+                  onClick={goNextMonth}
+                  className="h-fit w-3 cursor-pointer rounded-sm hover:bg-blue-900 hover:text-white"
+                >
                   ›
                 </button>
               </div>
@@ -217,7 +230,7 @@ export function AppDatePickerField({
                 ))}
               </div>
 
-              <div className="grid grid-cols-7">
+              <div className="grid grid-cols-7 gap-1">
                 {cells.map((day, i) =>
                   !day ? (
                     <div key={i} />
@@ -227,7 +240,7 @@ export function AppDatePickerField({
                       type="button"
                       onClick={() => selectDate(day)}
                       className={cn(
-                        "h-8 text-sm",
+                        "h-8 text-sm cursor-pointer rounded-sm hover:bg-blue-900 hover:text-white",
                         value &&
                           isSameDay(
                             new Date(viewYear, viewMonth, day),
@@ -246,11 +259,19 @@ export function AppDatePickerField({
               </div>
 
               <div className="mt-3 flex justify-between text-xs">
-                <button type="button" onClick={todayClick}>
+                <button
+                  type="button"
+                  onClick={todayClick}
+                  className="cursor-pointer hover:text-blue-700"
+                >
                   Today
                 </button>
                 {value && (
-                  <button type="button" onClick={clear}>
+                  <button
+                    type="button"
+                    onClick={clear}
+                    className="cursor-pointer hover:text-red-400"
+                  >
                     Clear
                   </button>
                 )}
@@ -268,6 +289,7 @@ export function AppDatePickerField({
                     setViewMonth(i);
                     setView("calendar");
                   }}
+                  className="cursor-pointer rounded-sm hover:bg-blue-900 hover:text-white"
                 >
                   {m.slice(0, 3)}
                 </button>
@@ -283,6 +305,7 @@ export function AppDatePickerField({
                   onClick={() =>
                     setYearPageStart((prev) => Math.max(minYear, prev - 12))
                   }
+                  className="h-fit w-3 cursor-pointer rounded-sm hover:bg-blue-900 hover:text-white"
                 >
                   ‹
                 </button>
@@ -298,6 +321,7 @@ export function AppDatePickerField({
                       prev + 12 <= maxYear ? prev + 12 : prev,
                     )
                   }
+                  className="h-fit w-3 cursor-pointer rounded-sm hover:bg-blue-900 hover:text-white"
                 >
                   ›
                 </button>
@@ -312,6 +336,7 @@ export function AppDatePickerField({
                       setViewYear(y);
                       setView("month");
                     }}
+                    className="cursor-pointer rounded-sm hover:bg-blue-900 hover:text-white"
                   >
                     {y}
                   </button>
